@@ -1,31 +1,44 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import * as React from "react";
 import { Link } from "react-router-dom";
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
-
-export default function Navbar() {
+const Navbar = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
+    <SideNav>
+      <SideNav.Toggle />
+      <SideNav.Nav defaultSelected="Products">
 
-          <Typography variant="h6" color="error" component="div">
-            <Button variant="outlined" color="error">
-              <Link color='black' to="/listele">UrunleriListele</Link>
-            </Button>
-          </Typography>
+        <NavItem eventKey="Products">
+          <NavIcon>
+            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+          </NavIcon>
+          <NavText>
+            <Link to="/products">Products</Link>
+          </NavText>
+        </NavItem>
 
-          <Typography variant="h6" color="error" component="div">
-            <Button variant="outlined" color="error">
-            <Link to="/sil">UrunleriSil</Link>
-            </Button>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+        <NavItem eventKey="Orders">
+          <NavIcon>
+            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+          </NavIcon>
+          <NavText>
+            <Link to="/orders">Orders</Link>
+          </NavText>
+        </NavItem>
+
+        <NavItem eventKey="">
+          <NavIcon>
+            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+          </NavIcon>
+          <NavText>
+            <Link to="/customers">Customers</Link>
+          </NavText>
+        </NavItem>
+
+      </SideNav.Nav>
+    </SideNav>
+  )
 }
+
+export default Navbar

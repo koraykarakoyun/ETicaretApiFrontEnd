@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export default function BasicTable(props) {
+export default function ProductsPage(props) {
 
   const [deger, setDeger] = useState([]);
 

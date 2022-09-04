@@ -19,7 +19,7 @@ export default function ProductsPage(props) {
 
   useEffect(() => {
 
-    props.api("GET","localhost","7098","products","getall").then((data) => {
+    props.api("GET", "localhost", "7098", "products", "getall").then((data) => {
       setDeger(data);
     });
 
@@ -27,41 +27,41 @@ export default function ProductsPage(props) {
   }, [])
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left">ProductId</TableCell>
-            <TableCell align="left">ProductName</TableCell>
-            <TableCell align="left">ProductStock</TableCell>
-            <TableCell align="left">ProductPrice</TableCell>
-            <TableCell align="left">Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {deger.map((row) => (
-
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">{row.id}</TableCell>
-              <TableCell align="left">{row.name}</TableCell>
-              <TableCell align="left">{row.stock}</TableCell>
-              <TableCell align="left">{row.price}</TableCell>
-              <TableCell align="left">
-                <IconButton aria-label="delete">
-                  <DeleteIcon onClick={() => {
-                    console.log(row.id);
-                    props.api("localhost","7098","products","deletebyid",row.id);
-                  }} />
-                </IconButton>
-              </TableCell>
-
+    <div style={{ marginLeft: "64px" }}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="left">ProductId</TableCell>
+              <TableCell align="left">ProductName</TableCell>
+              <TableCell align="left">ProductStock</TableCell>
+              <TableCell align="left">ProductPrice</TableCell>
+              <TableCell align="left">Delete</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {deger.map((row) => (
+
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">{row.id}</TableCell>
+                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="left">{row.stock}</TableCell>
+                <TableCell align="left">{row.price}</TableCell>
+                <TableCell align="left">
+                  <IconButton aria-label="delete">
+                    <DeleteIcon onClick={() => {
+                      console.log(row.id);
+                      props.api("DELETE","localhost", "7098", "products", "deletebyid", row.id);
+                    }} />
+                  </IconButton>
+                </TableCell>
+
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
-
-
 
 }

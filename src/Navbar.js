@@ -2,7 +2,8 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import ProductAdd from "./Pages/ProductAdd";
+import ProductAdd from "./Pages/Products/ProductAddPage";
+import { color } from "@mui/system";
 
 const Navbar = (props) => {
   return (
@@ -14,7 +15,7 @@ const Navbar = (props) => {
             <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
           </NavIcon>
           <NavText>
-            <Link to="/">Home</Link>
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">Dashboard</Link>
           </NavText>
         </NavItem>
 
@@ -23,21 +24,21 @@ const Navbar = (props) => {
             <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
           </NavIcon>
           <NavText>
-            <Link to="/products">Products</Link>
+            <Link style={{ textDecoration: "none", color: "white" }} to="/products">Products</Link>
           </NavText>
           <NavItem eventKey="AddProduct">
             <NavText>
-            <Link to="/productadd">Add Product</Link>
+              <Link style={{ textDecoration: "none", color: "white" }} to="/addproduct">Add Product</Link>
             </NavText>
           </NavItem>
           <NavItem eventKey="UpdateProduct">
             <NavText>
-              Update Product
+              <Link style={{ textDecoration: "none", color: "white" }} to="/updateproduct">Update Product</Link>
             </NavText>
           </NavItem>
           <NavItem eventKey="DeleteProduct">
             <NavText>
-              Delete Product
+              <Link style={{ textDecoration: "none", color: "white" }} to="/deleteproduct">Delete Product</Link>
             </NavText>
           </NavItem>
         </NavItem>
@@ -47,25 +48,24 @@ const Navbar = (props) => {
             <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
           </NavIcon>
           <NavText>
-            Orders
+            <Link style={{ textDecoration: "none", color: "white" }} to="/orders">Orders</Link>
           </NavText>
-          <NavItem eventKey="charts/linechart">
+          <NavItem eventKey="AddOrder">
             <NavText>
-              Add Order
+              <Link style={{ textDecoration: "none", color: "white" }} to="/addorder">Add Orders</Link>
             </NavText>
           </NavItem>
-          <NavItem eventKey="charts/linechart">
+          <NavItem eventKey="UpdateOrder">
             <NavText>
-              Update Order
+              <Link style={{ textDecoration: "none", color: "white" }} to="/updateorder">Update Orders</Link>
             </NavText>
           </NavItem>
-          <NavItem eventKey="charts/barchart">
+          <NavItem eventKey="charts/DeleteOrder">
             <NavText>
-              DeleteOrder
+              <Link style={{ textDecoration: "none", color: "white" }} to="/deleteorder">Delete Orders</Link>
             </NavText>
           </NavItem>
         </NavItem>
-
       </SideNav.Nav>
     </SideNav>
   )

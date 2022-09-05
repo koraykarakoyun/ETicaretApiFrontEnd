@@ -1,11 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import Navbar from './Navbar';
-import MainPage from './Pages/MainPage';
-import ProductsPage from './Pages//ProductsPage';
+import MainPage from './Pages/Main/MainPage';
+import ProductsPage from './Pages/Products/ProductsPage';
 import { List } from '@mui/material';
-import ProductAdd from './Pages/ProductAdd';
-
+import ProductAdd from './Pages/Products/ProductAddPage';
+import ProductUpdate from './Pages/Products/ProductUpdatePage';
+import ProductDelete from './Pages/Products/ProductDeletePage';
 
 
 const api = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null) => {
@@ -81,7 +82,9 @@ const Main_Routers = () => {
             <Routes>
                 <Route path="/" element={<MainPage></MainPage>} />
                 <Route path="/products" element={<ProductsPage api={api}></ProductsPage>} />
-                <Route path="/productadd" element={<ProductAdd api={api}></ProductAdd>} />
+                <Route path="/addproduct" element={<ProductAdd api={api}></ProductAdd>} />
+                <Route path="/updateproduct" element={<ProductUpdate api={api}></ProductUpdate>} />
+                <Route path="/deleteproduct" element={<ProductDelete api={api}></ProductDelete>} />
             </Routes>
         </BrowserRouter>
     )

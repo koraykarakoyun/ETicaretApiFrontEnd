@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import { Link } from 'react-router-dom';
 
 
 export default function ProductsPage(props) {
@@ -47,11 +49,13 @@ export default function ProductsPage(props) {
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.stock}</TableCell>
                 <TableCell align="left">{row.price}</TableCell>
+
+
                 <TableCell align="left">
                   <IconButton aria-label="delete">
                     <DeleteIcon onClick={() => {
                       console.log(row.id);
-                      props.api("DELETE","localhost", "7098", "products", "deletebyid", row.id);
+                      props.api("DELETE", "localhost", "7098", "products", "deletebyid", row.id);
                     }} />
                   </IconButton>
                 </TableCell>

@@ -48,7 +48,7 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-export default function ProductAdd(props) {
+export default function ProductUpdate(props) {
     const [open, setOpen] = React.useState(true);
 
     const handleClickOpen = () => {
@@ -58,6 +58,7 @@ export default function ProductAdd(props) {
         setOpen(false);
     };
     const Add = () => {
+        var product_id = document.getElementById("product_id").value;
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
@@ -70,9 +71,9 @@ export default function ProductAdd(props) {
 
         }
 
-        props.api("POST","localhost","7098","products","add",null,product);
+        props.api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product);
 
-        console.log("eklendi");
+        console.log("guncellendi");
         setOpen(false);
     };
 
@@ -85,20 +86,23 @@ export default function ProductAdd(props) {
                 aria-labelledby="customized-dialog-title"
                 open={open}>
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Product Add
+                    Product Update
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
 
                         <form onSubmit={Add}>
                             <label>
-                                Name:<input id='product_name' type="text" />
+                                UpdateProductId:<input id='product_id' type="text" />
                             </label>
                             <label>
-                                Stock:<input id='product_stock' type="number" />
+                                NewName:<input id='product_name' type="text" />
                             </label>
                             <label>
-                                Price:<input id='product_price' type="number" />
+                                NewStock:<input id='product_stock' type="text" />
+                            </label>
+                            <label>
+                                NewPrice:<input id='product_price' type="text" />
                             </label>
                         </form>
 
@@ -107,7 +111,7 @@ export default function ProductAdd(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={Add}>
-                        Add
+                        Update
                     </Button>
                     <Button autoFocus onClick={handleClose}>
                         Close

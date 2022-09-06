@@ -12,10 +12,11 @@ import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Link, NavLink } from 'react-router-dom';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProductsPage(props) {
-
+  const notify = (data) => toast(data);
   const [deger, setDeger] = useState([]);
   let url;
 
@@ -29,7 +30,9 @@ export default function ProductsPage(props) {
   }, [])
 
   return (
+
     <div style={{ marginLeft: "64px" }}>
+      <ToastContainer />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -55,7 +58,10 @@ export default function ProductsPage(props) {
                 <TableCell align="left">
                   <IconButton aria-label="delete">
                     <DeleteIcon onClick={() => {
-                      props.api("DELETE", "localhost", "7098", "products", "deletebyid", row.id);
+                      props.api("DELETE", "localhost", "7098", "products", "deletebyid", row.id).then(response => {
+                        notify(response);
+
+                      })
                     }} />
                   </IconButton>
                 </TableCell>

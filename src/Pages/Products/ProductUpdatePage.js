@@ -9,12 +9,9 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useParams
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -55,6 +52,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductUpdate(props) {
+    const notify = (data) => toast(data);
     let { id } = useParams();
     const [deger, setDeger] = useState([]);
     useEffect(() => {
@@ -85,7 +83,9 @@ export default function ProductUpdate(props) {
             "price": Number(product_price)
 
         }
-        props.api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product);
+        props.api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product).then(response => {
+            notify(response);
+        })
         setOpen(false);
     };
 
@@ -93,6 +93,7 @@ export default function ProductUpdate(props) {
 
     return (
         <div>
+            <ToastContainer />
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"

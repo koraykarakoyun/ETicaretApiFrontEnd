@@ -36,7 +36,7 @@ const api = (method_type = null, origin = "localhost", port = "7098", controller
                 headers: new Headers({ 'content-type': 'application/json' }),
                 method: method_type,
                 body: JSON.stringify(formData)
-            })
+            }).then(response=>response.text());
         }
 
     }
@@ -47,7 +47,7 @@ const api = (method_type = null, origin = "localhost", port = "7098", controller
                 headers: new Headers({ 'content-type': 'application/json' }),
                 method: method_type,
                 body: JSON.stringify(formData)
-            })
+            }).then(response=>response.text());
         }
 
     }
@@ -58,14 +58,14 @@ const api = (method_type = null, origin = "localhost", port = "7098", controller
                 headers: new Headers({ 'content-type': 'application/json' }),
                 method: method_type,
 
-            })
+            }).then(response=>response.text());
         }
 
         if (id != null) {
             return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
                 headers: new Headers({ 'content-type': 'application/json' }),
                 method: method_type,
-            });
+            }).then(response=>response.text());
         }
 
     }

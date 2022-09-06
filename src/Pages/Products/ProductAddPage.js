@@ -9,6 +9,8 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -51,6 +53,8 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ProductAdd(props) {
 
+    const notify = (data) => toast(data);
+
     const [open, setOpen] = React.useState(true);
 
     const handleClickOpen = () => {
@@ -59,7 +63,7 @@ export default function ProductAdd(props) {
     const handleClose = () => {
         setOpen(false);
     };
-    const Add = () => {
+    const Add = async () => {
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
@@ -69,7 +73,12 @@ export default function ProductAdd(props) {
             "price": Number(product_price)
 
         }
-        props.api("POST", "localhost", "7098", "products", "add", null, product);
+        await props.api("POST", "localhost", "7098", "products", "add", null, product)
+            .then((response) => {
+                console.log(response);
+                notify(response);
+            });
+
         setOpen(false);
     };
 
@@ -77,6 +86,7 @@ export default function ProductAdd(props) {
 
     return (
         <div>
+            <ToastContainer />
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
@@ -103,7 +113,10 @@ export default function ProductAdd(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={Add}>
+                    <Button onClick={() => {
+                        Add()
+
+                    }}>
                         Add
                     </Button>
                     <Button autoFocus onClick={handleClose}>

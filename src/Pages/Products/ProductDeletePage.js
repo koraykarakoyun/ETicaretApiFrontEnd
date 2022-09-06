@@ -9,12 +9,9 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    useParams
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -29,6 +26,7 @@ const BootstrapDialogTitle = (props) => {
     const { children, onClose, ...other } = props;
 
     return (
+
         <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
             {children}
             {onClose ? (
@@ -55,6 +53,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductDelete(props) {
+    const notify = (data) => toast(data);
     let { id } = useParams()
     console.log(id);
     const [open, setOpen] = React.useState(true);
@@ -66,12 +65,13 @@ export default function ProductDelete(props) {
         setOpen(false);
     };
     const Add = () => {
-        var product_id= document.getElementById("product_id").value;
+        var product_id = document.getElementById("product_id").value;
 
 
-        props.api("DELETE","localhost","7098","products","deletebyid",String(product_id));
+        props.api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id)).then(response => {
+            notify(response)
+        })  
 
-        console.log("silindi");
         setOpen(false);
     };
 
@@ -79,6 +79,7 @@ export default function ProductDelete(props) {
 
     return (
         <div>
+            <ToastContainer />
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"

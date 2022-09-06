@@ -8,7 +8,7 @@ import { width } from '@mui/system';
 
 
 
-export default function MainPage() {
+const MainPage=(props) => {
   return (
 
     <>
@@ -22,3 +22,4 @@ export default function MainPage() {
     </>
   );
 }
+export default MainPage;

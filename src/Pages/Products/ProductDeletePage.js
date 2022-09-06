@@ -9,6 +9,12 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useParams
+} from "react-router-dom";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -49,6 +55,8 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductDelete(props) {
+    let { id } = useParams()
+    console.log(id);
     const [open, setOpen] = React.useState(true);
 
     const handleClickOpen = () => {
@@ -83,7 +91,7 @@ export default function ProductDelete(props) {
 
                         <form onSubmit={Add}>
                             <label>
-                                DeleteProductId:<input id='product_id' type="text" />
+                                DeleteProductId:<input id='product_id' defaultValue={id} type="text" />
                             </label>
                         </form>
 

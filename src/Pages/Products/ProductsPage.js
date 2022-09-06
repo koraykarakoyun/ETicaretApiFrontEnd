@@ -11,12 +11,13 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 
 export default function ProductsPage(props) {
 
   const [deger, setDeger] = useState([]);
+  let url;
 
 
   useEffect(() => {
@@ -24,7 +25,6 @@ export default function ProductsPage(props) {
     props.api("GET", "localhost", "7098", "products", "getall").then((data) => {
       setDeger(data);
     });
-
 
   }, [])
 
@@ -38,28 +38,27 @@ export default function ProductsPage(props) {
               <TableCell align="left">ProductName</TableCell>
               <TableCell align="left">ProductStock</TableCell>
               <TableCell align="left">ProductPrice</TableCell>
+              <TableCell align="left">Update</TableCell>
               <TableCell align="left">Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {deger.map((row) => (
-
               <TableRow key={row.id}>
                 <TableCell component="th" scope="row">{row.id}</TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.stock}</TableCell>
                 <TableCell align="left">{row.price}</TableCell>
-
-
+                <TableCell align="left">
+                  <Link to={`/updateproduct/${row.id}`}><AutorenewIcon/></Link>
+                </TableCell>
                 <TableCell align="left">
                   <IconButton aria-label="delete">
                     <DeleteIcon onClick={() => {
-                      console.log(row.id);
                       props.api("DELETE", "localhost", "7098", "products", "deletebyid", row.id);
                     }} />
                   </IconButton>
                 </TableCell>
-
               </TableRow>
             ))}
           </TableBody>

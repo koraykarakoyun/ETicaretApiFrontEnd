@@ -16,7 +16,7 @@ const Navbar = (props) => {
           </NavIcon>
           <NavText>
             <Link style={{ textDecoration: "none", color: "white" }} to="/">Dashboard</Link>
-          </NavText>
+          </NavText> 
         </NavItem>
 
         <NavItem eventKey="products">

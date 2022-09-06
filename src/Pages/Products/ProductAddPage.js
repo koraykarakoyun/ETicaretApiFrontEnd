@@ -11,6 +11,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -49,6 +50,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductAdd(props) {
+
     const [open, setOpen] = React.useState(true);
 
     const handleClickOpen = () => {
@@ -61,18 +63,13 @@ export default function ProductAdd(props) {
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
-
-
         var product = {
             "name": String(product_name),
             "stock": Number(product_stock),
             "price": Number(product_price)
 
         }
-
-        props.api("POST","localhost","7098","products","add",null,product);
-
-        console.log("eklendi");
+        props.api("POST", "localhost", "7098", "products", "add", null, product);
         setOpen(false);
     };
 

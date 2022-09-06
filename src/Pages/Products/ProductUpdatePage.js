@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -9,6 +9,12 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    useParams
+} from "react-router-dom";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -49,6 +55,17 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductUpdate(props) {
+    let { id } = useParams();
+    const [deger, setDeger] = useState([]);
+    useEffect(() => {
+        if (id != null) {
+            props.api("GET", "localhost", "7098", "products", "getbyid", id).then((data) => {
+                setDeger(data);
+            });
+        }
+
+    }, [])
+
     const [open, setOpen] = React.useState(true);
 
     const handleClickOpen = () => {
@@ -62,18 +79,13 @@ export default function ProductUpdate(props) {
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
-
-
         var product = {
             "name": String(product_name),
             "stock": Number(product_stock),
             "price": Number(product_price)
 
         }
-
         props.api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product);
-
-        console.log("guncellendi");
         setOpen(false);
     };
 
@@ -93,16 +105,16 @@ export default function ProductUpdate(props) {
 
                         <form onSubmit={Add}>
                             <label>
-                                UpdateProductId:<input id='product_id' type="text" />
+                                UpdateProductId:<input id='product_id' defaultValue={id} type="text" />
                             </label>
                             <label>
-                                NewName:<input id='product_name' type="text" />
+                                NewName:<input id='product_name' defaultValue={deger.name} type="text" />
                             </label>
                             <label>
-                                NewStock:<input id='product_stock' type="text" />
+                                NewStock:<input id='product_stock' defaultValue={deger.stock} type="text" />
                             </label>
                             <label>
-                                NewPrice:<input id='product_price' type="text" />
+                                NewPrice:<input id='product_price' defaultValue={deger.price} type="text" />
                             </label>
                         </form>
 

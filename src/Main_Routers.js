@@ -57,7 +57,7 @@ const api = (method_type = null, origin = "localhost", port = "7098", controller
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({ 'content-type': 'application/json' }),
                 method: method_type,
-                
+
             })
         }
 
@@ -75,7 +75,7 @@ const api = (method_type = null, origin = "localhost", port = "7098", controller
 }
 
 
-const Main_Routers = () => {
+const Main_Routers = (props) => {
     return (
         <BrowserRouter>
             <Navbar></Navbar>
@@ -84,7 +84,9 @@ const Main_Routers = () => {
                 <Route path="/products" element={<ProductsPage api={api}></ProductsPage>} />
                 <Route path="/addproduct" element={<ProductAdd api={api}></ProductAdd>} />
                 <Route path="/updateproduct" element={<ProductUpdate api={api}></ProductUpdate>} />
+                <Route path="/updateproduct/:id" element={<ProductUpdate api={api}></ProductUpdate>} />
                 <Route path="/deleteproduct" element={<ProductDelete api={api}></ProductDelete>} />
+                <Route path="/deleteproduct/:id" element={<ProductDelete api={api}></ProductDelete>} />
             </Routes>
         </BrowserRouter>
     )

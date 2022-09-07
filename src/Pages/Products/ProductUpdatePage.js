@@ -81,9 +81,7 @@ export default function ProductUpdate(props) {
             "price": Number(product_price)
 
         }
-        api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product).then(response => {
-            notify(response);
-        })
+        api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product);
         setOpen(false);
     };
 
@@ -120,10 +118,10 @@ export default function ProductUpdate(props) {
                                 NewName:<input id='product_name' defaultValue={deger.name} type="text" />
                             </label>
                             <label>
-                                NewStock:<input id='product_stock' defaultValue={deger.stock} type="text" />
+                                NewStock:<input id='product_stock' defaultValue={deger.stock} type="number" />
                             </label>
                             <label>
-                                NewPrice:<input id='product_price' defaultValue={deger.price} type="text" />
+                                NewPrice:<input id='product_price' defaultValue={deger.price} type="number" />
                             </label>
                         </form>
 

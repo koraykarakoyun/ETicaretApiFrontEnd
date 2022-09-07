@@ -66,11 +66,7 @@ export default function ProductAdd(props) {
             "price": Number(product_price)
 
         }
-        api("POST", "localhost", "7098", "products", "add", null, product)
-            .then((response) => {
-                notify(response);
-            });
-
+        api("POST", "localhost", "7098", "products", "add", null, product);
         setOpen(false);
     };
 
@@ -94,10 +90,10 @@ export default function ProductAdd(props) {
                                 Name:<input id='product_name' type="text" />
                             </label>
                             <label>
-                                Stock:<input id='product_stock' type="text" />
+                                Stock:<input id='product_stock' type="number" />
                             </label>
                             <label>
-                                Price:<input id='product_price' type="text" />
+                                Price:<input id='product_price' type="number" />
                             </label>
                         </form>
 

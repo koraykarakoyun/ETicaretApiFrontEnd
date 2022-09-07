@@ -68,9 +68,8 @@ export default function ProductDelete(props) {
         var product_id = document.getElementById("product_id").value;
 
 
-        api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id)).then(response => {
-            notify(response)
-        })
+        api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id));
+    
 
         setOpen(false);
     };

@@ -11,8 +11,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
+import { api } from '../../Utilities/Api';
+import { notify } from '../../Utilities/Notify';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -52,14 +52,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductAdd(props) {
-
-    const notify = (data) => toast(data);
-
     const [open, setOpen] = React.useState(true);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
     const handleClose = () => {
         setOpen(false);
     };
@@ -73,9 +66,8 @@ export default function ProductAdd(props) {
             "price": Number(product_price)
 
         }
-        await props.api("POST", "localhost", "7098", "products", "add", null, product)
+        api("POST", "localhost", "7098", "products", "add", null, product)
             .then((response) => {
-                console.log(response);
                 notify(response);
             });
 

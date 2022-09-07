@@ -6,8 +6,13 @@ import ProductAdd from "./Pages/Products/ProductAddPage";
 import { color } from "@mui/system";
 
 const Navbar = (props) => {
+
+  const nav_height = {
+    "height": "100%"
+  }
+
   return (
-    <SideNav>
+    <SideNav style={nav_height}>
       <SideNav.Toggle />
       <SideNav.Nav defaultSelected="Home">
         <NavItem eventKey="Home">
@@ -16,7 +21,7 @@ const Navbar = (props) => {
           </NavIcon>
           <NavText>
             <Link style={{ textDecoration: "none", color: "white" }} to="/">Dashboard</Link>
-          </NavText> 
+          </NavText>
         </NavItem>
 
         <NavItem eventKey="products">
@@ -67,7 +72,7 @@ const Navbar = (props) => {
           </NavItem>
         </NavItem>
       </SideNav.Nav>
-    </SideNav>
+    </SideNav >
   )
 }
 

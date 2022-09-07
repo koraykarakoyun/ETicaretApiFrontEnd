@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { api } from '../../Utilities/Api';
+import { notify } from '../../Utilities/Notify';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -52,12 +54,11 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductUpdate(props) {
-    const notify = (data) => toast(data);
     let { id } = useParams();
     const [deger, setDeger] = useState([]);
     useEffect(() => {
         if (id != null) {
-            props.api("GET", "localhost", "7098", "products", "getbyid", id).then((data) => {
+            api("GET", "localhost", "7098", "products", "getbyid", id).then((data) => {
                 setDeger(data);
             });
         }
@@ -66,9 +67,6 @@ export default function ProductUpdate(props) {
 
     const [open, setOpen] = React.useState(true);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
     const handleClose = () => {
         setOpen(false);
     };
@@ -83,12 +81,22 @@ export default function ProductUpdate(props) {
             "price": Number(product_price)
 
         }
-        props.api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product).then(response => {
+        api("PUT", "localhost", "7098", "products", "updatebyid", String(product_id), product).then(response => {
             notify(response);
         })
         setOpen(false);
     };
 
+
+    const changeid = () => {
+        var product_id = document.getElementById("product_id").value;
+        api("GET", "localhost", "7098", "products", "getbyid", product_id).then(response => {
+            document.getElementById("product_name").value = response.name;
+            document.getElementById("product_stock").value = response.stock;
+            document.getElementById("product_price").value = response.price;
+        })
+
+    }
 
 
     return (
@@ -106,7 +114,7 @@ export default function ProductUpdate(props) {
 
                         <form onSubmit={Add}>
                             <label>
-                                UpdateProductId:<input id='product_id' defaultValue={id} type="text" />
+                                UpdateProductId:<input id='product_id' onChange={changeid} defaultValue={id} type="text" />
                             </label>
                             <label>
                                 NewName:<input id='product_name' defaultValue={deger.name} type="text" />

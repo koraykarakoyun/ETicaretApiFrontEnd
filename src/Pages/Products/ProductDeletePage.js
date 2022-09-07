@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import { BrowserRouter as Router, Switch, Route, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { api } from '../../Utilities/Api';
+import { notify } from '../../Utilities/Notify';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -53,9 +55,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductDelete(props) {
-    const notify = (data) => toast(data);
     let { id } = useParams()
-    console.log(id);
     const [open, setOpen] = React.useState(true);
 
     const handleClickOpen = () => {
@@ -68,9 +68,9 @@ export default function ProductDelete(props) {
         var product_id = document.getElementById("product_id").value;
 
 
-        props.api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id)).then(response => {
+        api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id)).then(response => {
             notify(response)
-        })  
+        })
 
         setOpen(false);
     };

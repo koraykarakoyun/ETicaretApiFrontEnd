@@ -14,23 +14,19 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { Link, NavLink } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { api } from '../../Utilities/Api';
+import { notify } from '../../Utilities/Notify';
 
 export default function ProductsPage(props) {
-  const notify = (data) => toast(data);
   const [deger, setDeger] = useState([]);
-  let url;
-
-
   useEffect(() => {
-
-    props.api("GET", "localhost", "7098", "products", "getall").then((data) => {
+    api("GET", "localhost", "7098", "products", "getall").then((data) => {
       setDeger(data);
     });
 
   }, [])
 
   return (
-
     <div style={{ marginLeft: "64px" }}>
       <ToastContainer />
       <TableContainer component={Paper}>
@@ -53,14 +49,13 @@ export default function ProductsPage(props) {
                 <TableCell align="left">{row.stock}</TableCell>
                 <TableCell align="left">{row.price}</TableCell>
                 <TableCell align="left">
-                  <Link to={`/updateproduct/${row.id}`}><AutorenewIcon/></Link>
+                  <Link to={`/updateproduct/${row.id}`}><AutorenewIcon /></Link>
                 </TableCell>
                 <TableCell align="left">
                   <IconButton aria-label="delete">
                     <DeleteIcon onClick={() => {
-                      props.api("DELETE", "localhost", "7098", "products", "deletebyid", row.id).then(response => {
+                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id).then(response => {
                         notify(response);
-
                       })
                     }} />
                   </IconButton>

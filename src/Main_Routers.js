@@ -7,6 +7,7 @@ import { List } from '@mui/material';
 import ProductAdd from './Pages/Products/ProductAddPage';
 import ProductUpdate from './Pages/Products/ProductUpdatePage';
 import ProductDelete from './Pages/Products/ProductDeletePage';
+import RegistrationForm from './Pages/Register/RegisterForm';
 
 
 const Main_Routers = (props) => {
@@ -15,7 +16,8 @@ const Main_Routers = (props) => {
             <Navbar></Navbar>
             <Routes>
                 <Route path="/" element={<MainPage></MainPage>} />
-                <Route path="/products" element={<ProductsPage ></ProductsPage>} />
+                <Route path="/register" element={<RegistrationForm></RegistrationForm>} />
+                <Route path="/products" element={<ProductsPage></ProductsPage>} />
                 <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />
                 <Route path="/updateproduct" element={<ProductUpdate ></ProductUpdate>} />
                 <Route path="/updateproduct/:id" element={<ProductUpdate ></ProductUpdate>} />

@@ -5,10 +5,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 
-export const infoverification = (firstname, lastname, email, password, confirmpassword) => {
+export const infoverification = (firstname, lastname, email, username, password, confirmpassword) => {
     if (firstname !== null && firstname !== ""
         && lastname !== null && lastname !== ""
         && email !== null && email !== ""
+        && username !== null && username !== ""
         && password !== null && password !== ""
         && confirmpassword !== null && confirmpassword !== "") {
         if (password === confirmpassword) {
@@ -26,6 +27,7 @@ function RegistrationForm() {
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [email, setEmail] = useState(null);
+    const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
 
@@ -40,6 +42,9 @@ function RegistrationForm() {
         if (id === "email") {
             setEmail(value);
         }
+        if (id === "username") {
+            setUsername(value);
+        }
         if (id === "password") {
             setPassword(value);
         }
@@ -49,13 +54,24 @@ function RegistrationForm() {
 
     }
 
-  
+
 
     const handleSubmit = () => {
-        if(infoverification(firstName,lastName,email,password,confirmPassword)){
-            notify("kayit olundu");
+        if (infoverification(firstName, lastName, email, username, password, confirmPassword)) {
+            
+            var user_data=
+            {
+                "Name":firstName,
+                "Surname":lastName,
+                "Email":email,
+                "Username":username,
+                "Password":password,
+                "PasswordConfirm":confirmPassword
+            }
+
+            api("POST","localhost","7098","users","createuser",null,user_data).then(response=>notify(response.message));
         }
-        else{
+        else {
             notify("bilgilerinizi kontrol ediniz");
         }
 
@@ -67,17 +83,21 @@ function RegistrationForm() {
             <ToastContainer />
             <div className="form">
                 <div className="form-body">
-                    <div className="username">
+                    <div className="firstname">
                         <label className="form__label" htmlFor='firstName'>First Name </label>
-                        <input className="form__input" type="text" value={firstName} onChange={(e) => handleInputChange(e)} id="firstName" placeholder="First Name" />
+                        <input id="firstName" className="form__input" type="text" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="First Name" />
                     </div>
                     <div className="lastname">
                         <label className="form__label" htmlfor='lastName'>Last Name </label>
-                        <input type="text" name="" id="lastName" defaultValue={null} className="form__input" onChange={(e) => handleInputChange(e)} placeholder="LastName" />
+                        <input type="text" id="lastName" defaultValue={null} className="form__input" onChange={(e) => handleInputChange(e)} placeholder="Last Name" />
                     </div>
                     <div className="email">
                         <label className="form__label" htmlfor='email'>Email </label>
                         <input type="email" id="email" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="Email" />
+                    </div>
+                    <div className="username">
+                        <label className="form__label" htmlfor='username'>User Name</label>
+                        <input type="text" id="username" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="User Name" />
                     </div>
                     <div className="password">
                         <label className="form__label" htmlfor='password'>Password </label>

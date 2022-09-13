@@ -27,19 +27,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(response => response.json())
-                .then((response) => {
-                    if (response.status == 400) {
-                        if (response.errors.Name != null) {
-                            notify(response.errors.Name[0]);
-                        }
-                        else if (response.errors.Price != null) {
-                            notify(response.errors.Price[0]);
-                        }
-                        else if (response.errors.Stock != null) {
-                            notify(response.errors.Stock[0]);
-                        }
-                    }
-                });
+
 
 
         }

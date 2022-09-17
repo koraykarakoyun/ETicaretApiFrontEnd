@@ -18,8 +18,10 @@ import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 
 export default function ProductsPage(props) {
+  let token=localStorage.getItem("token");
   const [deger, setDeger] = useState([]);
   useEffect(() => {
+
     api("GET", "localhost", "7098", "products", "getall").then((data) => {
       setDeger(data);
     });
@@ -54,7 +56,7 @@ export default function ProductsPage(props) {
                 <TableCell align="left">
                   <IconButton aria-label="delete">
                     <DeleteIcon onClick={() => {
-                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id).then(response => {
+                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id,null,token).then(response => {
                         notify(response);
                       })
                     }} />

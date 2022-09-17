@@ -55,6 +55,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductDelete(props) {
+    let token=localStorage.getItem("token")
     let { id } = useParams()
     const [open, setOpen] = React.useState(true);
 
@@ -68,7 +69,7 @@ export default function ProductDelete(props) {
         var product_id = document.getElementById("product_id").value;
 
 
-        api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id));
+        api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id),null,token);
     
 
         setOpen(false);

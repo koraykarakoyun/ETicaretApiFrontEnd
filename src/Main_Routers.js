@@ -8,6 +8,7 @@ import ProductAdd from './Pages/Products/ProductAddPage';
 import ProductUpdate from './Pages/Products/ProductUpdatePage';
 import ProductDelete from './Pages/Products/ProductDeletePage';
 import RegistrationForm from './Pages/Register/RegisterForm';
+import LoginForm from './Pages/LogIn/LoginForm';
 
 
 const Main_Routers = (props) => {
@@ -17,6 +18,7 @@ const Main_Routers = (props) => {
             <Routes>
                 <Route path="/" element={<MainPage></MainPage>} />
                 <Route path="/register" element={<RegistrationForm></RegistrationForm>} />
+                <Route path="/login" element={<LoginForm></LoginForm>} />
                 <Route path="/products" element={<ProductsPage></ProductsPage>} />
                 <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />
                 <Route path="/updateproduct" element={<ProductUpdate ></ProductUpdate>} />

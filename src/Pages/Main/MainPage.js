@@ -1,23 +1,22 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Navbar from '../../Navbar';
-import { width } from '@mui/system';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import { Link } from 'react-router-dom';
 
-
-const MainPage = (props) => {
+export default function MainPage() {
   return (
+    <div style={{ marginLeft: "64px" }}>
 
-    <>
-      <div style={{ marginLeft: "64px" }}>
-      </div>
+    <Stack direction="row" spacing={2}>
 
-
-    </>
+      <Button variant="outlined" href="#outlined-buttons">
+        <Link to="/register">Register</Link>
+      </Button>
+      
+      <Button variant="outlined" href="#outlined-buttons">
+        <Link to="/login">Log In</Link>
+      </Button>
+    </Stack>
+    </div>
   );
 }
-export default MainPage;

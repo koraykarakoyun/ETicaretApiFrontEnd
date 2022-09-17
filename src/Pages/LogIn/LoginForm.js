@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 
-function LoginForm() {
+function LoginForm(props) {
 
 
     const [email, setEmail] = useState(null);
@@ -26,11 +26,7 @@ function LoginForm() {
 
     }
 
-
-
     const handleSubmit = () => {
-
-
         var user_data =
         {
             "Email": email,
@@ -39,6 +35,8 @@ function LoginForm() {
 
         api("POST", "localhost", "7098", "users", "login", null, user_data).then(response =>{
         localStorage.setItem("token",response.token.accessToken)
+        props.setIsauthenticated(true);
+
         notify(response.message);
         });
 

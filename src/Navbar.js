@@ -20,7 +20,7 @@ const Navbar = (props) => {
             <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
           </NavIcon>
           <NavText>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/">Dashboard</Link>
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">Home</Link>
           </NavText>
         </NavItem>
 

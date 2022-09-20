@@ -30,8 +30,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
         if (id == null) {
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({
-                    'content-type': 'application/json',
-                    'Authorization': 'Bearer ' + token,
+                    'content-type': 'application/json'
                 }),
                 method: method_type,
                 body: JSON.stringify(formData)

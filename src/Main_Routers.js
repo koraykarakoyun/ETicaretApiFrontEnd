@@ -24,7 +24,7 @@ const Main_Routers = (props) => {
     if (!Isauthenticated) {
         routes = (<Routes>
             <Route path="*" element={<LoginForm setIsauthenticated={setIsauthenticated}/>} />
-            <Route path="/" element={<MainPage></MainPage>} />
+            <Route path="/" element={<MainPage setIsauthenticated={setIsauthenticated}></MainPage>} />
             <Route path="/register" element={<RegistrationForm></RegistrationForm>} />
             <Route path="/login" element={<LoginForm setIsauthenticated={setIsauthenticated}></LoginForm>} />
         </Routes>)

@@ -7,13 +7,14 @@ import { gapi } from 'gapi-script';
 import { useEffect } from 'react';
 import { api } from '../../Utilities/Api';
 import { useState } from 'react';
+import FacebookLogin from 'react-facebook-login';
 
 
 export default function MainPage(props) {
 
 
   const clientId = "858096983515-prmmpeohub6v3u5smr2cc02o6u4mkn2v.apps.googleusercontent.com";
-  const [userdata, setUserdata] = useState({});
+  const FacebookAppId = "630541088591232";
 
   const onSuccess = (res) => {
     let data = {
@@ -26,13 +27,25 @@ export default function MainPage(props) {
     }
 
     api("POST", "localhost", "7098", "users", "google", null, data, null)
-      .then(res => localStorage.setItem("token", res.token.accessToken)
-      );
+      .then(res => localStorage.setItem("token", res.token.accessToken));
   };
 
   const onFailure = (err) => {
     console.log('failed:', err);
   };
+
+  const responseFacebook = (response) => {
+    let data = {
+      "accessToken": String(response.accessToken)
+    }
+    api("POST", "localhost", "7098", "users", "facebook", null, data, null).then(res => {
+      console.log(res)
+      localStorage.setItem("facebooktoken", res.token.accessToken)
+     
+    }
+      );
+  }
+
 
   useEffect(() => {
     const initClient = () => {
@@ -69,7 +82,13 @@ export default function MainPage(props) {
         />
 
 
+        <FacebookLogin
+          appId={FacebookAppId}
+          callback={responseFacebook}
+        />
       </Stack>
+
+
     </div>
 
   );

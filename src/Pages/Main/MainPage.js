@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { api } from '../../Utilities/Api';
 import { useState } from 'react';
 import FacebookLogin from 'react-facebook-login';
+import { notify } from '../../Utilities/Notify';
 
 
 export default function MainPage(props) {
@@ -26,8 +27,18 @@ export default function MainPage(props) {
       "Provider": res.tokenObj.idpId,
     }
 
-    api("POST", "localhost", "7098", "users", "google", null, data, null)
-      .then(res => localStorage.setItem("token", res.token.accessToken));
+    api("POST", "localhost", "7098", "auth", "google", null, data, null)
+      .then(res => {
+        if (res.isSuccess) {
+          console.log(res.message)
+          notify("Google Girisi Yapildi")
+          localStorage.setItem("googletoken", res.token.accessToken)
+        }
+        else {
+          console.log(res.message)
+        }
+      }
+      );
   };
 
   const onFailure = (err) => {
@@ -38,12 +49,19 @@ export default function MainPage(props) {
     let data = {
       "accessToken": String(response.accessToken)
     }
-    api("POST", "localhost", "7098", "users", "facebook", null, data, null).then(res => {
-      console.log(res)
-      localStorage.setItem("facebooktoken", res.token.accessToken)
-     
+    api("POST", "localhost", "7098", "auth", "facebook", null, data, null).then(res => {
+      if (res.isSuccess) {
+        console.log(res.message)
+        notify("Facebook Girisi Yapildi")
+        localStorage.setItem("facebooktoken", res.token.accessToken)
+      }
+      else {
+        console.log(res.message)
+      }
+
+
     }
-      );
+    );
   }
 
 

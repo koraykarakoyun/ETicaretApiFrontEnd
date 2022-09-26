@@ -2,12 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Main_Routers from './Main_Routers';
 import reportWebVitals from './reportWebVitals';
+import { combineReducers } from 'redux';
+import Loginreducer from './Redux/Reducer/LoginReducer';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux'
+import Authreducer from './Redux/Reducer/AuthReducer';
 
-
+const store = createStore(
+    combineReducers(
+        {
+            login: Loginreducer,
+            auth:Authreducer
+        }
+    ));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Main_Routers></Main_Routers>
+    <>
+        <Provider store={store}>
+            <Main_Routers></Main_Routers>
+        </Provider>
+    </>
 );
 
 // If you want to start measuring performance in your app, pass a function

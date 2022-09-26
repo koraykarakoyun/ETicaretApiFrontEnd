@@ -1,79 +1,68 @@
-import * as React from "react";
-import { Link } from "react-router-dom";
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import ProductAdd from "./Pages/Products/ProductAddPage";
-import { color } from "@mui/system";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { authanticated, notauthanticated } from './Redux/Action/AuthAction';
+import { bindActionCreators } from 'redux';
 
-const Navbar = (props) => {
+function ButtonAppBar(props) {
 
-  const nav_height = {
-    "height": "100%"
-  }
+
+  console.log(props.authstate)
 
   return (
-    <SideNav style={nav_height}>
-      <SideNav.Toggle />
-      <SideNav.Nav defaultSelected="Home">
-        <NavItem eventKey="Home">
-          <NavIcon>
-            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-          </NavIcon>
-          <NavText>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/">Home</Link>
-          </NavText>
-        </NavItem>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
 
-        <NavItem eventKey="products">
-          <NavIcon>
-            <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
-          </NavIcon>
-          <NavText>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/products">Products</Link>
-          </NavText>
-          <NavItem eventKey="AddProduct">
-            <NavText>
-              <Link style={{ textDecoration: "none", color: "white" }} to="/addproduct">Add Product</Link>
-            </NavText>
-          </NavItem>
-          <NavItem eventKey="UpdateProduct">
-            <NavText>
-              <Link style={{ textDecoration: "none", color: "white" }} to="/updateproduct">Update Product</Link>
-            </NavText>
-          </NavItem>
-          <NavItem eventKey="DeleteProduct">
-            <NavText>
-              <Link style={{ textDecoration: "none", color: "white" }} to="/deleteproduct">Delete Product</Link>
-            </NavText>
-          </NavItem>
-        </NavItem>
 
-        <NavItem eventKey="orders">
-          <NavIcon>
-            <i className="fa fa-fw fa-line-chart" style={{ fontSize: '1.75em' }} />
-          </NavIcon>
-          <NavText>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/orders">Orders</Link>
-          </NavText>
-          <NavItem eventKey="AddOrder">
-            <NavText>
-              <Link style={{ textDecoration: "none", color: "white" }} to="/addorder">Add Orders</Link>
-            </NavText>
-          </NavItem>
-          <NavItem eventKey="UpdateOrder">
-            <NavText>
-              <Link style={{ textDecoration: "none", color: "white" }} to="/updateorder">Update Orders</Link>
-            </NavText>
-          </NavItem>
-          <NavItem eventKey="charts/DeleteOrder">
-            <NavText>
-              <Link style={{ textDecoration: "none", color: "white" }} to="/deleteorder">Delete Orders</Link>
-            </NavText>
-          </NavItem>
-        </NavItem>
-      </SideNav.Nav>
-    </SideNav >
-  )
+
+          {
+            props.authstate ? (
+              <>
+                <Button><Link style={{ color: 'white' }} to="/products">Products</Link></Button>
+                <Button style={{ color: "white" }} onClick={() => {
+                    props.notauthanticated();
+                    
+                }}>Log Out</Button>
+              </>
+            ) : (<>
+              <Button><Link style={{ color: 'white' }} to="/login">Login</Link></Button>
+              <Button><Link style={{ color: 'white' }} to="/register">Register</Link></Button>
+            </>)
+          }
+
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
 }
 
-export default Navbar
+
+const mapStateToProps = (state) => {
+  return {
+    authstate: state.auth
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+
+  return bindActionCreators({ authanticated, notauthanticated }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar)

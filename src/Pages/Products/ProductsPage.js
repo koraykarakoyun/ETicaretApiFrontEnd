@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function ProductsPage(props) {
   let token = localStorage.getItem("token");
@@ -24,9 +25,6 @@ export default function ProductsPage(props) {
     api("GET", "localhost", "7098", "products", "getall", null, null, token).then((data) => {
       setDeger(data);
     });
-
-
-
   }, [])
 
   return (
@@ -36,10 +34,10 @@ export default function ProductsPage(props) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="left">ProductId</TableCell>
               <TableCell align="left">ProductName</TableCell>
               <TableCell align="left">ProductStock</TableCell>
               <TableCell align="left">ProductPrice</TableCell>
+              <TableCell align="left">Add</TableCell>
               <TableCell align="left">Update</TableCell>
               <TableCell align="left">Delete</TableCell>
             </TableRow>
@@ -47,22 +45,29 @@ export default function ProductsPage(props) {
           <TableBody>
             {deger.map((row) => (
               <TableRow key={row.id}>
-                <TableCell component="th" scope="row">{row.id}</TableCell>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.stock}</TableCell>
                 <TableCell align="left">{row.price}</TableCell>
+                <TableCell align="left">
+                  <Link to={`/addproduct`}><AddIcon></AddIcon></Link>
+                </TableCell>
                 <TableCell align="left">
                   <Link to={`/updateproduct/${row.id}`}><AutorenewIcon /></Link>
                 </TableCell>
                 <TableCell align="left">
                   <IconButton aria-label="delete">
                     <DeleteIcon onClick={() => {
-                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, null, token).then(response => {
-                        notify(response);
+                      let data = {
+                        id: String(row.id)
+                      }
+                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, data, token).then(response => {
+                        notify(response.message);
                       })
                     }} />
                   </IconButton>
                 </TableCell>
+
+
               </TableRow>
             ))}
           </TableBody>

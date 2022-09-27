@@ -52,7 +52,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductAdd(props) {
-    let token=localStorage.getItem("token");
+    let token = localStorage.getItem("token");
     const [open, setOpen] = React.useState(true);
     const handleClose = () => {
         setOpen(false);
@@ -67,7 +67,7 @@ export default function ProductAdd(props) {
             "price": Number(product_price)
 
         }
-        api("POST", "localhost", "7098", "products", "add", null, product,token);
+        api("POST", "localhost", "7098", "products", "add", null, product, token).then(res => notify(res.message))
         setOpen(false);
     };
 

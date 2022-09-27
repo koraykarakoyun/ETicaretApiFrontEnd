@@ -12,7 +12,7 @@ import NotFound from './Pages/NotFound/NotFound';
 import { connect } from 'react-redux';
 import { authanticated, notauthanticated } from './Redux/Action/AuthAction';
 import { bindActionCreators } from 'redux';
-
+import AdminPanel from './Pages/Products/AdminPanel';
 
 
 const Main_Routers = (props) => {
@@ -24,7 +24,7 @@ const Main_Routers = (props) => {
         routes = (
             <Routes>
                 <Route path="*" element={<NotFound/>} />
-                <Route path="/" element={<MainPage ></MainPage>} />
+                <Route path="/" element={<MainPage></MainPage>} />
                 <Route path="/register" element={<RegistrationForm></RegistrationForm>} />
                 <Route path="/login" element={<LoginForm></LoginForm>} />
             </Routes>
@@ -34,6 +34,7 @@ const Main_Routers = (props) => {
         routes = (
             <Routes>
                 <Route path="*" element={<MainPage></MainPage>} />
+                <Route path="/adminpanel" element={<AdminPanel></AdminPanel>} />
                 <Route path="/products" element={<ProductsPage></ProductsPage>} />
                 <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />
                 <Route path="/updateproduct" element={<ProductUpdate ></ProductUpdate>} />

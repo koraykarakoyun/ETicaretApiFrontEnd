@@ -65,11 +65,13 @@ export default function ProductDelete(props) {
     const handleClose = () => {
         setOpen(false);
     };
-    const Add = () => {
+    const Delete = () => {
         var product_id = document.getElementById("product_id").value;
-
-
-        api("DELETE", "localhost", "7098", "products", "deletebyid", String(product_id),null,token);
+        let delete_product={
+            Id:String(product_id)
+        }
+         
+        api("DELETE", "localhost", "7098", "products", "deletebyid", product_id,delete_product,token).then(res=>console.log(res));
     
 
         setOpen(false);
@@ -90,7 +92,7 @@ export default function ProductDelete(props) {
                 <DialogContent dividers>
                     <Typography gutterBottom>
 
-                        <form onSubmit={Add}>
+                        <form onSubmit={Delete}>
                             <label>
                                 DeleteProductId:<input id='product_id' defaultValue={id} type="text" />
                             </label>
@@ -100,7 +102,7 @@ export default function ProductDelete(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={Add}>
+                    <Button autoFocus onClick={Delete}>
                         Delete
                     </Button>
                     <Button autoFocus onClick={handleClose}>

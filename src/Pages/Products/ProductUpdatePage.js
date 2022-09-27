@@ -65,18 +65,18 @@ export default function ProductUpdate(props) {
         setOpen(false);
     };
     const Add = () => {
-        var product_id = document.getElementById("product_id").value;
+       
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
         var product = {
-            "id": String(product_id),
+            "id": String(id),
             "name": String(product_name),
             "stock": Number(product_stock),
             "price": Number(product_price)
 
         }
-        api("PUT", "localhost", "7098", "products", "update",null,product,token);
+        api("PUT", "localhost", "7098", "products", "update",null,product,token).then(res => notify(res.message))
         setOpen(false);
     };
 
@@ -96,9 +96,6 @@ export default function ProductUpdate(props) {
                     <Typography gutterBottom>
 
                         <form onSubmit={Add}>
-                            <label>
-                                UpdateProductId:<input id='product_id' defaultValue={id} type="text" />
-                            </label>
                             <label>
                                 NewName:<input id='product_name' defaultValue={deger.name} type="text" />
                             </label>

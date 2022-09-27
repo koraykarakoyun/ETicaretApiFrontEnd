@@ -35,7 +35,7 @@ function ButtonAppBar(props) {
           {
             props.authstate ? (
               <>
-                <Button><Link style={{ color: 'white' }} to="/products">Products</Link></Button>
+                <Button><Link style={{ color: 'white' }} to="/adminpanel">Admin Paneli</Link></Button>
                 <Button style={{ color: "white" }} onClick={() => {
                     props.notauthanticated();
                     

@@ -1,192 +1,247 @@
 
 
-export const api = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null, token = null) => {
+const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null) => {
+    //-----------------
 
-    if (token != null) {
+    let refreshtoken = localStorage.getItem("refreshtoken");
+    let data = {
+        "refreshToken": String(refreshtoken)
+    }
+
+    return fetch(`https://localhost:7098/api/auth/refreshtokenlogin`, {
+        headers: new Headers({
+            'content-type': 'application/json',
+        }),
+        method: "POST",
+        body: JSON.stringify(data)
+    }
+    ).then(function (res) {
+        return res.json()
+    }).then(response => {
+        console.log(response);
+        localStorage.setItem("token", response.token.accessToken);
+        localStorage.setItem("refreshtoken", response.token.refreshToken);
+    }).then(() => {
+
+
         if (method_type == "GET") {
             if (id == null) {
                 return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                     headers: new Headers({
                         'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
+                        'Authorization': 'Bearer ' + localStorage.getItem("token"),
                     }),
                     method: method_type,
+                }).then(res => {
+                    return res.json();
+                })
+            }
+            else if (id != null) {
+                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
+                    headers: new Headers({
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                    }),
+                    method: method_type,
+                }).then(res => {
+                    return res.json();
+                })
+
+            }
+        }
+
+        else {
+            if (id == null) {
+                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                    headers: new Headers({
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                    }),
+                    method: method_type,
+                    body: JSON.stringify(formData)
+                }).then(res => {
+                    return res.json();
+                })
+            }
+            else if (id != null) {
+                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
+                    headers: new Headers({
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                    }),
+                    method: method_type,
+                    body: JSON.stringify(formData)
+                }).then(res => {
+                    return res.json();
+                })
+
+            }
+        }
+
+
+
+
+    })
+    //------
+
+}
+
+
+export const api = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null) => {
+
+    let token = localStorage.getItem("token");
+    if (method_type == "GET") {
+        if (id == null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                method: method_type,
+
+            }
+            ).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                   return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+                }
+            }
+            )
+
+        }
+
+        if (id != null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                method: method_type,
+            }).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
 
                 }
-                )
-                    .then(response => response.json())
-
             }
+            )
+        }
 
-            if (id != null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-                    }),
-                    method: method_type,
-                }).then(response => response.json())
+    }
+
+    if (method_type == "POST") {
+        if (id == null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                method: method_type,
+                body: JSON.stringify(formData)
+            }).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+                }
             }
+            )
+
+
 
         }
 
-        if (method_type == "POST") {
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json())
+    }
 
-
-
+    if (method_type == "PUT") {
+        if (id != null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                method: method_type,
+                body: JSON.stringify(formData)
+            }).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+                }
             }
-
+            )
         }
 
-        if (method_type == "PUT") {
-            if (id != null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json())
+        if (id == null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                method: method_type,
+                body: JSON.stringify(formData)
+            }).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+                }
             }
-
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json())
-            }
-
+            )
         }
 
-        if (method_type == "DELETE") {
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json());
+    }
+
+    if (method_type == "DELETE") {
+        if (id == null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                method: method_type,
+                body: JSON.stringify(formData)
+            }).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+                }
             }
-
-            if (id != null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + token,
-
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json());
-            }
-
+            )
         }
+
+        if (id != null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+
+                }),
+                method: method_type,
+                body: JSON.stringify(formData)
+            }).then(function (res) {
+                if (res.status == 200) {
+                    return res.json();
+                }
+                else if (res.status == 401) {
+                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+                }
+            }
+            )
+        }
+
     }
 
 
-    else {
-        if (method_type == "GET") {
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json',
-                    }),
-                    method: method_type
-
-                }
-                )
-                    .then(response => response.json())
-
-            }
-
-            if (id != null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
-                    method: method_type,
-                }).then(response => response.json())
-            }
-
-        }
-
-        if (method_type == "POST") {
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json())
-
-
-
-            }
-
-        }
-
-        if (method_type == "PUT") {
-            if (id != null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json())
-            }
-
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
-                    method: method_type,
-                    body: JSON.stringify(formData)
-                }).then(response => response.json())
-            }
-
-        }
-
-        if (method_type == "DELETE") {
-            if (id == null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
-                    method: method_type,
-
-                }).then(response => response.json());
-            }
-
-            if (id != null) {
-                return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
-                    headers: new Headers({
-                        'content-type': 'application/json'
-                    }),
-                    method: method_type,
-                }).then(response => response.json());
-            }
-
-        }
-    }
 
 
 

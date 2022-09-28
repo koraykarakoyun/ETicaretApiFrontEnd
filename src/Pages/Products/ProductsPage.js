@@ -23,9 +23,11 @@ export default function ProductsPage(props) {
   const [deger, setDeger] = useState([]);
   useEffect(() => {
     api("GET", "localhost", "7098", "products", "getall", null, null, token).then((data) => {
+     //localStorage.setItem("token",data.token.accessToken);
+      //localStorage.setItem("refreshtoken",data.token.refreshToken);
       setDeger(data);
     });
-  }, [])
+  }, ProductsPage)
 
   return (
     <div style={{ marginLeft: "64px" }}>

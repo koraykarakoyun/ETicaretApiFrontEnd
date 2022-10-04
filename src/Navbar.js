@@ -12,10 +12,6 @@ import { authanticated, notauthanticated } from './Redux/Action/AuthAction';
 import { bindActionCreators } from 'redux';
 
 function ButtonAppBar(props) {
-
-
-  console.log(props.authstate)
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

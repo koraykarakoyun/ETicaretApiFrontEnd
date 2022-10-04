@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -52,6 +53,11 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductAdd(props) {
+    //-----------------------------
+  
+
+    //-----------------------------
+
     let token = localStorage.getItem("token");
     const [open, setOpen] = React.useState(true);
     const handleClose = () => {
@@ -68,8 +74,11 @@ export default function ProductAdd(props) {
 
         }
         api("POST", "localhost", "7098", "products", "add", null, product, token).then(res => notify(res.message))
+        
         setOpen(false);
     };
+
+
 
 
 

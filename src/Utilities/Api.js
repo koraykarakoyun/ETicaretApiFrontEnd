@@ -1,4 +1,14 @@
-
+const statuscodeControl = (res, method_type, origin, port, controller, action, id, formData) => {
+    if (res.status == 200) {
+        return res.json();
+    }
+    else if (res.status == 401) {
+        return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
+    }
+    else if (res.status == 500) {
+        return res.json();
+    }
+}
 
 const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null) => {
     //-----------------
@@ -18,7 +28,6 @@ const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098"
     ).then(function (res) {
         return res.json()
     }).then(response => {
-        console.log(response);
         localStorage.setItem("token", response.token.accessToken);
         localStorage.setItem("refreshtoken", response.token.refreshToken);
     }).then(() => {
@@ -101,12 +110,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
 
             }
             ).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                   return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-                }
+                return statuscodeControl(res,method_type,origin,port,controller,action,null,formData);
             }
             )
 
@@ -120,13 +124,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 }),
                 method: method_type,
             }).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-
-                }
+                return statuscodeControl(res,method_type,origin,port,controller,action,null,formData);
             }
             )
         }
@@ -143,12 +141,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-                }
+                return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
             }
             )
 
@@ -168,12 +161,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-                }
+                return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
             }
             )
         }
@@ -187,12 +175,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-                }
+                return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
             }
             )
         }
@@ -209,12 +192,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-                }
+                return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
             }
             )
         }
@@ -229,12 +207,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                if (res.status == 200) {
-                    return res.json();
-                }
-                else if (res.status == 401) {
-                    return refreshTokenApi(method_type, origin, port, controller, action, id, formData);
-                }
+                return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
             }
             )
         }

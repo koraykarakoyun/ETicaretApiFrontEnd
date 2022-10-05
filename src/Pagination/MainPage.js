@@ -6,11 +6,11 @@ import { api } from '../Utilities/Api';
 const MainPagination = () => {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(24);
+    const [postsPerPage] = useState(20);
     useEffect(() => {
         api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
             setPosts(data);
-            console.log(data)
+         
         });
     }, MainPagination)
 

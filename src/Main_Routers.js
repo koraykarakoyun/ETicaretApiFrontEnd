@@ -34,7 +34,7 @@ const Main_Routers = (props) => {
     if (props.authstate) {
         routes = (
             <Routes>
-                <Route path="*" element={<MainPage></MainPage>} />
+                <Route path="*" element={<MainPagination></MainPagination>} />
                 <Route path="/adminpanel" element={<AdminPanel></AdminPanel>} />
                 <Route path="/products" element={<ProductsPage></ProductsPage>} />
                 <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />

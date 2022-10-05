@@ -110,7 +110,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
 
             }
             ).then(function (res) {
-                return statuscodeControl(res,method_type,origin,port,controller,action,null,formData);
+                return statuscodeControl(res,method_type,origin,port,controller,action,null);
             }
             )
 
@@ -121,10 +121,10 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
-                }),
+                }), 
                 method: method_type,
             }).then(function (res) {
-                return statuscodeControl(res,method_type,origin,port,controller,action,null,formData);
+                return statuscodeControl(res,method_type,origin,port,controller,action,id);
             }
             )
         }

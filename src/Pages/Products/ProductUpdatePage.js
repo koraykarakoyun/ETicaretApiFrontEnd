@@ -54,18 +54,25 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductUpdate(props) {
-    const token = localStorage.getItem("token");
+
     let { id } = useParams();
+    console.log(id);
+    useEffect(() => {
+        api("GET", "localhost", "7098", "products", "getbyid", id, null).then(res => {
+            setDeger(res)
+            console.log(res)
+        })
+
+    },[])
+
+    const token = localStorage.getItem("token");
     const [deger, setDeger] = useState([]);
-    
-
     const [open, setOpen] = React.useState(true);
-
     const handleClose = () => {
         setOpen(false);
     };
-    const Add = () => {
-       
+    const Update = () => {
+
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
@@ -76,7 +83,7 @@ export default function ProductUpdate(props) {
             "price": Number(product_price)
 
         }
-        api("PUT", "localhost", "7098", "products", "update",null,product,token).then(res => notify(res.message))
+        api("PUT", "localhost", "7098", "products", "update", null, product, token).then(res => notify(res.message))
         setOpen(false);
     };
 
@@ -95,7 +102,7 @@ export default function ProductUpdate(props) {
                 <DialogContent dividers>
                     <Typography gutterBottom>
 
-                        <form onSubmit={Add}>
+                        <form onSubmit={Update}>
                             <label>
                                 NewName:<input id='product_name' defaultValue={deger.name} type="text" />
                             </label>
@@ -111,7 +118,7 @@ export default function ProductUpdate(props) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={Add}>
+                    <Button autoFocus onClick={Update}>
                         Update
                     </Button>
                     <Button autoFocus onClick={handleClose}>

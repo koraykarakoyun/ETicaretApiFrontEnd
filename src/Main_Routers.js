@@ -14,6 +14,8 @@ import { authanticated, notauthanticated } from './Redux/Action/AuthAction';
 import { bindActionCreators } from 'redux';
 import AdminPanel from './Pages/Products/AdminPanel';
 import MainPagination from './Pagination/MainPage';
+import FileUpload from './Components/FileUpload/FileUpload';
+import FileUploadPage from './Pages/FileUpload/FileUploadPage';
 
 
 const Main_Routers = (props) => {
@@ -28,6 +30,7 @@ const Main_Routers = (props) => {
                 <Route path="/" element={<MainPagination></MainPagination>}/>
                 <Route path="/register" element={<RegistrationForm></RegistrationForm>} />
                 <Route path="/login" element={<LoginForm></LoginForm>} />
+                <Route path="/file" element={<FileUploadPage></FileUploadPage>}/>
             </Routes>
         )
     }

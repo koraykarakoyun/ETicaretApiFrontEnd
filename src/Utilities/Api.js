@@ -110,7 +110,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
 
             }
             ).then(function (res) {
-                return statuscodeControl(res,method_type,origin,port,controller,action,null);
+                return statuscodeControl(res, method_type, origin, port, controller, action, null);
             }
             )
 
@@ -121,10 +121,10 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
-                }), 
+                }),
                 method: method_type,
             }).then(function (res) {
-                return statuscodeControl(res,method_type,origin,port,controller,action,id);
+                return statuscodeControl(res, method_type, origin, port, controller, action, id);
             }
             )
         }
@@ -133,6 +133,15 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
 
     if (method_type == "POST") {
         if (id == null) {
+
+            if (action == "upload") {
+                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                    body: formData,
+                    method: method_type
+                }
+                ).then(res =>res.json())
+            }
+
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({
                     'content-type': 'application/json',
@@ -144,6 +153,8 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
             }
             )
+
+
 
 
 

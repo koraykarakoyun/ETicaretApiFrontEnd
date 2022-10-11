@@ -12,10 +12,10 @@ import NotFound from './Pages/NotFound/NotFound';
 import { connect } from 'react-redux';
 import { authanticated, notauthanticated } from './Redux/Action/AuthAction';
 import { bindActionCreators } from 'redux';
-import AdminPanel from './Pages/Products/AdminPanel';
+import AdminPanel from './Pages/AdminPanel/AdminPanel';
 import MainPagination from './Pagination/MainPage';
-import FileUpload from './Components/FileUpload/FileUpload';
 import FileUploadPage from './Pages/FileUpload/FileUploadPage';
+import FileUploadModelDialog from './Components/FileUploadModelDialog';
 
 
 const Main_Routers = (props) => {
@@ -45,6 +45,7 @@ const Main_Routers = (props) => {
                 <Route path="/updateproduct/:id" element={<ProductUpdate ></ProductUpdate>} />
                 <Route path="/deleteproduct" element={<ProductDelete ></ProductDelete>} />
                 <Route path="/deleteproduct/:id" element={<ProductDelete></ProductDelete>} />
+                <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
             </Routes>
         )
     }

@@ -18,12 +18,16 @@ import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import AddIcon from '@mui/icons-material/Add';
 
+import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
+
 export default function ProductsPage(props) {
   let token = localStorage.getItem("token");
   const [deger, setDeger] = useState([]);
+
+
   useEffect(() => {
     api("GET", "localhost", "7098", "products", "getall", null, null, token).then((data) => {
-     //localStorage.setItem("token",data.token.accessToken);
+      //localStorage.setItem("token",data.token.accessToken);
       //localStorage.setItem("refreshtoken",data.token.refreshToken);
       console.log(data)
       setDeger(data);
@@ -43,6 +47,7 @@ export default function ProductsPage(props) {
               <TableCell align="left">Add</TableCell>
               <TableCell align="left">Update</TableCell>
               <TableCell align="left">Delete</TableCell>
+              <TableCell align="left">Image</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,7 +74,9 @@ export default function ProductsPage(props) {
                     }} />
                   </IconButton>
                 </TableCell>
-
+                <TableCell align="left">
+               <FileUploadModelDialog productId={row.id}></FileUploadModelDialog>
+                </TableCell>
 
               </TableRow>
             ))}

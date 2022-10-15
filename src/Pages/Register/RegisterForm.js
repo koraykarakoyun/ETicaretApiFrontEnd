@@ -70,6 +70,7 @@ function RegistrationForm() {
             }
 
             api("POST","localhost","7098","users","createuser",null,user_data).then(response=>notify(response.message));
+        
         }
         else {
             notify("bilgilerinizi kontrol ediniz");

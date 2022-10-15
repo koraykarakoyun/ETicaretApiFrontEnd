@@ -83,7 +83,7 @@ export default function ProductUpdate(props) {
             "price": Number(product_price)
 
         }
-        api("PUT", "localhost", "7098", "products", "update", null, product, token).then(res => notify(res.message))
+        api("PUT", "localhost", "7098", "products", "update", null, product).then(res => notify(res.message))
         setOpen(false);
     };
 

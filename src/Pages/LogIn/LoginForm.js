@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { gapi } from 'gapi-script';
 import { authanticated,notauthanticated} from '../../Redux/Action/AuthAction';
+import { Navigate } from 'react-router';
 
 function LoginForm(props) {
 
@@ -111,9 +112,12 @@ function LoginForm(props) {
                 localStorage.setItem("token",res.token.accessToken)
                 localStorage.setItem("refreshtoken",res.token.refreshToken)
                 notify(res.message)
+
             }
 
         })
+
+
 
     }
 

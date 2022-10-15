@@ -68,9 +68,7 @@ export default function FileUploadModelDialog(props) {
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
-      
-      >
+        open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           Image Upload
         </BootstrapDialogTitle>

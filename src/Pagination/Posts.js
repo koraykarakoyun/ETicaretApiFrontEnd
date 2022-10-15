@@ -10,24 +10,34 @@ import { margin, width } from '@mui/system';
 import { api } from '../Utilities/Api';
 
 const Posts = ({ posts }) => {
+
+  console.log(posts);
+
   return (
     <>
       {posts.map(post => (
-        <Card sx={{ maxWidth: "23%", display: "inline-block", marginTop: "1.2%", marginLeft: "1.4%" }}>
+
+        <Card sx={{display: "inline-block", marginTop: "1.2%", marginLeft: "1.4%" }}>
           <CardMedia
             component="img"
-            image="https://cdn.vatanbilgisayar.com/Upload/PRODUCT/huawei/thumb/130999-1_large.jpg"
-            alt="green iguana"
-            style={{ height: "50%", width: "50%", margin: "auto" }}
+            src={
+              post.productImageFile.map(element => {
+                if (element.showCase) {
+                  console.log(`http://127.0.0.1:8887/${element.path}`)
+                  return (`http://127.0.0.1:8887/${element.path}`)
+                }
+              })
+            }
+            style={{ height:"15rem",width:"15rem", margin: "auto" }}
           />
-          <CardContent  style={{padding:"1rem"}}>
-            <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto",marginBottom:"1rem" ,fontSize: "1.3rem" ,textOverflow:"ellipsis",maxHeight:"1.2rem"}}>
+          <CardContent style={{ padding: "1rem" }}>
+            <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto", marginBottom: "1rem", fontSize: "1rem", textOverflow: "ellipsis", maxHeight: "1.2rem" }}>
               Name:{post.name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Stock:{post.stock}
             </Typography>
-            <Typography variant="body2" style={{ marginTop: "2%", fontSize: "1.3rem" }}>
+            <Typography variant="body2" style={{ marginTop: "2%", fontSize: "1rem" }}>
               <strong>Fiyat:{post.price} TL</strong>
             </Typography>
           </CardContent>

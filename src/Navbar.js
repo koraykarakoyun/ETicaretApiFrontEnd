@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authanticated, notauthanticated } from './Redux/Action/AuthAction';
 import { bindActionCreators } from 'redux';
+import HomeIcon from '@mui/icons-material/Home';
 
 function ButtonAppBar(props) {
   return (
@@ -31,15 +32,18 @@ function ButtonAppBar(props) {
           {
             props.authstate ? (
               <>
+                <Button><Link style={{ color: 'white' }} to="/"> <HomeIcon></HomeIcon></Link></Button>
                 <Button><Link style={{ color: 'white' }} to="/adminpanel">Admin Paneli</Link></Button>
                 <Button style={{ color: "white" }} onClick={() => {
-                    props.notauthanticated();
-                    
-                }}>Log Out</Button>
+                  props.notauthanticated();
+
+                }}><Link style={{ color: 'white' }} to="/">Log Out</Link></Button>
               </>
             ) : (<>
+              <Button><Link style={{ color: 'white' }} to="/"> <HomeIcon></HomeIcon></Link></Button>
               <Button><Link style={{ color: 'white' }} to="/login">Login</Link></Button>
               <Button><Link style={{ color: 'white' }} to="/register">Register</Link></Button>
+
             </>)
           }
 

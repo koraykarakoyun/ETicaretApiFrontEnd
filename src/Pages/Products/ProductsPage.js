@@ -77,7 +77,6 @@ export default function ProductsPage(props) {
                 <TableCell align="left">
                <FileUploadModelDialog productId={row.id}></FileUploadModelDialog>
                 </TableCell>
-
               </TableRow>
             ))}
           </TableBody>

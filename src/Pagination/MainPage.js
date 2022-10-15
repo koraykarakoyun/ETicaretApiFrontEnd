@@ -3,7 +3,7 @@ import Posts from "./Posts"
 import Pagination from "./Pagination"
 import { api } from '../Utilities/Api';
 
-const MainPagination = () => {
+const MainPage = () => {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(20);
@@ -12,7 +12,7 @@ const MainPagination = () => {
             setPosts(data);
          
         });
-    }, MainPagination)
+    }, MainPage)
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -30,4 +30,4 @@ const MainPagination = () => {
     );
 };
 
-export default MainPagination;
+export default MainPage;

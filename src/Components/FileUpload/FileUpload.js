@@ -1,8 +1,10 @@
 
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import Posts from '../../Pagination/Posts';
 import { api } from "../../Utilities/Api"
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import FileUploadPosts from './FileUploadPosts';
 
 export default function FileUpload(props) {
 
@@ -10,6 +12,9 @@ export default function FileUpload(props) {
     const [isFilePicked, setIsFilePicked] = useState(false);
     const [IsSelected, setIsSelected] = useState(false);
     const [isConfirm, setIsConfirm] = useState(false);
+
+  
+
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
         setIsSelected(true);
@@ -17,7 +22,6 @@ export default function FileUpload(props) {
     };
 
     useEffect(() => {
-        console.log(isConfirm);
         if (isConfirm) {
 
             const formData = new FormData();
@@ -44,6 +48,11 @@ export default function FileUpload(props) {
             ) : null}
             <div>
                 <ConfirmDialog buttonName="Resmi Kaydet" setIsConfirm={setIsConfirm}></ConfirmDialog>
+            </div>
+
+
+            <div style={{width:"100%" ,border:"1px solid black",marginTop:"2%"}}>
+            <FileUploadPosts productId={props.productId}></FileUploadPosts>
             </div>
         </div>
     )

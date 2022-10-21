@@ -152,7 +152,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
+                return res.json();
             }
             )
 
@@ -188,8 +188,8 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
-                console.log(res);
                 return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
+             
             }
             )
         }

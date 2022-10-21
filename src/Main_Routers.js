@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux';
 import AdminPanel from './Pages/AdminPanel/AdminPanel';
 import FileUploadModelDialog from './Components/FileUploadModelDialog';
 import MainPage from "./Pagination/MainPage";
+import MyBasket from './Pages/MyBasket/MyBasket';
 
 
 const Main_Routers = (props) => {
@@ -43,6 +44,8 @@ const Main_Routers = (props) => {
                 <Route path="/deleteproduct" element={<ProductDelete ></ProductDelete>} />
                 <Route path="/deleteproduct/:id" element={<ProductDelete></ProductDelete>} />
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
+                <Route path="/mybasket" element={<MyBasket></MyBasket>} />
+
             </Routes>
         )
     }

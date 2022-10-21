@@ -11,13 +11,11 @@ import { api } from '../Utilities/Api';
 
 const Posts = ({ posts }) => {
 
-  console.log(posts);
-
   return (
     <>
       {posts.map(post => (
 
-        <Card sx={{display: "inline-block", marginTop: "1.2%", marginLeft: "1.4%" }}>
+        <Card sx={{ display: "inline-block", marginTop: "1.2%", marginLeft: "1.4%" }}>
           <CardMedia
             component="img"
             src={
@@ -28,7 +26,7 @@ const Posts = ({ posts }) => {
                 }
               })
             }
-            style={{ height:"15rem",width:"15rem", margin: "auto" }}
+            style={{ height: "15rem", width: "15rem", margin: "auto" }}
           />
           <CardContent style={{ padding: "1rem" }}>
             <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto", marginBottom: "1rem", fontSize: "1rem", textOverflow: "ellipsis", maxHeight: "1.2rem" }}>
@@ -42,10 +40,25 @@ const Posts = ({ posts }) => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button variant="contained" style={{ width: "100%" }}>Sepete ekle</Button>
+
+
+
+            <Button id={post.id} onClick={(event) => {
+
+              let id = event.target.id
+
+              var data = {
+                productid: id,
+                quantity: "1"
+              }
+
+              api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data);
+
+            }} variant="contained" style={{ width: "100%" }}>Sepete ekle</Button>
           </CardActions>
         </Card>
-      ))}
+      ))
+      }
     </>
 
   );

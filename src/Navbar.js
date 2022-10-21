@@ -38,6 +38,8 @@ function ButtonAppBar(props) {
                   props.notauthanticated();
 
                 }}><Link style={{ color: 'white' }} to="/">Log Out</Link></Button>
+
+                <Button><Link style={{ color: 'white' }} to="/mybasket">MyBasket</Link></Button>
               </>
             ) : (<>
               <Button><Link style={{ color: 'white' }} to="/"> <HomeIcon></HomeIcon></Link></Button>

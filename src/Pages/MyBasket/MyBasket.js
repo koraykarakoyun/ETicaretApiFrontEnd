@@ -27,32 +27,66 @@ export default function MyBasket() {
     }, MyBasket)
 
     return (
-        <TableContainer style={{ margin: "auto", width: "50%", marginLeft: "25%" }} component={Paper}>
-            <Table  >
-                <TableHead>
-                    <TableRow>
-                        <TableCell>ProductName</TableCell>
-                        <TableCell>Product Price</TableCell>
-                        <TableCell>Product Quantity</TableCell>
+        <>
+            <TableContainer style={{ margin: "auto", width: "50%", marginLeft: "25%" }} component={Paper}>
+                <Table  >
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>ProductName</TableCell>
+                            <TableCell>Product Price</TableCell>
+                            <TableCell>Product Quantity</TableCell>
 
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {datas.map((data) => (
-                        <TableRow
-                            key={data.basketItemId}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell >{data.productName}</TableCell>
-                            <TableCell >{data.productPrice}</TableCell>
-                            <TableCell >
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {datas.map((data) => (
+                            <TableRow
+                                key={data.basketItemId}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell >{data.productName}</TableCell>
+                                <TableCell >{data.productPrice}</TableCell>
+                                <TableCell >
 
-                                <button id={data.basketItemId} onClick={(event) => {
+                                    <button id={data.basketItemId} onClick={(event) => {
 
-                                    let sayi = Number(document.getElementById(`input_` + event.target.id).value)
+                                        let sayi = Number(document.getElementById(`input_` + event.target.id).value)
 
-                                    if (sayi > 1) {
-                                        let input_deger = sayi + -1;
+                                        if (sayi > 1) {
+                                            let input_deger = sayi + -1;
+                                            document.getElementById(`input_` + event.target.id).value = input_deger;
+                                            var data = {
+                                                basketItemId: event.target.id,
+                                                quantity: Number(input_deger)
+                                            }
+
+                                            api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(res => console.log(res));
+
+                                        }
+
+                                        if (sayi == 1) {
+                                            var data = {
+                                                basketItemId: event.target.id,
+                                            }
+                                            api("DELETE", "localhost", "7098", "baskets", "deletebasketitem", null, data).then(res => console.log(res));
+                                        }
+
+
+                                    }} >
+                                        -
+                                    </button>
+
+                                    <input style={{ width: "10%", marginLeft: "3%", marginRight: "3%" }} disabled id={`input_` + data.basketItemId}
+                                        defaultValue={data.quantity}></input>
+
+
+
+
+                                    <button id={data.basketItemId} onClick={(event) => {
+
+                                        let sayi = Number(document.getElementById(`input_` + event.target.id).value)
+
+                                        let input_deger = sayi + 1;
                                         document.getElementById(`input_` + event.target.id).value = input_deger;
                                         var data = {
                                             basketItemId: event.target.id,
@@ -61,56 +95,38 @@ export default function MyBasket() {
 
                                         api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(res => console.log(res));
 
-                                    }
-
-                                    if (sayi == 1) {
-                                        var data = {
-                                            basketItemId: event.target.id,
-                                        }
-                                        api("DELETE", "localhost", "7098", "baskets", "deletebasketitem",null,data).then(res => console.log(res));
-                                    }
-
-
-                                }} >
-                                    -
-                                </button>
-
-                                <input style={{ width: "10%", marginLeft: "3%", marginRight: "3%" }} disabled id={`input_` + data.basketItemId}
-                                    defaultValue={data.quantity}></input>
+                                    }}>
+                                        +
+                                    </button>
 
 
 
-
-                                <button id={data.basketItemId} onClick={(event) => {
-
-                                    let sayi = Number(document.getElementById(`input_` + event.target.id).value)
-
-                                    let input_deger = sayi + 1;
-                                    document.getElementById(`input_` + event.target.id).value = input_deger;
-                                    var data = {
-                                        basketItemId: event.target.id,
-                                        quantity: Number(input_deger)
-                                    }
-
-                                    api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(res => console.log(res));
-
-                                }}>
-                                    +
-                                </button>
-
-
-
-                            </TableCell>
+                                </TableCell>
 
 
 
 
 
 
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer >
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+
+                <div >
+                <button style={{marginLeft:"40%"}} onClick={() => {
+                    let formdata = {
+                        "address": "istanbul",
+                        "Description": "siparis aciklamasi"
+                    }
+                    api("POST", "localhost", "7098", "orders", "createorder", null, formdata).then(res => console.log(res));
+                }}>Sepeti Olustur</button>
+            </div>
+            </TableContainer >
+
+            
+
+
+        </>
     );
 }

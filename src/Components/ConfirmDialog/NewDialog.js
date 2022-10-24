@@ -6,16 +6,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect } from 'react';
-import { IconButton } from '@mui/material';
-/*
-buttonName:"",
-DialogTitle:"",
-DialogContent:"",
-apifunction:{}
-icon:{}
-*/
-export default function ConfirmDialog(props) {
-    const [open, setOpen] = React.useState(false);
+
+export default function NewDialog(props) {
+    const [open, setOpen] = React.useState(true);
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -23,41 +16,33 @@ export default function ConfirmDialog(props) {
         setOpen(false);
     };
 
+    useEffect(() => {
+        props.setIsConfirm(false)
+    })
     return (
         <div>
-            {
-                props.icon ? (
-                    <IconButton onClick={handleClickOpen} component="label">
-                        {props.icon}
-                    </IconButton>
-                ) : (
-                    <Button variant="outlined" onClick={handleClickOpen}>
-                        {props.buttonName}
-                    </Button>
-                )
-            }
-
             <Dialog
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description">
                 <DialogTitle id="alert-dialog-title">
-                    {props.DialogTitle}
+                    NewDİALOG
                 </DialogTitle>
                 <DialogContent>
-                    {props.DialogContent}
+                NewDİALOG
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => {
-                        props.apifunction()
+                        props.setIsConfirm(true)
                         handleClose()
                     }}>Evet</Button>
                     <Button onClick={() => {
+                        props.setIsConfirm(false)
                         handleClose()
                     }}>Hayır</Button>
                 </DialogActions>
             </Dialog>
-        </div >
+        </div>
     );
 }

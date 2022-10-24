@@ -14,9 +14,14 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import IconButton from '@mui/material/IconButton';
 import { TextField } from '@mui/material';
+import NewDialog from '../../Components/ConfirmDialog/NewDialog';
+import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function MyBasket() {
     const [datas, setDatas] = useState([]);
+    const [IsConfirm, setIsConfirm] = useState(false);
+
 
 
     useEffect(() => {
@@ -78,10 +83,6 @@ export default function MyBasket() {
 
                                     <input style={{ width: "10%", marginLeft: "3%", marginRight: "3%" }} disabled id={`input_` + data.basketItemId}
                                         defaultValue={data.quantity}></input>
-
-
-
-
                                     <button id={data.basketItemId} onClick={(event) => {
 
                                         let sayi = Number(document.getElementById(`input_` + event.target.id).value)
@@ -98,33 +99,23 @@ export default function MyBasket() {
                                     }}>
                                         +
                                     </button>
-
-
-
                                 </TableCell>
-
-
-
-
-
-
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
-
-                <div >
-                <button style={{marginLeft:"40%"}} onClick={() => {
-                    let formdata = {
-                        "address": "istanbul",
-                        "Description": "siparis aciklamasi"
-                    }
-                    api("POST", "localhost", "7098", "orders", "createorder", null, formdata).then(res => console.log(res));
-                }}>Sepeti Olustur</button>
-            </div>
+                <div style={{ textAlign: "center" }}>
+                    <ConfirmDialog icon={<AddBoxIcon></AddBoxIcon>} buttonName="Sepeti Olustur" DialogTitle="Dikkat" DialogContent="Sepetinizi onaylamak istiyormusunuz" apifunction={() => {
+                        let formdata = {
+                            "address": "istanbul",
+                            "Description": "siparis aciklamasi"
+                        }
+                        api("POST", "localhost", "7098", "orders", "createorder", null, formdata).then(res => console.log(res));
+                    }}></ConfirmDialog>
+                </div>
             </TableContainer >
 
-            
+
 
 
         </>

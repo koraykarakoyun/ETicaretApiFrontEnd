@@ -19,6 +19,7 @@ import { notify } from '../../Utilities/Notify';
 import AddIcon from '@mui/icons-material/Add';
 
 import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
+import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 
 export default function ProductsPage(props) {
   let token = localStorage.getItem("token");
@@ -33,7 +34,6 @@ export default function ProductsPage(props) {
       setDeger(data);
     });
   }, ProductsPage)
-
   return (
     <div style={{ marginLeft: "64px" }}>
       <ToastContainer />
@@ -64,18 +64,20 @@ export default function ProductsPage(props) {
                 </TableCell>
                 <TableCell align="left">
                   <IconButton aria-label="delete">
-                    <DeleteIcon onClick={() => {
+
+                    <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" apifunction={() => {
                       let data = {
                         id: String(row.id)
                       }
                       api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, data, token).then(response => {
                         notify(response.message);
                       })
-                    }} />
+                    }} ></ConfirmDialog>
+
                   </IconButton>
                 </TableCell>
                 <TableCell align="left">
-               <FileUploadModelDialog productId={row.id}></FileUploadModelDialog>
+                  <FileUploadModelDialog productId={row.id}></FileUploadModelDialog>
                 </TableCell>
               </TableRow>
             ))}

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import ProductsPage from '../Products/ProductsPage';
 import ProductAdd from '../Products/ProductAddPage';
 import { useEffect } from 'react';
+import OrdersPage from '../Orders/OrdersPage';
 
 
 
@@ -30,9 +31,9 @@ export default function AdminPanel() {
                         Products
                     </button>
                     <button style={buttonStyle} onClick={() => {
-                        setTable()
+                        setTable(<OrdersPage></OrdersPage>)
                     }}>
-                        Suppliers
+                        Orders
                     </button>
                     <button style={buttonStyle} onClick={() => {
                         setTable()

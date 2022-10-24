@@ -30,6 +30,8 @@ export default function ProductsPage(props) {
     api("GET", "localhost", "7098", "products", "getall", null, null, token).then((data) => {
       //localStorage.setItem("token",data.token.accessToken);
       //localStorage.setItem("refreshtoken",data.token.refreshToken);
+
+      
       console.log(data)
       setDeger(data);
     });

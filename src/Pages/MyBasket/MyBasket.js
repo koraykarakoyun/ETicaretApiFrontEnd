@@ -29,6 +29,12 @@ export default function MyBasket() {
 
             setDatas(data);
         });
+
+        api("GET", "localhost", "7098", "orders", "getallorder", null, null).then((data) => {
+
+           console.log(data);
+        });
+
     }, MyBasket)
 
     return (

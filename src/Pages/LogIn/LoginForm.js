@@ -11,8 +11,9 @@ import GoogleLogin from 'react-google-login';
 import { useEffect } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { gapi } from 'gapi-script';
-import { authanticated,notauthanticated} from '../../Redux/Action/AuthAction';
+import { authanticated, notauthanticated } from '../../Redux/Action/AuthAction';
 import { Navigate } from 'react-router';
+import { Button } from '@mui/material';
 
 function LoginForm(props) {
 
@@ -109,8 +110,8 @@ function LoginForm(props) {
             if (res.isSuccess == true) {
                 console.log(res);
                 props.authanticated();
-                localStorage.setItem("token",res.token.accessToken)
-                localStorage.setItem("refreshtoken",res.token.refreshToken)
+                localStorage.setItem("token", res.token.accessToken)
+                localStorage.setItem("refreshtoken", res.token.refreshToken)
                 notify(res.message)
 
             }
@@ -124,35 +125,46 @@ function LoginForm(props) {
     return (
         <>
             <ToastContainer />
-            <div className="form">
+
+            <div style={{ border: "1px solid black" }} className="form">
                 <div className="form-body">
 
                     <div className="email">
-                        <label className="form__label" htmlfor='email'>Email </label>
-                        <input type="email" id="email" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="Email" />
+                        <label className="form__label" htmlfor='email'>Email</label>
+                        <input type="email" id="email" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
 
                     <div className="password">
-                        <label className="form__label" htmlfor='password'>Password </label>
-                        <input className="form__input" type="password" id="password" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="Password" />
+                        <label className="form__label" htmlfor='password'>Password</label>
+                        <input className="form__input" type="password" id="password" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
 
                 </div>
                 <div className="footer">
-                    <button onClick={() => handleSubmit()} type="submit" className="btn">Login</button>
+
+
+
+
+                    <GoogleLogin
+                        id="google_button"
+                        clientId={clientId}
+                        buttonText="Sign in with Google"
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        cookiePolicy={'single_host_origin'}
+                        isSignedIn={false}
+                    />
+
+                    <Button style={{ width: "30%", height: "3rem", marginLeft: "2%" }} onClick={() => handleSubmit()} type="submit" variant="contained">Giriş Yap</Button>
+
+                    <FacebookLogin
+                        appId={FacebookAppId}
+                        callback={responseFacebook}
+                        buttonStyle={{ width: "30%", height: "3rem", fontSize: "8px", marginLeft: "2%" }}
+                    />
+
                 </div>
-                <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Sign in with Google"
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={false}
-                />
-                <FacebookLogin
-                    appId={FacebookAppId}
-                    callback={responseFacebook}
-                />
+
             </div>
         </>
     )
@@ -161,13 +173,13 @@ function LoginForm(props) {
 const mapStateToProps = (state) => {
     return {
         userinfostate: state.login,
-        authstate:state.auth
+        authstate: state.auth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
 
-    return bindActionCreators({ addLoginInfo, removeLogınInfo ,authanticated,notauthanticated }, dispatch)
+    return bindActionCreators({ addLoginInfo, removeLogınInfo, authanticated, notauthanticated }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

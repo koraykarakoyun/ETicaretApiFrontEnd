@@ -8,11 +8,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect } from 'react';
 import { IconButton } from '@mui/material';
 /*
-buttonName:"",
+buttonName:"" 
+or
+icon:{},
 DialogTitle:"",
 DialogContent:"",
 apifunction:{}
-icon:{}
 */
 export default function ConfirmDialog(props) {
     const [open, setOpen] = React.useState(false);

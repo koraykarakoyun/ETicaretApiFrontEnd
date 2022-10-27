@@ -1,6 +1,5 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Navbar from './Navbar';
 import ProductsPage from './Pages/Products/ProductsPage';
 import ProductAdd from './Pages/Products/ProductAddPage';
 import ProductUpdate from './Pages/Products/ProductUpdatePage';
@@ -15,6 +14,7 @@ import AdminPanel from './Pages/AdminPanel/AdminPanel';
 import FileUploadModelDialog from './Components/FileUploadModelDialog';
 import MainPage from "./Pagination/MainPage";
 import MyBasket from './Pages/MyBasket/MyBasket';
+import Navbar2 from './Components/Navbar/Navbar2';
 
 
 const Main_Routers = (props) => {
@@ -52,7 +52,7 @@ const Main_Routers = (props) => {
 
     return (
         <BrowserRouter>
-            <Navbar></Navbar>
+            <Navbar2></Navbar2>
             {routes}
         </BrowserRouter>
     )

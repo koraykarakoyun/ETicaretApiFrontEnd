@@ -1,8 +1,4 @@
-body{
-    background-image: url('https://wallpaperaccess.com/full/2367875.jpg');
-}
-
-.form{
+.form {
     background-color: white;
     border-radius: 5px;
     width: 550px;
@@ -11,23 +7,30 @@ body{
     /* height: 600px; */
 }
 
-.form-body{
+.form-body {
     text-align: left;
     padding: 20px 10px;
 }
 
-.form-body > *{
+.form-body>* {
     padding: 5px;
 }
 
-.form__label{
-    width: 40%;
+.form__label {
+    width: 100%;
+    margin-bottom: 0.5%;
 }
 
-.form_input{
-    width: 60%;
+.form__input {
+    width: 100%;
 }
 
-.footer{
+
+
+.footer {
     text-align: center;
+}
+
+#google_button {
+    font-size: 100px;
 }

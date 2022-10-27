@@ -17,17 +17,17 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import AddIcon from '@mui/icons-material/Add';
-
 import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
+import ReorderIcon from '@mui/icons-material/Reorder';
+import OrderDetailPage from './OrderDetailPage';
 
 export default function OrdersPage(props) {
-    let token = localStorage.getItem("token");
     const [deger, setDeger] = useState([]);
 
 
     useEffect(() => {
-        api("GET", "localhost", "7098", "orders", "getallorders", null, null, token).then((data) => {
+        api("GET", "localhost", "7098", "orders", "getallorders", null, null).then((data) => {
             console.log(data)
             setDeger(data);
         });
@@ -41,12 +41,9 @@ export default function OrdersPage(props) {
                         <TableRow>
                             <TableCell align="left">OrderCode</TableCell>
                             <TableCell align="left">UserName</TableCell>
-                            <TableCell align="left">TotalPrice</TableCell>
-                            <TableCell align="left">Description</TableCell>
-                            <TableCell align="left">Address</TableCell>
                             <TableCell align="left">CreatedDate</TableCell>
-                            <TableCell align="left">Add</TableCell>
-                            <TableCell align="left">Update</TableCell>
+                            <TableCell align="left">Detail</TableCell>
+
                             <TableCell align="left">Delete</TableCell>
                         </TableRow>
                     </TableHead>
@@ -55,28 +52,15 @@ export default function OrdersPage(props) {
                             <TableRow key={row.orderBasketId}>
                                 <TableCell align="left">{row.orderCode}</TableCell>
                                 <TableCell align="left">{row.userName}</TableCell>
-                                <TableCell align="left">{row.totalPrice}</TableCell>
-                                <TableCell align="left">{row.description}</TableCell>
-                                <TableCell align="left">{row.address}</TableCell>
                                 <TableCell align="left">{row.createdDate}</TableCell>
+
                                 <TableCell align="left">
-                                    <Link to={`/addproduct`}><AddIcon></AddIcon></Link>
+                                    <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId}></OrderDetailPage>} ></ConfirmDialog>
                                 </TableCell>
-                                <TableCell align="left">
-                                    <Link to={`/updateproduct/${row.id}`}><AutorenewIcon /></Link>
-                                </TableCell>
+
                                 <TableCell align="left">
                                     <IconButton aria-label="delete">
-
-                                        <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" apifunction={() => {
-                                            let data = {
-                                                id: String(row.id)
-                                            }
-                                            api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, data, token).then(response => {
-                                                notify(response.message);
-                                            })
-                                        }} ></ConfirmDialog>
-
+                                        <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" ></ConfirmDialog>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>

@@ -126,7 +126,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 }),
                 method: method_type,
             }).then(function (res) {
-                return statuscodeControl(res, method_type, origin, port, controller, action, id);
+                return res.json()
             }
             )
         }

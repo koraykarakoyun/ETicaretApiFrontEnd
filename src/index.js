@@ -8,13 +8,18 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 import Authreducer from './Redux/Reducer/AuthReducer';
 
-const store = createStore(
+export const store = createStore(
     combineReducers(
         {
             login: Loginreducer,
-            auth:Authreducer
+            auth: Authreducer
         }
     ));
+
+
+
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

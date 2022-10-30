@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import Posts from '../../Pagination/Posts';
-import { api } from "../../Utilities/Api"
+import { api } from '../../Utilities/Api';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import FileUploadPosts from './FileUploadPosts';
 

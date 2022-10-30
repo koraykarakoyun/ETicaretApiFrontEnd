@@ -1,31 +1,38 @@
-
-
-.form{
+.form {
     background-color: white;
     border-radius: 5px;
     width: 550px;
-    margin: 15% auto;
+    margin: auto auto;
     padding: 20px;
     /* height: 600px; */
+    position: relative;
+    top: 10rem;
 }
 
-.form-body{
+.form-body {
     text-align: left;
     padding: 20px 10px;
 }
 
-.form-body > *{
+.form-body>* {
     padding: 5px;
 }
 
-.form__label{
+.form__label {
     width: 40%;
 }
 
-.form_input{
+.form_input {
     width: 60%;
 }
 
-.footer{
+.footer {
     text-align: center;
+}
+
+.backgroundImageDiv {
+    height: 54rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { store } from "../index"
 const statuscodeControl = (res, method_type, origin, port, controller, action, id, formData) => {
     if (res.status == 200) {
         return res.json();
@@ -41,7 +43,7 @@ const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098"
                         'Authorization': 'Bearer ' + localStorage.getItem("token"),
                     }),
                     method: method_type,
-                   
+
                 }).then(res => {
                     return res.json();
                 })
@@ -53,7 +55,7 @@ const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098"
                         'Authorization': 'Bearer ' + localStorage.getItem("token"),
                     }),
                     method: method_type,
-                  
+
                 }).then(res => {
                     return res.json();
                 })
@@ -100,13 +102,33 @@ const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098"
 
 export const api = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null) => {
 
-    let token = localStorage.getItem("token");
+    let token = "";
+
+    if (store.getState().auth.isAuth) {
+
+        if (store.getState().auth.activeAccount == "internal") {
+            token = localStorage.getItem("token");
+
+        }
+
+        else if (store.getState().auth.activeAccount == "google") {
+            token = localStorage.getItem("googletoken");
+
+        }
+        else if (store.getState().auth.activeAccount == "facebook") {
+            token = localStorage.getItem("facebooktoken");
+
+        }
+    }
+
+
     if (method_type == "GET") {
         if (id == null) {
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
+
                 }),
                 method: method_type,
 
@@ -141,7 +163,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                     body: formData,
                     method: method_type
                 }
-                ).then(res =>res.json())
+                ).then(res => res.json())
             }
 
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
@@ -170,6 +192,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
+
                 }),
                 method: method_type,
                 body: JSON.stringify(formData)
@@ -184,12 +207,13 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
+
                 }),
                 method: method_type,
                 body: JSON.stringify(formData)
             }).then(function (res) {
                 return statuscodeControl(res, method_type, origin, port, controller, action, null, formData);
-             
+
             }
             )
         }
@@ -202,6 +226,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
+
                 }),
                 method: method_type,
                 body: JSON.stringify(formData)
@@ -217,6 +242,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
 
+
                 }),
                 method: method_type,
                 body: JSON.stringify(formData)
@@ -230,9 +256,6 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
 
 
 
-
-
-
-
-
 }
+
+

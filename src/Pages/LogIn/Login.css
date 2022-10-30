@@ -2,9 +2,11 @@
     background-color: white;
     border-radius: 5px;
     width: 550px;
-    margin: 15% auto;
+    margin: auto auto;
     padding: 20px;
     /* height: 600px; */
+    position: relative;
+    top: 10rem;
 }
 
 .form-body {
@@ -33,4 +35,11 @@
 
 #google_button {
     font-size: 100px;
+}
+
+.backgroundImageDiv {
+    height: 54rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }

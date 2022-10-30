@@ -14,71 +14,13 @@ import { gapi } from 'gapi-script';
 import { authanticated, notauthanticated } from '../../Redux/Action/AuthAction';
 import { Navigate } from 'react-router';
 import { Button } from '@mui/material';
+import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
+import registerloginimage from "../../Image/register-login.jpg"
 
 function LoginForm(props) {
 
-    const clientId = "858096983515-prmmpeohub6v3u5smr2cc02o6u4mkn2v.apps.googleusercontent.com";
-    const FacebookAppId = "630541088591232";
-
-    useEffect(() => {
-        const initClient = () => {
-            gapi.client.init({
-                clientId: clientId,
-                scope: ''
-            });
-        };
-        gapi.load('client:auth2', initClient);
-
-    });
-
-
-    const onSuccess = (res) => {
-        let data = {
-            "IdToken": res.tokenId,
-            "FirstName": res.profileObj.givenName,
-            "LastName": res.profileObj.familyName,
-            "UserName": res.profileObj.name,
-            "Email": res.profileObj.email,
-            "Provider": res.tokenObj.idpId,
-        }
-
-        api("POST", "localhost", "7098", "auth", "google", null, data, null)
-            .then(res => {
-                if (res.isSuccess) {
-
-                    notify("Google Girisi Yapildi")
-                    localStorage.setItem("googletoken", res.token.accessToken)
-
-                }
-                else {
-                    console.log(res.message)
-                }
-            }
-            );
-    };
-
-    const onFailure = (err) => {
-        console.log('failed:', err);
-    };
-
-    const responseFacebook = (response) => {
-        let data = {
-            "accessToken": String(response.accessToken)
-        }
-        api("POST", "localhost", "7098", "auth", "facebook", null, data, null).then(res => {
-            if (res.isSuccess) {
-
-                notify("Facebook Girisi Yapildi")
-                localStorage.setItem("facebooktoken", res.token.accessToken)
-            }
-            else {
-                console.log(res.message)
-            }
-
-
-        }
-        );
-    }
+  
+    
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -109,7 +51,7 @@ function LoginForm(props) {
         api("POST", "localhost", "7098", "auth", "login", null, user_data, null).then(res => {
             if (res.isSuccess == true) {
                 console.log(res);
-                props.authanticated();
+                props.authanticated("internal");
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
                 notify(res.message)
@@ -123,50 +65,34 @@ function LoginForm(props) {
     }
 
     return (
-        <>
+        <div className='backgroundImageDiv' style={{backgroundImage:`url(${registerloginimage})`}}>
             <ToastContainer />
 
-            <div style={{ border: "1px solid black" }} className="form">
+            <div style={{ border: "1px solid black" }}  className="form">
                 <div className="form-body">
 
                     <div className="email">
-                        <label className="form__label" htmlfor='email'>Email</label>
+                        <label className="form__label" htmlfor='email'>E-Posta</label>
                         <input type="email" id="email" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
 
                     <div className="password">
-                        <label className="form__label" htmlfor='password'>Password</label>
+                        <label className="form__label" htmlfor='password'>Şifre</label>
                         <input className="form__input" type="password" id="password" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
 
                 </div>
                 <div className="footer">
 
+                    <Button style={{
+                        width: "88%", height: "2.8rem"
+                    }} onClick={() => handleSubmit()} type="submit" variant="contained">Giriş Yap</Button>
 
-
-
-                    <GoogleLogin
-                        id="google_button"
-                        clientId={clientId}
-                        buttonText="Sign in with Google"
-                        onSuccess={onSuccess}
-                        onFailure={onFailure}
-                        cookiePolicy={'single_host_origin'}
-                        isSignedIn={false}
-                    />
-
-                    <Button style={{ width: "30%", height: "3rem", marginLeft: "2%" }} onClick={() => handleSubmit()} type="submit" variant="contained">Giriş Yap</Button>
-
-                    <FacebookLogin
-                        appId={FacebookAppId}
-                        callback={responseFacebook}
-                        buttonStyle={{ width: "30%", height: "3rem", fontSize: "8px", marginLeft: "2%" }}
-                    />
-
+                    <ExternalLogin></ExternalLogin>
                 </div>
 
             </div>
-        </>
+            </div>
     )
 }
 

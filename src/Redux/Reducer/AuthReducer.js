@@ -1,5 +1,7 @@
-
-const AuthState = false;
+ const AuthState = {
+    isAuth: false,
+    activeAccount: ""
+}
 
 
 const Authreducer = (state = AuthState, action) => {
@@ -8,17 +10,23 @@ const Authreducer = (state = AuthState, action) => {
     switch (action.type) {
 
         case "authanticated": {
-            return  state=true;
-            
+            return state = {
+                isAuth: true,
+                activeAccount: action.activeAccount
+            };
+
         }
 
         case "notauthanticated": {
             localStorage.clear();
-            return state=false;
+            return state = {
+                isAuth: false,
+                activeAccount:action.activeAccount
+            };
         }
         default:
-        return state 
-        
+            return state
+
     }
 
 

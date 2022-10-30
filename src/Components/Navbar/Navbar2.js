@@ -104,6 +104,7 @@ function Navbar2(props) {
 
     const logout = () => {
         props.notauthanticated();
+        console.log(props.authstate);
         handleMenuClose();
     }
 
@@ -126,16 +127,16 @@ function Navbar2(props) {
         >
 
             {
-                props.authstate ? (
+                props.authstate.isAuth ? (
                     <>
-                        <MenuItem onClick={handleMenuClose} style={linkstyle} >Profile</MenuItem>
-                        <MenuItem onClick={handleMenuClose} style={linkstyle} >My account</MenuItem>
-                        <MenuItem onClick={logout} style={linkstyle} >Logout</MenuItem>
+                        <MenuItem onClick={handleMenuClose} style={linkstyle} >Profilim</MenuItem>
+                        <MenuItem onClick={handleMenuClose} style={linkstyle} >Hesabım</MenuItem>
+                        <MenuItem onClick={logout} style={linkstyle} >Çıkış Yap</MenuItem>
 
                     </>
                 ) : (<>
-                    <MenuItem onClick={handleMenuClose}> <Link style={linkstyle} to="/login">Login</Link></MenuItem>
-                    <MenuItem onClick={handleMenuClose}><Link style={linkstyle} to="/register">Register</Link></MenuItem>
+                    <MenuItem onClick={handleMenuClose}> <Link style={linkstyle} to="/login">Giriş Yap</Link></MenuItem>
+                    <MenuItem onClick={handleMenuClose}><Link style={linkstyle} to="/register">Kayıt Ol</Link></MenuItem>
 
                 </>)
             }
@@ -147,8 +148,8 @@ function Navbar2(props) {
 
     return (
         <Box >
-            <AppBar style={{backgroundColor:"#576F72"}} position="static">
-                <Toolbar style={{height:"6rem"}}>
+            <AppBar style={{ backgroundColor: "#576F72" }} position="static">
+                <Toolbar style={{ height: "6rem" }}>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 3.5 }}>
                     </Typography>
 
@@ -156,7 +157,7 @@ function Navbar2(props) {
                     <Link style={{}} to="/">
                         <img
                             src={homeimage}
-                            style={{height:"5rem"}}
+                            style={{ height: "5rem" }}
                         />
                     </Link>
 
@@ -176,7 +177,7 @@ function Navbar2(props) {
 
 
                     {
-                        props.authstate ? (
+                        props.authstate.isAuth ? (
                             <>
                                 <Typography variant="h6" component="div" sx={{ flexGrow: 0.1 }}>
                                     <IconButton>
@@ -197,7 +198,7 @@ function Navbar2(props) {
                         <IconButton >
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 {
-                                    props.authstate ? (
+                                    props.authstate.isAuth ? (
                                         <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/mybasket"><ShoppingBasketIcon style={{ paddingRight: "5%" }}></ShoppingBasketIcon>Sepetim</Link>
                                     ) : (
                                         <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/login"><ShoppingBasketIcon style={{ paddingRight: "5%" }}></ShoppingBasketIcon>Sepetim</Link>
@@ -221,7 +222,11 @@ function Navbar2(props) {
                             >
                                 <Box style={{ fontSize: "0.9rem" }}>
                                     <PersonOutlineIcon></PersonOutlineIcon>
-                                    Giriş Yap
+                                    {
+                                        props.authstate.isAuth ?
+                                            "Hesabım"
+                                            : "Giriş Yap"
+                                    }
                                 </Box>
 
                             </IconButton>

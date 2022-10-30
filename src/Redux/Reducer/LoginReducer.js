@@ -21,7 +21,7 @@ const Loginreducer = (state = LoginState, action) => {
                 return element.id!=action.data.id
             })
         }
-        default: // need this for default case
+        default:
         return state 
         
     }

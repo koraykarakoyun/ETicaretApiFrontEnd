@@ -4,6 +4,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
+import { Button } from '@mui/material';
+import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
+import { useEffect } from 'react';
+import registerloginimage from "../../Image/register-login.jpg"
+
 
 export const infoverification = (firstname, lastname, email, username, password, confirmpassword) => {
     if (firstname !== null && firstname !== ""
@@ -23,6 +28,8 @@ export const infoverification = (firstname, lastname, email, username, password,
 }
 
 function RegistrationForm() {
+
+
 
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
@@ -58,19 +65,19 @@ function RegistrationForm() {
 
     const handleSubmit = () => {
         if (infoverification(firstName, lastName, email, username, password, confirmPassword)) {
-            
-            var user_data=
+
+            var user_data =
             {
-                "Name":firstName,
-                "Surname":lastName,
-                "Email":email,
-                "Username":username,
-                "Password":password,
-                "PasswordConfirm":confirmPassword
+                "Name": firstName,
+                "Surname": lastName,
+                "Email": email,
+                "Username": username,
+                "Password": password,
+                "PasswordConfirm": confirmPassword
             }
 
-            api("POST","localhost","7098","users","createuser",null,user_data).then(response=>notify(response.message));
-        
+            api("POST", "localhost", "7098", "users", "createuser", null, user_data).then(response => notify(response.message));
+
         }
         else {
             notify("bilgilerinizi kontrol ediniz");
@@ -80,41 +87,54 @@ function RegistrationForm() {
     }
 
     return (
-        <>
-            <ToastContainer />
-            <div className="form">
+        <div className='backgroundImageDiv' style={{ backgroundImage: `url(${registerloginimage})`}}>
+
+            <div className="form" style={{ border: "1px solid black" }}>
                 <div className="form-body">
                     <div className="firstname">
-                        <label className="form__label" htmlFor='firstName'>First Name </label>
-                        <input id="firstName" className="form__input" type="text" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="First Name" />
+                        <label className="form__label" htmlFor='firstName'>Ad</label>
+                        <input id="firstName" className="form__input" type="text" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
                     <div className="lastname">
-                        <label className="form__label" htmlfor='lastName'>Last Name </label>
-                        <input type="text" id="lastName" defaultValue={null} className="form__input" onChange={(e) => handleInputChange(e)} placeholder="Last Name" />
+                        <label className="form__label" htmlfor='lastName'>Soyad</label>
+                        <input type="text" id="lastName" defaultValue={null} className="form__input" onChange={(e) => handleInputChange(e)} />
                     </div>
                     <div className="email">
-                        <label className="form__label" htmlfor='email'>Email </label>
-                        <input type="email" id="email" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="Email" />
+                        <label className="form__label" htmlfor='email'>E-Posta</label>
+                        <input type="email" id="email" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
                     <div className="username">
-                        <label className="form__label" htmlfor='username'>User Name</label>
-                        <input type="text" id="username" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="User Name" />
+                        <label className="form__label" htmlfor='username'>Kullanıcı Adı</label>
+                        <input type="text" id="username" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
                     <div className="password">
-                        <label className="form__label" htmlfor='password'>Password </label>
-                        <input className="form__input" type="password" id="password" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="Password" />
+                        <label className="form__label" htmlfor='password'>Şifre</label>
+                        <input className="form__input" type="password" id="password" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
                     <div className="confirm-password">
-                        <label className="form__label" htmlfor='confirmPassword'>Confirm Password </label>
-                        <input className="form__input" type="password" id="confirmPassword" defaultValue={null} onChange={(e) => handleInputChange(e)} placeholder="Confirm Password" />
+                        <label className="form__label" htmlfor='confirmPassword'>Şifreyi Onaylayın</label>
+                        <input className="form__input" type="password" id="confirmPassword" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
                 </div>
                 <div className="footer">
-                    <button onClick={() => handleSubmit()} type="submit" className="btn">Register</button>
+
+                    <Button style={{
+                        width: "88%", height: "2.8rem"
+                    }} onClick={handleSubmit} type="submit" variant="contained">Kayıt Ol</Button>
+
+                    <ExternalLogin></ExternalLogin>
+
+
+
                 </div>
             </div>
-        </>
+
+        </div>
+
+
+
     )
+
 }
 
 export default RegistrationForm

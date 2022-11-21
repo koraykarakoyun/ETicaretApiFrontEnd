@@ -177,13 +177,21 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 return res.json();
             }
             )
-
-
-
-
-
         }
 
+        if (id != null) {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}/${id}`, {
+                headers: new Headers({
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                }),
+                body: JSON.stringify(formData),
+                method: method_type,
+            }).then(function (res) {
+                return res.json();
+            }
+            )
+        }
     }
 
     if (method_type == "PUT") {

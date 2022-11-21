@@ -21,6 +21,7 @@ import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import OrderDetailPage from './OrderDetailPage';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export default function OrdersPage(props) {
     const [deger, setDeger] = useState([]);
@@ -33,34 +34,48 @@ export default function OrdersPage(props) {
         });
     }, OrdersPage)
     return (
-        <div style={{ marginLeft: "64px" }}>
+        <div style={{ marginLeft: "0.1%" }}>
             <ToastContainer />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">OrderCode</TableCell>
-                            <TableCell align="left">UserName</TableCell>
-                            <TableCell align="left">CreatedDate</TableCell>
-                            <TableCell align="left">Detail</TableCell>
-
-                            <TableCell align="left">Delete</TableCell>
+                            <TableCell align="center">Sipariş Kod</TableCell>
+                            <TableCell align="center">Kullanıcı</TableCell>
+                            <TableCell align="center">Sipariş Tarihi</TableCell>
+                            <TableCell align="center">Sipariş Durumu</TableCell>
+                            <TableCell align="center">Sipariş Detayı</TableCell>
+                            <TableCell align="center">Siparişi Sil</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {deger.map((row) => (
                             <TableRow key={row.orderBasketId}>
-                                <TableCell align="left">{row.orderCode}</TableCell>
-                                <TableCell align="left">{row.userName}</TableCell>
-                                <TableCell align="left">{row.createdDate}</TableCell>
+                                <TableCell align="center">{row.orderCode}</TableCell>
+                                <TableCell align="center">{row.userName}</TableCell>
+                                <TableCell align="center">{row.createdDate}</TableCell>
 
-                                <TableCell align="left">
-                                    <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId}></OrderDetailPage>} ></ConfirmDialog>
+                                <TableCell align="center">{row.orderCompleted ? (<CheckCircleIcon ></CheckCircleIcon>) : null}</TableCell>
+                                <TableCell align="center">
+                                    <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" apifunction={null} DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId} rowOrderCode={row.orderCode}></OrderDetailPage>}
+                                        Button1=
+                                        {
+                                            row.orderCompleted ? null : (
+                                                <ConfirmDialog DialogTitle="Sipariş Detayı" DialogContent="Siparişi Tamamlamak istiyormusunuz" Button1="Evet" Button2="Hayır" apifunction={() => {
+                                                    console.log(row.orderBasketId)
+                                                    api("POST", "localhost", "7098", "orders", "CompleteOrder", row.orderBasketId, null).then(res => console.log(res));
+                                                }}>
+                                                
+                                                </ConfirmDialog>
+                                            )
+                                        }
+                                        Button2="Kapat"
+                                    ></ConfirmDialog>
                                 </TableCell>
 
-                                <TableCell align="left">
+                                <TableCell align="center">
                                     <IconButton aria-label="delete">
-                                        <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" ></ConfirmDialog>
+                                        <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır"></ConfirmDialog>
                                     </IconButton>
                                 </TableCell>
                             </TableRow>

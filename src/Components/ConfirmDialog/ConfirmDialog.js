@@ -14,6 +14,8 @@ icon:{},
 DialogTitle:"",
 DialogContent:"",
 apifunction:{}
+Button1:"",
+Button2:"",
 */
 export default function ConfirmDialog(props) {
     const [open, setOpen] = React.useState(false);
@@ -25,7 +27,7 @@ export default function ConfirmDialog(props) {
     };
 
     return (
-        <div>
+        <>
             {
                 props.icon ? (
                     <IconButton onClick={handleClickOpen} component="label">
@@ -53,12 +55,12 @@ export default function ConfirmDialog(props) {
                     <Button onClick={() => {
                         props.apifunction()
                         handleClose()
-                    }}>Evet</Button>
+                    }}>{props.Button1}</Button>
                     <Button onClick={() => {
                         handleClose()
-                    }}>Hayır</Button>
+                    }}>{props.Button2}</Button>
                 </DialogActions>
             </Dialog>
-        </div >
+        </>
     );
 }

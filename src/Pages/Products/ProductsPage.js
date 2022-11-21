@@ -71,7 +71,7 @@ export default function ProductsPage(props) {
                       let data = {
                         id: String(row.id)
                       }
-                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, data, token).then(response => {
+                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, data).then(response => {
                         notify(response.message);
                       })
                     }} ></ConfirmDialog>

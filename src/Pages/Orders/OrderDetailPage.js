@@ -34,7 +34,7 @@ export default function OrderDetailPage(props) {
     return (
         <>
             <div>
-                {"Sipariş Numarası: " + props.rowOrderBasketId}
+                {"Sipariş Numarası: " + props.rowOrderCode}
             </div>
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">

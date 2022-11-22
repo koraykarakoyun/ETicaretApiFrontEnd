@@ -10,6 +10,7 @@ import ProductAdd from '../Products/ProductAddPage';
 import { useEffect } from 'react';
 import OrdersPage from '../Orders/OrdersPage';
 import AuthPage from '../AuthorizationMenu/AuthorizationPage';
+import RolesPage from '../Roles/RolesPage';
 
 
 
@@ -40,6 +41,12 @@ export default function AdminPanel() {
                         setTable(<AuthPage></AuthPage>)
                     }} >
                         Authorization Menu
+                    </button>
+
+                    <button style={buttonStyle} onClick={() => {
+                        setTable(<RolesPage></RolesPage>)
+                    }}>
+                        Roles
                     </button>
                 </div>
                 <div class="col-10">

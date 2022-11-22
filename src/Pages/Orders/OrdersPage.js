@@ -65,7 +65,7 @@ export default function OrdersPage(props) {
                                                     console.log(row.orderBasketId)
                                                     api("POST", "localhost", "7098", "orders", "CompleteOrder", row.orderBasketId, null).then(res => console.log(res));
                                                 }}>
-                                                
+
                                                 </ConfirmDialog>
                                             )
                                         }

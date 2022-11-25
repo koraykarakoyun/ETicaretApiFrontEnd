@@ -68,8 +68,8 @@ const Posts = ({ posts }) => {
                       productid: id,
                       quantity: "1"
                     }
-
-                    api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data);
+                 
+                    api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data).then(res=>console.log(res));
 
                   }} variant="contained" style={{ width: "100%" }}>Sepete ekle</Button>
                 </CardActions>

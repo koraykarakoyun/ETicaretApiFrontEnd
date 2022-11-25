@@ -17,24 +17,32 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
+import RolesList from '../../Components/RolesList/RolesList';
 
 export default function AuthPage(props) {
     const [deger, setDeger] = useState([]);
-
-
+    const [rolesList, setRolesList] = useState();
+    const [selectedRoles, setSelectedRoles] = useState();
     useEffect(() => {
         api("GET", "localhost", "7098", "ApplicationServices", "GetAuthorizeDefinitonEndpoints", null, null).then((data) => {
             console.log(data)
             setDeger(data);
         });
-    },[])
+
+        api("GET", "localhost", "7098", "Roles", "getallroles", null, null).then((data) => {
+            console.log(data.result)
+            setRolesList(data.result);
+        });
+
+
+    }, [])
     return (
         <div style={{ marginLeft: "0.1%" }}>
             <TreeView
                 aria-label="file system navigator"
                 defaultCollapseIcon={<ExpandMoreIcon />}
                 defaultExpandIcon={<ChevronRightIcon />}
-              
+
             >
 
                 {deger.map((data) => (
@@ -42,13 +50,13 @@ export default function AuthPage(props) {
                         {
                             data.action.map(action => {
                                 return (<div>
-                                  <ConfirmDialog buttonName="Rol Ata" DialogTitle={action.definiton+" Endpoint'ine Rol Atama"}
-                                   DialogContent="İlgili Sayfaya Aşağıdan Rolleri Atayabilirsiniz" Button1="Evet" Button2="Hayır" 
-                                   apifunction={()=>{
-                                    console.log(action.definiton+"a tıklandı")
-                                   }}></ConfirmDialog>
+                                    <ConfirmDialog buttonName="Rol Ata" DialogTitle={action.definiton + " Endpoint'ine Rol Atama"}
+                                        DialogContent={<RolesList rolesList={rolesList} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata" Button2="İptal Et"
+                                        apifunction={() => {
+                                            console.log(selectedRoles)
+                                        }}></ConfirmDialog>
 
-                                <TreeItem style={{display:"inline-block"}} nodeId={action.code} label={action.definiton} />
+                                    <TreeItem style={{ display: "inline-block" }} nodeId={action.code} label={action.definiton} />
                                 </div>
                                 )
                             })
@@ -56,9 +64,6 @@ export default function AuthPage(props) {
                         }
                     </TreeItem>
                 )
-
-
-
 
                 )}
 

@@ -31,7 +31,7 @@ export default function RolesList(props) {
   return (
     <List>
       {props.rolesList.map((value) => {
-        const labelId = value.id;
+        const labelId = value.name;
         return (
           <ListItem
             key={value}

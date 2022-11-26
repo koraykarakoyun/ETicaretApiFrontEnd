@@ -22,7 +22,9 @@ import RolesList from '../../Components/RolesList/RolesList';
 export default function AuthPage(props) {
     const [deger, setDeger] = useState([]);
     const [rolesList, setRolesList] = useState();
-    const [selectedRoles, setSelectedRoles] = useState();
+    const [selectedRoles, setSelectedRoles] = useState([]);
+
+
     useEffect(() => {
         api("GET", "localhost", "7098", "ApplicationServices", "GetAuthorizeDefinitonEndpoints", null, null).then((data) => {
             console.log(data)
@@ -53,7 +55,17 @@ export default function AuthPage(props) {
                                     <ConfirmDialog buttonName="Rol Ata" DialogTitle={action.definiton + " Endpoint'ine Rol Atama"}
                                         DialogContent={<RolesList rolesList={rolesList} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata" Button2="İptal Et"
                                         apifunction={() => {
-                                            console.log(selectedRoles)
+                                        
+                                           
+                                            let formdata = {
+                                                "menu": String(data.name),
+                                                "code": String(action.code),
+                                                roles: selectedRoles.map((element)=>{
+                                                    return element.name;
+                                                })
+                                            }
+                                            console.log(formdata);
+                                            api("POST", "localhost", "7098", "AuthorizationEndpoints", "AssingRoleEndpoint", null, formdata);
                                         }}></ConfirmDialog>
 
                                     <TreeItem style={{ display: "inline-block" }} nodeId={action.code} label={action.definiton} />

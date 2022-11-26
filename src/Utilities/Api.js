@@ -156,7 +156,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
     }
 
     if (method_type == "POST") {
-        console.log(token);
+
         if (id == null) {
 
             if (action == "upload") {
@@ -166,7 +166,7 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 }
                 ).then(res => res.json())
             }
-            console.log(token);
+
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({
                     'content-type': 'application/json',

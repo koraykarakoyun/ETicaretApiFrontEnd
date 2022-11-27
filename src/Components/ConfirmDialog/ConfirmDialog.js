@@ -11,16 +11,21 @@ import { IconButton } from '@mui/material';
 buttonName:"" 
 or
 icon:{},
+handleclickfunction:()=>{},
+
 DialogTitle:"",
 DialogContent:"",
 apifunction:{}
 Button1:"",
 Button2:"",
+
 */
 export default function ConfirmDialog(props) {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
+        props.handleclickfunction();
         setOpen(true);
+      
     };
     const handleClose = () => {
         setOpen(false);

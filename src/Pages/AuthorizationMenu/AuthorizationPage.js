@@ -55,6 +55,7 @@ export default function AuthPage(props) {
                                             "menu": data.name,
                                             "code": action.code
                                         }
+                                        console.log("formdata: "+data.name+" "+action.code)
                                         api("POST", "localhost", "7098", "AuthorizationEndpoints", "GetRolesToEndpoint", null, formdata).then((data) => {
                                             if (data.datas != null) {
                                                 setRolesToEndpoint(data.datas)
@@ -64,7 +65,7 @@ export default function AuthPage(props) {
                                             }
                                         });
                                     }} DialogTitle={action.definiton + " Endpoint'ine Rol Atama"}
-                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata2" Button2="İptal Et"
+                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={[]} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata2" Button2="İptal Et"
                                         apifunction={() => {
                                             let formdata = {
                                                 "menu": String(data.name),
@@ -73,7 +74,7 @@ export default function AuthPage(props) {
                                                     return element.name;
                                                 })
                                             }
-                                            console.log(formdata);
+                                           
                                             api("POST", "localhost", "7098", "AuthorizationEndpoints", "AssingRoleEndpoint", null, formdata);
                                         }}></ConfirmDialog>
 

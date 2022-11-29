@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import OrdersPage from '../Orders/OrdersPage';
 import AuthPage from '../AuthorizationMenu/AuthorizationPage';
 import RolesPage from '../Roles/RolesPage';
+import UsersPage from '../Users/UsersPage';
 
 
 
@@ -47,6 +48,12 @@ export default function AdminPanel() {
                         setTable(<RolesPage></RolesPage>)
                     }}>
                         Roles
+                    </button>
+
+                    <button style={buttonStyle} onClick={() => {
+                        setTable(<UsersPage></UsersPage>)
+                    }}>
+                        Users
                     </button>
                 </div>
                 <div class="col-10">

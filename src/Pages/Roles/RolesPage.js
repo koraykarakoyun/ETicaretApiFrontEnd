@@ -23,18 +23,23 @@ import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 
 export default function RolesPage(props) {
-    const [deger, setDeger] = useState([]);
+    const [deger, setDeger] = useState({ success: false, data: [] });
     useEffect(() => {
         api("GET", "localhost", "7098", "Roles", "getallroles", null, null).then((data) => {
 
-            console.log(data.result);
-            setDeger(data.result)
+            if (data.status == 401) {
+                setDeger({ success: false, data: [] })
+            }
+            else {
+                setDeger({ success: true, data: data.result })
+            }
+
         });
     }, [])
 
 
     return (
-        <div style={{ marginLeft: "64px" }}>
+        deger.success ? (<div style={{ marginLeft: "64px" }}>
             <ToastContainer />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -50,7 +55,7 @@ export default function RolesPage(props) {
                     </TableHead>
 
                     <TableBody>
-                        {deger.map((row) => (
+                        {deger.data.map((row) => (
                             <TableRow key={row.id}>
                                 <TableCell align="center">{row.name}</TableCell>
 
@@ -116,7 +121,7 @@ export default function RolesPage(props) {
 
                 </Table>
             </TableContainer>
-        </div>
+        </div>) : (null)
     );
 
 }

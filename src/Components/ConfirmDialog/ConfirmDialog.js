@@ -23,9 +23,11 @@ Button2:"",
 export default function ConfirmDialog(props) {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
-        props.handleclickfunction();
+        if (props.handleclickfunction!= undefined) {
+            props.handleclickfunction();
+        }
         setOpen(true);
-      
+
     };
     const handleClose = () => {
         setOpen(false);

@@ -22,22 +22,23 @@ import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 
 export default function ProductsPage(props) {
-  let token = localStorage.getItem("token");
-  const [deger, setDeger] = useState([]);
+  const [deger, setDeger] = useState({ success: false, data: [] });
 
 
   useEffect(() => {
-    api("GET", "localhost", "7098", "products", "getall", null, null, token).then((data) => {
-      //localStorage.setItem("token",data.token.accessToken);
-      //localStorage.setItem("refreshtoken",data.token.refreshToken);
-
-      
-      console.log(data)
-      setDeger(data);
+    api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
+            if (data.status == 401) {
+                setDeger({ success: false, data: [] })
+            }
+            else{ 
+                setDeger({ success: true, data: data })
+            }
+     
     });
-  }, ProductsPage)
+  },ProductsPage)
   return (
-    <div style={{ marginLeft: "64px" }}>
+
+    deger.success ? (<div style={{ marginLeft: "64px" }}>
       <ToastContainer />
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -53,7 +54,7 @@ export default function ProductsPage(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {deger.map((row) => (
+            {deger.data.map((row) => (
               <TableRow key={row.id}>
                 <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.stock}</TableCell>
@@ -86,7 +87,9 @@ export default function ProductsPage(props) {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+    </div>) : (null)
+
+
   );
 
 }

@@ -21,30 +21,39 @@ import RolesList from '../../Components/RolesList/RolesList';
 import { act } from 'react-dom/test-utils';
 
 export default function AuthPage(props) {
-    const [deger, setDeger] = useState([]);
+    const [deger, setDeger] = useState({ success: false, data: [] });
     const [rolesList, setRolesList] = useState();
     const [selectedRoles, setSelectedRoles] = useState([]);
     const [rolesToEndpoint, setRolesToEndpoint] = useState([]);
     useEffect(() => {
         api("GET", "localhost", "7098", "ApplicationServices", "GetAuthorizeDefinitonEndpoints", null, null).then((data) => {
-            console.log(data)
-            setDeger(data);
+
+            console.log(data);
+            if (data.status == 401) {
+                setDeger({ success: false, data: [] })
+            }
+            else {
+                setDeger({ success: true, data: data })
+            }
+
+
         });
 
         api("GET", "localhost", "7098", "Roles", "getallroles", null, null).then((data) => {
+            console.log(data);
             setRolesList(data.result);
         });
 
 
     }, [])
     return (
-        <div style={{ marginLeft: "0.1%" }}>
+        deger.success ? (<div style={{ marginLeft: "0.1%" }}>
             <TreeView
                 aria-label="file system navigator"
                 defaultCollapseIcon={<ExpandMoreIcon />}
                 defaultExpandIcon={<ChevronRightIcon />}
             >
-                {deger.map((data) => (
+                {deger.data.map((data) => (
                     <TreeItem nodeId={data.name} label={data.name}>
                         {
                             data.action.map(action => {
@@ -55,8 +64,9 @@ export default function AuthPage(props) {
                                             "menu": data.name,
                                             "code": action.code
                                         }
-                                        console.log("formdata: "+data.name+" "+action.code)
+                                        console.log("formdata: " + data.name + " " + action.code)
                                         api("POST", "localhost", "7098", "AuthorizationEndpoints", "GetRolesToEndpoint", null, formdata).then((data) => {
+                                            console.log(data.datas);
                                             if (data.datas != null) {
                                                 setRolesToEndpoint(data.datas)
                                             }
@@ -65,7 +75,7 @@ export default function AuthPage(props) {
                                             }
                                         });
                                     }} DialogTitle={action.definiton + " Endpoint'ine Rol Atama"}
-                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={[]} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata2" Button2="İptal Et"
+                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata2" Button2="İptal Et"
                                         apifunction={() => {
                                             let formdata = {
                                                 "menu": String(data.name),
@@ -74,7 +84,7 @@ export default function AuthPage(props) {
                                                     return element.name;
                                                 })
                                             }
-                                           
+
                                             api("POST", "localhost", "7098", "AuthorizationEndpoints", "AssingRoleEndpoint", null, formdata);
                                         }}></ConfirmDialog>
 
@@ -90,7 +100,7 @@ export default function AuthPage(props) {
                 )}
 
             </TreeView>
-        </div>
+        </div>) : (null)
     );
 
 }

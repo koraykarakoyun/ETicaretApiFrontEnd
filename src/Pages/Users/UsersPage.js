@@ -24,7 +24,7 @@ import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import RolesList from '../../Components/RolesList/RolesList';
 
 export default function UsersPage(props) {
-    const [deger, setDeger] = useState([]);
+    const [deger, setDeger] = useState({ success: false, data: [] });
     const [endpoint, setEndpoint] = useState([]);
     const [rolesList, setRolesList] = useState();
     const [rolesToEndpoint, setRolesToEndpoint] = useState([]);
@@ -32,7 +32,15 @@ export default function UsersPage(props) {
     const [selectedRoles, setSelectedRoles] = useState([]);
 
     useEffect(() => {
-
+        api("GET", "localhost", "7098", "Users", "Getallusers", null, null).then((data) => {
+            if (data.status == 401) {
+                setDeger({ success: false, data: [] })
+            }
+            else {
+                setDeger({ success: true, data: data })
+            }
+        });
+        
         api("GET", "localhost", "7098", "ApplicationServices", "GetAuthorizeDefinitonEndpoints", null, null).then((data) => {
             data.forEach(element => {
                 if (element.name == "Users") {
@@ -44,9 +52,7 @@ export default function UsersPage(props) {
             });
         });
 
-        api("GET", "localhost", "7098", "Users", "Getallusers", null, null).then((data) => {
-            setDeger(data)
-        });
+
 
         api("GET", "localhost", "7098", "Roles", "getallroles", null, null).then((data) => {
             setRolesList(data.result);
@@ -58,7 +64,7 @@ export default function UsersPage(props) {
 
 
     return (
-        <div style={{ marginLeft: "64px" }}>
+        deger.success ? (<div style={{ marginLeft: "64px" }}>
             <ToastContainer />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -77,7 +83,7 @@ export default function UsersPage(props) {
                     </TableHead>
 
                     <TableBody>
-                        {deger.map((row) => (
+                        {deger.data.map((row) => (
                             <TableRow key={row.id}>
 
                                 <TableCell align="center">{row.name + " " + row.surname}</TableCell>
@@ -125,7 +131,7 @@ export default function UsersPage(props) {
 
                 </Table>
             </TableContainer>
-        </div >
+        </div >) : (null)
     );
 
 }

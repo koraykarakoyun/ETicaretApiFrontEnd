@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
@@ -22,19 +22,33 @@ import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import OrderDetailPage from './OrderDetailPage';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { useNavigate } from "react-router";
+import ProductAdd from '../Products/ProductAddPage';
+import ProductsPage from '../Products/ProductsPage';
+
+
 
 export default function OrdersPage(props) {
-    const [deger, setDeger] = useState([]);
-
-
+    const [deger, setDeger] = useState({ success: false, data: [] });
+    const navigate = useNavigate();
     useEffect(() => {
+
         api("GET", "localhost", "7098", "orders", "getallorders", null, null).then((data) => {
-            console.log(data)
-            setDeger(data);
+            if (data.status == 401) {
+                setDeger({ success: false, data: [] })
+            }
+            else {
+                setDeger({ success: true, data: data })
+            }  
         });
     }, OrdersPage)
+
+
+
     return (
-        <div style={{ marginLeft: "0.1%" }}>
+
+
+        deger.success ? (<div style={{ marginLeft: "0.1%" }} >
             <ToastContainer />
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -49,41 +63,48 @@ export default function OrdersPage(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {deger.map((row) => (
-                            <TableRow key={row.orderBasketId}>
-                                <TableCell align="center">{row.orderCode}</TableCell>
-                                <TableCell align="center">{row.userName}</TableCell>
-                                <TableCell align="center">{row.createdDate}</TableCell>
+                        {
+                            (deger.data.map((row) => (
+                                <TableRow key={row.orderBasketId}>
+                                    <TableCell align="center">{row.orderCode}</TableCell>
+                                    <TableCell align="center">{row.userName}</TableCell>
+                                    <TableCell align="center">{row.createdDate}</TableCell>
 
-                                <TableCell align="center">{row.orderCompleted ? (<CheckCircleIcon ></CheckCircleIcon>) : null}</TableCell>
-                                <TableCell align="center">
-                                    <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" apifunction={null} DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId} rowOrderCode={row.orderCode}></OrderDetailPage>}
-                                        Button1=
-                                        {
-                                            row.orderCompleted ? null : (
-                                                <ConfirmDialog DialogTitle="Sipariş Detayı" DialogContent="Siparişi Tamamlamak istiyormusunuz" Button1="Evet" Button2="Hayır" apifunction={() => {
-                                                    console.log(row.orderBasketId)
-                                                    api("POST", "localhost", "7098", "orders", "CompleteOrder", row.orderBasketId, null).then(res => console.log(res));
-                                                }}>
+                                    <TableCell align="center">{row.orderCompleted ? (<CheckCircleIcon ></CheckCircleIcon>) : null}</TableCell>
+                                    <TableCell align="center">
+                                        <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" apifunction={null} HAND DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId} rowOrderCode={row.orderCode}></OrderDetailPage>}
+                                            Button1=
+                                            {
+                                                row.orderCompleted ? null : (
+                                                    <ConfirmDialog DialogTitle="Sipariş Detayı" DialogContent="Siparişi Tamamlamak istiyormusunuz" Button1="Evet" Button2="Hayır" apifunction={() => {
+                                                        console.log(row.orderBasketId)
+                                                        api("POST", "localhost", "7098", "orders", "CompleteOrder", row.orderBasketId, null).then(res => console.log(res));
+                                                    }}>
 
-                                                </ConfirmDialog>
-                                            )
-                                        }
-                                        Button2="Kapat"
-                                    ></ConfirmDialog>
-                                </TableCell>
+                                                    </ConfirmDialog>
+                                                )
+                                            }
+                                            Button2="Kapat"
+                                        ></ConfirmDialog>
+                                    </TableCell>
 
-                                <TableCell align="center">
-                                    <IconButton aria-label="delete">
-                                        <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır"></ConfirmDialog>
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                                    <TableCell align="center">
+                                        <IconButton aria-label="delete">
+                                            <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır"></ConfirmDialog>
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            )))
+
+
+
+                        }
                     </TableBody>
                 </Table>
             </TableContainer>
-        </div>
+        </div >) : (null)
+
+
     );
 
 }

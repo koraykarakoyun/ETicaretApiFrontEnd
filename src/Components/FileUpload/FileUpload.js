@@ -13,7 +13,7 @@ export default function FileUpload(props) {
     const [IsSelected, setIsSelected] = useState(false);
     const [isConfirm, setIsConfirm] = useState(false);
 
-  
+
 
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -21,16 +21,7 @@ export default function FileUpload(props) {
 
     };
 
-    useEffect(() => {
-        if (isConfirm) {
-
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('fileName', selectedFile.name);
-            formData.append('ProductId', props.productId);
-            api("POST", "localhost", "7098", "products", "upload", null, formData).then(res => console.log(res));
-        }
-    })
+  
 
     return (
         <div>
@@ -47,12 +38,19 @@ export default function FileUpload(props) {
                 </div>
             ) : null}
             <div>
-                <ConfirmDialog buttonName="Resmi Kaydet" setIsConfirm={setIsConfirm}></ConfirmDialog>
+                <ConfirmDialog buttonName="Resmi Kaydet" apifunction={() => {
+
+                    const formData = new FormData();
+                    formData.append('file', selectedFile);
+                    formData.append('fileName', selectedFile.name);
+                    formData.append('ProductId', props.productId);
+                    api("POST", "localhost", "7098", "products", "upload", null, formData).then(res => console.log(res));
+                }} ></ConfirmDialog>
             </div>
 
 
-            <div style={{width:"100%" ,border:"1px solid black",marginTop:"2%"}}>
-            <FileUploadPosts productId={props.productId}></FileUploadPosts>
+            <div style={{ width: "100%", border: "1px solid black", marginTop: "2%" }}>
+                <FileUploadPosts productId={props.productId}></FileUploadPosts>
             </div>
         </div>
     )

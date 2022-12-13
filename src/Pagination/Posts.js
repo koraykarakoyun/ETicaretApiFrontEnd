@@ -36,14 +36,9 @@ const Posts = ({ posts }) => {
                 <CardMedia
                   component="img"
                   src={
-                    post.productImageFile.map(element => {
-                      if (element.showCase) {
-                        console.log(`http://127.0.0.1:8887/${element.path}`)
-                        return (`http://127.0.0.1:8887/${element.path}`)
-                      }
-                    })
+                    `http://127.0.0.1:8887/${post.path}`
                   }
-                  style={{height:"15rem", width: "100%",objectFit:"fill"}}
+                  style={{ height: "15rem", width: "100%", objectFit: "fill" }}
                 />
                 <CardContent style={{ padding: "1rem" }}>
                   <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto", marginBottom: "1rem", fontSize: "1rem", textOverflow: "ellipsis", maxHeight: "1.2rem" }}>
@@ -68,8 +63,8 @@ const Posts = ({ posts }) => {
                       productid: id,
                       quantity: "1"
                     }
-                 
-                    api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data).then(res=>console.log(res));
+
+                    api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data).then(res => console.log(res));
 
                   }} variant="contained" style={{ width: "100%" }}>Sepete ekle</Button>
                 </CardActions>

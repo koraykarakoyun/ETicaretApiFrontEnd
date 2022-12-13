@@ -32,18 +32,7 @@ const FileUploadPosts = (props) => {
 
     }, [FileUploadPosts])
 
-    if (IsConfirm) {
 
-        var data = {
-            "productid": String(productid),
-            "imageid": String(imageid)
-        }
-
-        api("PUT", "localhost", "7098", "products", "vitrin", null, data).then((res) => {
-            console.log(res);
-
-        });
-    }
 
 
     return (
@@ -61,7 +50,17 @@ const FileUploadPosts = (props) => {
                 </Card>
             ))}
             <div>
-                <ConfirmDialog buttonName="Vitrini Onayla" setIsConfirm={setIsConfirm}></ConfirmDialog>
+                <ConfirmDialog buttonName="Vitrini Onayla" apifunction={() => {
+                    var data = {
+                        "productid": String(productid),
+                        "imageid": String(imageid)
+                    }
+
+                    api("PUT", "localhost", "7098", "products", "vitrin", null, data).then((res) => {
+                        console.log(res);
+
+                    });
+                }}></ConfirmDialog>
             </div>
 
         </>

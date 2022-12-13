@@ -16,7 +16,7 @@ const MainPage = () => {
     useEffect(() => {
         api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
             setPosts(data);
-
+            console.log(data);
         });
     }, MainPage)
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useEffect } from 'react'
-import homeimage from "../../Image/homeimage.png"
 import { api } from '../../Utilities/Api'
 import { useState } from 'react'
 import Carousel from 'better-react-carousel'

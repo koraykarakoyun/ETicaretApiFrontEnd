@@ -12,53 +12,49 @@ import OrdersPage from '../Orders/OrdersPage';
 import AuthPage from '../AuthorizationMenu/AuthorizationPage';
 import RolesPage from '../Roles/RolesPage';
 import UsersPage from '../Users/UsersPage';
+import registerloginimage from "../../Image/register-login.jpg"
 
-
-
-
-let buttonStyle = {
-    "width": "100%"
+let backgroundImageDiv = {
+    "height": "100%",
+    "min-height": "54rem",
+    "background-repeat": "no-repeat",
+    "background-position": "center",
+    "background-size": "cover",
+    "background-image": `url(${registerloginimage})`,
 }
 
-export default function AdminPanel() {
+
+export default function AdminPanel(props) {
+    const [table, setTable] = useState(null);
+    useEffect(() => {
+        if (props.type === "products") {
+            setTable(<ProductsPage></ProductsPage>)
+
+        }
+        else if (props.type === "orders") {
+            setTable(<OrdersPage></OrdersPage>)
 
 
-    const [table, setTable] = useState(<ProductsPage></ProductsPage>);
+        }
+        else if (props.type === "users") {
+            setTable(<UsersPage></UsersPage>)
+
+        }
+
+        else if (props.type === "roles") {
+            setTable(<RolesPage></RolesPage>)
+
+        }
+        else if (props.type === "auth") {
+            setTable(<AuthPage></AuthPage>)
+
+        }
+    }, [props.type])
+
     return (
-        <div class="container" style={{ border: "1px solid black", marginTop: "1%" }}>
-            <div class="row">
-                <div class="col-2">
-                    <button style={buttonStyle} onClick={() => {
-                        setTable(<ProductsPage></ProductsPage>)
-                    }}>
-                        Products
-                    </button>
-                    <button style={buttonStyle} onClick={() => {
-                        setTable(<OrdersPage></OrdersPage>)
-                    }}>
-                        Orders
-                    </button>
-                    <button style={buttonStyle} onClick={() => {
-                        setTable(<AuthPage></AuthPage>)
-                    }} >
-                        Authorization Menu
-                    </button>
-
-                    <button style={buttonStyle} onClick={() => {
-                        setTable(<RolesPage></RolesPage>)
-                    }}>
-                        Roles
-                    </button>
-
-                    <button style={buttonStyle} onClick={() => {
-                        setTable(<UsersPage></UsersPage>)
-                    }}>
-                        Users
-                    </button>
-                </div>
-                <div class="col-10">
-                    {table}
-                </div>
+        <div style={backgroundImageDiv}>
+            <div class="container">
+                {table}
             </div>
         </div>
     );

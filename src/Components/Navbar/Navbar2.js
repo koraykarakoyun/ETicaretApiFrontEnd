@@ -26,7 +26,8 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import homeimage from "../../Image/homeimage.png"
+import home from "../../Image/home.png"
+import AdminDrawer from '../AdminDrawer/AdminDrawer';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -148,20 +149,16 @@ function Navbar2(props) {
 
     return (
         <Box >
-            <AppBar style={{ backgroundColor: "#576F72" }} position="static">
+            <AppBar style={{ backgroundColor: "#193441" }} position="static">
                 <Toolbar style={{ height: "6rem" }}>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 3.5 }}>
                     </Typography>
-
-
-                    <Link style={{}} to="/">
+                    <Link to="/">
                         <img
-                            src={homeimage}
-                            style={{ height: "5rem" }}
+                            src={home}
+                            style={{ height: "6rem" }}
                         />
                     </Link>
-
-
                     <Typography variant="h6" component="div" sx={{ flexGrow: 6 }}>
                         <Search>
                             <SearchIconWrapper>
@@ -174,22 +171,17 @@ function Navbar2(props) {
                         </Search>
                     </Typography>
                     {
-                        console.log(props.authstate)
-                    }
-
-                    {
 
                         props.authstate.isAuth ? (
 
-                            props.authstate.role === "Admin"||props.authstate.role==="Moderator" ? (<>
-                                <Typography variant="h6" component="div" sx={{ flexGrow: 0.1 }}>
-                                    <IconButton>
-                                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                            props.authstate.role === "Admin" || props.authstate.role === "Moderator" ? (<>
+                                <IconButton>
+                                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
-                                            <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/adminpanel"><AdminPanelSettingsIcon></AdminPanelSettingsIcon>Admin Paneli</Link>
-                                        </Box>
-                                    </IconButton>
-                                </Typography>
+                                        <AdminDrawer></AdminDrawer>
+                                    </Box>
+
+                                </IconButton>
 
                             </>) : (null)
 

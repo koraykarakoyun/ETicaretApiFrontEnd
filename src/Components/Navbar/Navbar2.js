@@ -173,12 +173,15 @@ function Navbar2(props) {
                             />
                         </Search>
                     </Typography>
-
-
+                    {
+                        console.log(props.authstate)
+                    }
 
                     {
+
                         props.authstate.isAuth ? (
-                            <>
+
+                            props.authstate.role === "Admin"||props.authstate.role==="Moderator" ? (<>
                                 <Typography variant="h6" component="div" sx={{ flexGrow: 0.1 }}>
                                     <IconButton>
                                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -188,10 +191,9 @@ function Navbar2(props) {
                                     </IconButton>
                                 </Typography>
 
-                            </>
-                        ) : (<>
+                            </>) : (null)
 
-                        </>)
+                        ) : (null)
                     }
 
                     <Typography variant="h6" component="div" sx={{ flexGrow: 0.1 }}>

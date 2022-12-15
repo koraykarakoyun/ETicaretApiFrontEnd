@@ -22,6 +22,7 @@ import AddIcon from '@mui/icons-material/Add';
 import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import RolesList from '../../Components/RolesList/RolesList';
+import UserAuth from './UserAuth';
 
 export default function UsersPage(props) {
     const [deger, setDeger] = useState({ success: false, data: [] });
@@ -30,7 +31,9 @@ export default function UsersPage(props) {
     const [rolesToEndpoint, setRolesToEndpoint] = useState([]);
     const [formdata, setFormdata] = useState({});
     const [selectedRoles, setSelectedRoles] = useState([]);
-
+    const [userAuthRoles, setUserAuthRoles] = useState([]);
+    const [selectedUserAuthRoles, setSelectedUserAuthRoles] = useState("");
+    const [defaultUserAuthRoles, setDefaultUserAuthRoles] = useState("");
     useEffect(() => {
         api("GET", "localhost", "7098", "Users", "Getallusers", null, null).then((data) => {
             if (data.status == 401) {
@@ -40,7 +43,7 @@ export default function UsersPage(props) {
                 setDeger({ success: true, data: data })
             }
         });
-        
+
         api("GET", "localhost", "7098", "ApplicationServices", "GetAuthorizeDefinitonEndpoints", null, null).then((data) => {
             data.forEach(element => {
                 if (element.name == "Users") {
@@ -58,7 +61,9 @@ export default function UsersPage(props) {
             setRolesList(data.result);
         });
 
-
+        api("GET", "localhost", "7098", "UserAuthRoles", "GetAllUserAuthRoles", null, null).then((res) => {
+            setUserAuthRoles(res);
+        })
 
     }, [])
 
@@ -74,10 +79,9 @@ export default function UsersPage(props) {
                             <TableCell align="center">Email</TableCell>
                             <TableCell align="center">UserName</TableCell>
                             <TableCell align="center">Two Factory</TableCell>
+                            <TableCell align="center">Rol Ata</TableCell>
+                            <TableCell align="center">Yetki Ata</TableCell>
 
-                            <TableCell align="right">Add</TableCell>
-                            <TableCell align="right">Update</TableCell>
-                            <TableCell align="right">Delete</TableCell>
 
                         </TableRow>
                     </TableHead>
@@ -90,10 +94,7 @@ export default function UsersPage(props) {
                                 <TableCell align="center">{row.email}</TableCell>
                                 <TableCell align="center">{row.userName}</TableCell>
                                 <TableCell align="center">{row.twoFactoryEnable}</TableCell>
-
-
-                                <TableCell align="right">
-
+                                <TableCell align="center">
                                     <ConfirmDialog buttonName="Rol Ata" handleclickfunction={() => {
 
                                         api("GET", "localhost", "7098", "Users", "GetByIdUserRoles", row.id, null).then((data) => {
@@ -106,10 +107,8 @@ export default function UsersPage(props) {
                                             }
                                         });
                                     }}
-
                                         DialogTitle=" Endpoint'ine Rol Atama"
-                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata2" Button2="İptal Et"
-
+                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rolu Onayla" Button2="İptal Et"
                                         apifunction={() => {
                                             let userData = {
                                                 "id": row.id,
@@ -117,13 +116,46 @@ export default function UsersPage(props) {
                                                     return element.name;
                                                 })
                                             }
-
                                             api("POST", "localhost", "7098", "Users", "AssignUserRoles", null, userData);
+                                        }}
+                                    ></ConfirmDialog>
+                                </TableCell>
+
+
+
+
+                                <TableCell align="center">
+
+                                    <ConfirmDialog buttonName="Yetki Ata" handleclickfunction={() => {
+                                        api("PUT", "localhost", "7098", "UserAuthRoles", "GetByIdUserAuthRole", row.id, null).then((data) => {
+
+                                            setDefaultUserAuthRoles(data.roleId)
+
+                                        });
+                                    }}
+
+                                        DialogTitle="Kullanıcıya Yetki Atama"
+                                        DialogContent={<UserAuth setSelectedUserAuthRoles={setSelectedUserAuthRoles} userAuthRoles={userAuthRoles}
+                                            defaultUserAuthRoles={defaultUserAuthRoles}
+                                        ></UserAuth>} Button1="Yetkiyi Onayla" Button2="İptal Et"
+
+                                        apifunction={() => {
+                                            let userData = {
+                                                "userid": row.id,
+                                                "roleid": selectedUserAuthRoles
+                                            }
+                                            api("PUT", "localhost", "7098", "UserAuthRoles", "SetUserAuthRole", null, userData);
+
                                         }}
 
                                     ></ConfirmDialog>
 
                                 </TableCell>
+
+
+
+
+
 
                             </TableRow>
                         ))}

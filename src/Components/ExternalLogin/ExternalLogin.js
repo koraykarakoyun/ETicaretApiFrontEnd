@@ -25,7 +25,7 @@ const ExternalLogin = (props) => {
         gapi.load('client:auth2', initClient);
 
     });
-    
+
     const onSuccess = (res) => {
         let data = {
             "IdToken": res.tokenId,
@@ -36,17 +36,16 @@ const ExternalLogin = (props) => {
             "Provider": res.tokenObj.idpId,
         }
 
-        api("POST", "localhost", "7098", "auth", "google", null, data, null)
+        api("POST", "localhost", "7098", "auth", "google", null, data)
             .then(res => {
                 if (res.isSuccess) {
 
                     notify("Google Girisi Yapildi")
                     localStorage.setItem("googletoken", res.token.accessToken)
-                    props.authanticated("google");
-
+                    props.authanticated("google", res.userAuthRoleName);
                 }
-                else {
-                    console.log(res.message)
+                else{
+                    props.notauthanticated();
                 }
             }
             );
@@ -60,17 +59,16 @@ const ExternalLogin = (props) => {
         let data = {
             "accessToken": String(response.accessToken)
         }
-        api("POST", "localhost", "7098", "auth", "facebook", null, data, null).then(res => {
+        api("POST", "localhost", "7098", "auth", "facebook", null, data).then(res => {
             if (res.isSuccess) {
 
                 notify("Facebook Girisi Yapildi")
                 localStorage.setItem("facebooktoken", res.token.accessToken)
-                props.authanticated("facebook");
+                props.authanticated("facebook", res.userAuthRoleName);
             }
-            else {
-                console.log(res.message)
+            else{
+                props.notauthanticated();
             }
-
 
         }
         );

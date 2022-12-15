@@ -19,8 +19,8 @@ import registerloginimage from "../../Image/register-login.jpg"
 
 function LoginForm(props) {
 
-  
-    
+
+
 
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -48,14 +48,17 @@ function LoginForm(props) {
             "Password": password,
         }
 
-        api("POST", "localhost", "7098", "auth", "login", null, user_data, null).then(res => {
+        api("POST", "localhost", "7098", "auth", "login", null, user_data).then(res => {
+
             if (res.isSuccess == true) {
-                console.log(res);
-                props.authanticated("internal");
+                props.authanticated("internal", res.userAuthRoleName);
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
                 notify(res.message)
 
+            }
+            else{
+                props.notauthanticated();
             }
 
         })
@@ -65,10 +68,10 @@ function LoginForm(props) {
     }
 
     return (
-        <div className='backgroundImageDiv' style={{backgroundImage:`url(${registerloginimage})`}}>
+        <div className='backgroundImageDiv' style={{ backgroundImage: `url(${registerloginimage})` }}>
             <ToastContainer />
 
-            <div style={{ border: "1px solid black" }}  className="form">
+            <div style={{ border: "1px solid black" }} className="form">
                 <div className="form-body">
 
                     <div className="email">
@@ -92,7 +95,7 @@ function LoginForm(props) {
                 </div>
 
             </div>
-            </div>
+        </div>
     )
 }
 

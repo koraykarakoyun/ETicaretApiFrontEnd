@@ -1,6 +1,8 @@
  const AuthState = {
     isAuth: false,
-    activeAccount: ""
+    activeAccount: "",
+    role:""
+
 }
 
 
@@ -12,7 +14,8 @@ const Authreducer = (state = AuthState, action) => {
         case "authanticated": {
             return state = {
                 isAuth: true,
-                activeAccount: action.activeAccount
+                activeAccount: action.activeAccount,
+                role:action.role
             };
 
         }
@@ -21,7 +24,7 @@ const Authreducer = (state = AuthState, action) => {
             localStorage.clear();
             return state = {
                 isAuth: false,
-                activeAccount:action.activeAccount
+                activeAccount:action.activeAccount,
             };
         }
         default:

@@ -1,6 +1,7 @@
-export const authanticated = (activeAccountType) => ({
+export const authanticated = (activeAccountType,role) => ({
     type: "authanticated",
-    activeAccount:activeAccountType
+    activeAccount:activeAccountType,
+    role:role
 })
 
 

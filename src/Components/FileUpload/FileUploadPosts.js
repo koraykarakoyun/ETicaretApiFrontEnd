@@ -18,18 +18,18 @@ const FileUploadPosts = (props) => {
     const [IsConfirm, setIsConfirm] = useState();
 
     const handleChange = (event) => {
+
+
         setproductid(props.productId)
         setimageid(event.target.value)
+
     }
 
     useEffect(() => {
-        console.log(props.productId);
         api("GET", "localhost", "7098", "products", "GetImage", props.productId, null).then((data) => {
-
             setPosts(data);
             console.log(data);
         });
-
     }, [FileUploadPosts])
 
 
@@ -38,9 +38,10 @@ const FileUploadPosts = (props) => {
     return (
         <>
             {posts.map(post => (
+
                 <Card sx={{ maxWidth: "23%", display: "inline-block", marginTop: "1.2%", marginLeft: "1.4%" }}>
 
-                    <input type="radio" value={post.id} name='img' onClick={handleChange}></input>
+                    <input type="radio" value={post.productId} name='img' onClick={handleChange}></input>
                     <CardMedia
                         component="img"
                         src={"http://127.0.0.1:8887/" + post.path}
@@ -49,15 +50,16 @@ const FileUploadPosts = (props) => {
 
                 </Card>
             ))}
+
             <div>
                 <ConfirmDialog buttonName="Vitrini Onayla" apifunction={() => {
                     var data = {
-                        "productid": String(productid),
-                        "imageid": String(imageid)
+                        "ProductId": String(productid),
+                        "ImageId": String(imageid)
                     }
-
+             
                     api("PUT", "localhost", "7098", "products", "vitrin", null, data).then((res) => {
-                        console.log(res);
+                      
 
                     });
                 }}></ConfirmDialog>

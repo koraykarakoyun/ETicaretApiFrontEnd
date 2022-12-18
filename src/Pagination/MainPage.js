@@ -3,6 +3,7 @@ import Posts from "./Posts"
 import Pagination from "./Pagination"
 import { api } from '../Utilities/Api';
 import ImageCarousel from '../Components/ImageSliderCarousel/ImageSliderCarousel';
+import { useParams } from "react-router-dom";
 
 const divMargin = {
     marginLeft: "5%",
@@ -13,11 +14,21 @@ const MainPage = () => {
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(20);
+    let { category } = useParams();
     useEffect(() => {
-        api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
-            setPosts(data);
-            console.log(data);
-        });
+        if (category != undefined) {
+            api("GET", "localhost", "7098", "categories", "getbynamecategoryinproducts", category, null).then((data) => {
+                console.log(data);
+                setPosts(data);
+            });
+        }
+        else {
+            api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
+                setPosts(data);
+                console.log(data);
+            });
+        }
+
     }, MainPage)
 
     const indexOfLastPost = currentPage * postsPerPage;

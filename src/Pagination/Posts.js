@@ -42,13 +42,13 @@ const Posts = ({ posts }) => {
                 />
                 <CardContent style={{ padding: "1rem" }}>
                   <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto", marginBottom: "1rem", fontSize: "1rem", textOverflow: "ellipsis", maxHeight: "1.2rem" }}>
-                    Name:{post.name}
+                    Name:{post.productName}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Stock:{post.stock}
+                    Stock:{post.productStock}
                   </Typography>
                   <Typography variant="body2" style={{ marginTop: "2%", fontSize: "1rem" }}>
-                    <strong>Fiyat:{post.price} TL</strong>
+                    <strong>Fiyat:{post.productPrice} TL</strong>
                   </Typography>
                 </CardContent>
                 <CardActions>

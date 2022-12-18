@@ -55,6 +55,7 @@ function LoginForm(props) {
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
                 notify(res.message)
+                
 
             }
             else{

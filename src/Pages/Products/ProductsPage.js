@@ -55,24 +55,21 @@ export default function ProductsPage(props) {
           </TableHead>
           <TableBody>
             {deger.data.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.stock}</TableCell>
-                <TableCell align="left">{row.price}</TableCell>
+              <TableRow key={row.productId}>
+                <TableCell align="left">{row.productName}</TableCell>
+                <TableCell align="left">{row.producStock}</TableCell>
+                <TableCell align="left">{row.productPrice}</TableCell>
                 <TableCell align="left">
                   <Link to={`/addproduct`}><AddIcon></AddIcon></Link>
                 </TableCell>
                 <TableCell align="left">
-                  <Link to={`/updateproduct/${row.id}`}><AutorenewIcon /></Link>
+                  <Link to={`/updateproduct/${row.productId}`}><AutorenewIcon /></Link>
                 </TableCell>
                 <TableCell align="left">
                   <IconButton aria-label="delete">
 
                     <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" apifunction={() => {
-                      let data = {
-                        id: String(row.id)
-                      }
-                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.id, data).then(response => {
+                      api("DELETE", "localhost", "7098", "products", "deletebyid", row.productId,null).then(response => {
                         notify(response.message);
                       })
                     }} ></ConfirmDialog>
@@ -80,7 +77,7 @@ export default function ProductsPage(props) {
                   </IconButton>
                 </TableCell>
                 <TableCell align="left">
-                  <FileUploadModelDialog productId={row.id}></FileUploadModelDialog>
+                  <FileUploadModelDialog productId={row.productId}></FileUploadModelDialog>
                 </TableCell>
               </TableRow>
             ))}

@@ -33,6 +33,7 @@ const Main_Routers = (props) => {
                 <Route path="/" element={<MainPage></MainPage>} />
                 <Route path="/register" element={<RegistrationForm ></RegistrationForm>} />
                 <Route path="/login" element={<LoginForm></LoginForm>} />
+                <Route path="/:category" element={<MainPage></MainPage>} />
             </Routes>
         )
     }
@@ -41,22 +42,24 @@ const Main_Routers = (props) => {
             <Routes>
                 <Route path="*" element={<MainPage></MainPage>} />
                 <Route path="/adminpanel" element={<AdminPanel type="products"></AdminPanel>} />
-                
+
                 <Route path="/adminpanel/products" element={<AdminPanel type="products"></AdminPanel>} />
                 <Route path="/adminpanel/orders" element={<AdminPanel type="orders"></AdminPanel>} />
                 <Route path="/adminpanel/users" element={<AdminPanel type="users"></AdminPanel>} />
                 <Route path="/adminpanel/roles" element={<AdminPanel type="roles"></AdminPanel>} />
                 <Route path="/adminpanel/auth" element={<AdminPanel type="auth"></AdminPanel>} />
-
-                <Route path="/products" element={<ProductsPage></ProductsPage>} />
+                {/* Admin Panel */}
                 <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />
                 <Route path="/updateproduct" element={<ProductUpdate ></ProductUpdate>} />
                 <Route path="/updateproduct/:id" element={<ProductUpdate ></ProductUpdate>} />
                 <Route path="/deleteproduct" element={<ProductDelete ></ProductDelete>} />
                 <Route path="/deleteproduct/:id" element={<ProductDelete></ProductDelete>} />
-                
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
                 <Route path="/mybasket" element={<MyBasket></MyBasket>} />
+                {/* Admin Panel */}
+                <Route path="/:category" element={<MainPage></MainPage>} />
+
+
             </Routes>
         )
     }

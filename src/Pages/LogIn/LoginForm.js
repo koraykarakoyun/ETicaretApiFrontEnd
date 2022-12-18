@@ -16,6 +16,7 @@ import { Navigate } from 'react-router';
 import { Button } from '@mui/material';
 import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
 import registerloginimage from "../../Image/register-login.jpg"
+import { Link } from 'react-router-dom';
 
 function LoginForm(props) {
 
@@ -55,10 +56,10 @@ function LoginForm(props) {
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
                 notify(res.message)
-                
+
 
             }
-            else{
+            else {
                 props.notauthanticated();
             }
 

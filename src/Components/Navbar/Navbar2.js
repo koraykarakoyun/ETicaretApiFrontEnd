@@ -242,7 +242,9 @@ function Navbar2(props) {
                 </Toolbar>
             </AppBar>
             {renderMenu}
+            <hr style={{margin:"0",color:"white",height:"1px"}}></hr>
         </Box>
+        
     );
 }
 

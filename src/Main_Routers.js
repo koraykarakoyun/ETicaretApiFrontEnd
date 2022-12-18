@@ -17,6 +17,7 @@ import MyBasket from './Pages/MyBasket/MyBasket';
 import Navbar2 from './Components/Navbar/Navbar2';
 import { useEffect } from 'react';
 import { api } from './Utilities/Api';
+import CategoriesNavbar from './Components/CategoriesNavbar/CategoriesNavbar';
 
 
 const Main_Routers = (props) => {
@@ -69,6 +70,7 @@ const Main_Routers = (props) => {
     return (
         < BrowserRouter >
             <Navbar2></Navbar2>
+            <CategoriesNavbar></CategoriesNavbar>
             <>
 
                 {routes}

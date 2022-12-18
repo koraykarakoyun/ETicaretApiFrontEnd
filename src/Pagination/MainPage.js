@@ -29,7 +29,7 @@ const MainPage = () => {
             });
         }
 
-    }, MainPage)
+    }, [category])
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;

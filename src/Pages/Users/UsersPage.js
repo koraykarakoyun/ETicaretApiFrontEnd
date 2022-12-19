@@ -17,12 +17,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import AddIcon from '@mui/icons-material/Add';
-
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import RolesList from '../../Components/RolesList/RolesList';
 import UserAuth from './UserAuth';
+
 
 export default function UsersPage(props) {
     const [deger, setDeger] = useState({ success: false, data: [] });
@@ -36,7 +37,9 @@ export default function UsersPage(props) {
     const [defaultUserAuthRoles, setDefaultUserAuthRoles] = useState("");
     useEffect(() => {
         api("GET", "localhost", "7098", "Users", "Getallusers", null, null).then((data) => {
+            console.log(data);
             if (data.status == 401) {
+              
                 setDeger({ success: false, data: [] })
             }
             else {
@@ -93,7 +96,9 @@ export default function UsersPage(props) {
                                 <TableCell align="center">{row.name + " " + row.surname}</TableCell>
                                 <TableCell align="center">{row.email}</TableCell>
                                 <TableCell align="center">{row.userName}</TableCell>
-                                <TableCell align="center">{row.twoFactoryEnable}</TableCell>
+                                <TableCell align="center">{
+                                row.twoFactoryEnable?(<CheckCircleIcon></CheckCircleIcon>):(<RemoveCircleIcon></RemoveCircleIcon>)
+                                }</TableCell>
                                 <TableCell align="center">
                                     <ConfirmDialog buttonName="Rol Ata" handleclickfunction={() => {
 

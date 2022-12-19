@@ -167,6 +167,14 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 ).then(res => res.json())
             }
 
+            else if (action == "addslidephoto") {
+                return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+                    body: formData,
+                    method: method_type
+                }
+                ).then(res => res.json())
+            }
+
             return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({
                     'content-type': 'application/json',

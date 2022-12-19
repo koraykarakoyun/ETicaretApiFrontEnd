@@ -23,7 +23,7 @@ Button2:"",
 export default function ConfirmDialog(props) {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
-        if (props.handleclickfunction!= undefined) {
+        if (props.handleclickfunction != undefined) {
             props.handleclickfunction();
         }
         setOpen(true);
@@ -59,10 +59,13 @@ export default function ConfirmDialog(props) {
                     {props.DialogContent}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => {
-                        props.apifunction()
-                        handleClose()
-                    }}>{props.Button1}</Button>
+                    {
+                        props.apifunction ? (<Button onClick={() => {
+                            props.apifunction()
+                            handleClose()
+                        }}>{props.Button1}</Button>) : (null)
+                    }
+
                     <Button onClick={() => {
                         handleClose()
                     }}>{props.Button2}</Button>

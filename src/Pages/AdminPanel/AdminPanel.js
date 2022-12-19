@@ -13,6 +13,7 @@ import AuthPage from '../AuthorizationMenu/AuthorizationPage';
 import RolesPage from '../Roles/RolesPage';
 import UsersPage from '../Users/UsersPage';
 import registerloginimage from "../../Image/register-login.jpg"
+import SliderPage from '../Slider/SliderPage';
 
 let backgroundImageDiv = {
     "height": "100%",
@@ -47,6 +48,10 @@ export default function AdminPanel(props) {
         }
         else if (props.type === "auth") {
             setTable(<AuthPage></AuthPage>)
+
+        }
+        else if (props.type === "slider") {
+            setTable(<SliderPage></SliderPage>)
 
         }
     }, [props.type])

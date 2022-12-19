@@ -49,6 +49,7 @@ const Main_Routers = (props) => {
                 <Route path="/adminpanel/users" element={<AdminPanel type="users"></AdminPanel>} />
                 <Route path="/adminpanel/roles" element={<AdminPanel type="roles"></AdminPanel>} />
                 <Route path="/adminpanel/auth" element={<AdminPanel type="auth"></AdminPanel>} />
+                <Route path="/adminpanel/slider" element={<AdminPanel type="slider"></AdminPanel>} />
                 {/* Admin Panel */}
                 <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />
                 <Route path="/updateproduct" element={<ProductUpdate ></ProductUpdate>} />

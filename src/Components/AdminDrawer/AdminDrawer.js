@@ -24,8 +24,8 @@ export default function AdminDrawer() {
         right: false,
     });
     const anchor = "Admin Panel"
-    const leftmenustyle = {textDecoration:"none",color: "black" }
-    const linkstyle = { textDecoration:"none", width: "100%" }
+    const leftmenustyle = { textDecoration: "none", color: "black" }
+    const linkstyle = { textDecoration: "none", width: "100%" }
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (
@@ -101,6 +101,18 @@ export default function AdminDrawer() {
                     </ListItemButton>
                 </Link>
             </ListItem>
+
+            <ListItem disablePadding>
+                <Link style={linkstyle} to="/adminpanel/slider">
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText style={leftmenustyle} primary={"Slider"} />
+                    </ListItemButton>
+                </Link>
+            </ListItem>
+
             <Divider />
 
         </Box>

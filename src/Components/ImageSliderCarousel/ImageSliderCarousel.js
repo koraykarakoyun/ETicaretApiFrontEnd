@@ -11,25 +11,22 @@ const ImageSliderCarousel = () => {
 
     useEffect(() => {
 
-        api("GET", "localhost", "7098", "products", "getallimage", null, null).then(res => setImage(res));
-
+        api("GET", "localhost", "7098", "sliders", "getallslidephoto", null, null).then((res) => {
+            console.log(res);
+            setImage(res)
+        }
+        );
     }, [])
-
-
-
-
     return (
         <>
             <Carousel loop>
                 {
                     image.map(element => (
-                        <Carousel.Item > 
-                            <img style={{width:"100%",maxHeight:"40rem"}} src={`http://127.0.0.1:8887/${element.path}`} />
+                        <Carousel.Item>
+                            <img style={{ width: "100%", maxHeight: "40rem" }} src={`http://127.0.0.1:8887/${element.filePath}`} />
                         </Carousel.Item>
                     ))
                 }
-
-
             </Carousel>
         </>
     )

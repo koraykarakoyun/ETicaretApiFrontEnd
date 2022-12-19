@@ -5,6 +5,7 @@ import { api } from '../Utilities/Api';
 import ImageCarousel from '../Components/ImageSliderCarousel/ImageSliderCarousel';
 import { useParams } from "react-router-dom";
 
+
 const divMargin = {
     marginLeft: "5%",
     marginRight: "5%"

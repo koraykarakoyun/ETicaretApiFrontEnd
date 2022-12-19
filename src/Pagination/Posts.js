@@ -33,7 +33,7 @@ const Posts = ({ posts }) => {
             <Grid item xs={2} sm={4} md={4} key={index}>
 
               <Card>
-                <CardMedia
+              <CardMedia
                   component="img"
                   src={
                     `http://127.0.0.1:8887/${post.path}`

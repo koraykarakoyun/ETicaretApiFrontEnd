@@ -25,7 +25,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate } from "react-router";
 import ProductAdd from '../Products/ProductAddPage';
 import ProductsPage from '../Products/ProductsPage';
-
+import UnpublishedIcon from '@mui/icons-material/Unpublished';
 
 
 export default function OrdersPage(props) {
@@ -34,7 +34,9 @@ export default function OrdersPage(props) {
     useEffect(() => {
 
         api("GET", "localhost", "7098", "orders", "getallorders", null, null).then((data) => {
+            console.log(data);
             if (data.status == 401) {
+                console.log(data);
                 setDeger({ success: false, data: [] })
             }
             else {
@@ -70,9 +72,9 @@ export default function OrdersPage(props) {
                                     <TableCell align="center">{row.userName}</TableCell>
                                     <TableCell align="center">{row.createdDate}</TableCell>
 
-                                    <TableCell align="center">{row.orderCompleted ? (<CheckCircleIcon ></CheckCircleIcon>) : null}</TableCell>
+                                    <TableCell align="center">{row.orderCompleted ? (<CheckCircleIcon ></CheckCircleIcon>) : (<UnpublishedIcon></UnpublishedIcon>)}</TableCell>
                                     <TableCell align="center">
-                                        <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" apifunction={null} HAND DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId} rowOrderCode={row.orderCode}></OrderDetailPage>}
+                                        <ConfirmDialog icon={<ReorderIcon></ReorderIcon>} DialogTitle="Sipariş Detayı" DialogContent={<OrderDetailPage rowOrderBasketId={row.orderBasketId} rowOrderCode={row.orderCode}></OrderDetailPage>}
                                             Button1=
                                             {
                                                 row.orderCompleted ? null : (

@@ -112,7 +112,7 @@ export default function MyBasket() {
                 </TableBody>
             </Table>
             <div style={{ textAlign: "center" }}>
-                <ConfirmDialog icon={<AddBoxIcon></AddBoxIcon>} buttonName="Sepeti Olustur" DialogTitle="Dikkat" DialogContent="Sepetinizi onaylamak istiyormusunuz" apifunction={() => {
+                <ConfirmDialog  icon={<AddBoxIcon></AddBoxIcon>} Button1="Onayla" Button2="İptal Et" buttonName="Sepeti Olustur"  DialogTitle="Dikkat" DialogContent="Sepetinizi onaylamak istiyormusunuz" apifunction={() => {
                     let formdata = {
                         "address": "istanbul",
                         "Description": "siparis aciklamasi"

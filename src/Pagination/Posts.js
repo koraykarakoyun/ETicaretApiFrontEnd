@@ -55,7 +55,7 @@ const Posts = ({ posts }) => {
 
 
 
-                  <Button id={post.id} onClick={(event) => {
+                  <Button id={post.productId} onClick={(event) => {
 
                     let id = event.target.id
 

@@ -19,6 +19,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authanticated, notauthanticated } from '../../Redux/Action/AuthAction';
+import { search } from '../../Redux/Action/SearchAction';
 import { bindActionCreators } from 'redux';
 import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
@@ -28,6 +29,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import home from "../../Image/home.png"
 import AdminDrawer from '../AdminDrawer/AdminDrawer';
+import { useEffect } from 'react';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -80,6 +82,7 @@ const linkstyle = {
 
 
 function Navbar2(props) {
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -164,7 +167,9 @@ function Navbar2(props) {
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
-                            <StyledInputBase
+                            <StyledInputBase onChange={(event) => {
+                                props.search(event.target.value)
+                            }}
                                 placeholder="Search…"
                                 inputProps={{ 'aria-label': 'search' }}
                             />
@@ -242,9 +247,9 @@ function Navbar2(props) {
                 </Toolbar>
             </AppBar>
             {renderMenu}
-            <hr style={{margin:"0",color:"white",height:"1px"}}></hr>
+            <hr style={{ margin: "0", color: "white", height: "1px" }}></hr>
         </Box>
-        
+
     );
 }
 
@@ -252,13 +257,14 @@ function Navbar2(props) {
 
 const mapStateToProps = (state) => {
     return {
-        authstate: state.auth
+        authstate: state.auth,
+        searchstate:state.search
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
 
-    return bindActionCreators({ authanticated, notauthanticated }, dispatch)
+    return bindActionCreators({search,authanticated, notauthanticated}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar2)

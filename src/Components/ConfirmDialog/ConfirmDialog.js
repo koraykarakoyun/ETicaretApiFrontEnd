@@ -59,12 +59,12 @@ export default function ConfirmDialog(props) {
                     {props.DialogContent}
                 </DialogContent>
                 <DialogActions>
-                    {
-                        props.apifunction ? (<Button onClick={() => {
-                            props.apifunction()
-                            handleClose()
-                        }}>{props.Button1}</Button>) : (null)
-                    }
+
+                    <Button onClick={() => {
+                        props.apifunction()
+                        handleClose()
+                    }}>{props.Button1}</Button>
+
 
                     <Button onClick={() => {
                         handleClose()

@@ -55,35 +55,48 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ProductUpdate(props) {
 
-    let { id } = useParams();
-    console.log(id);
-    useEffect(() => {
-        api("GET", "localhost", "7098", "products", "getbyid", id, null).then(res => {
-            setDeger(res)
-            console.log(res)
-        })
 
-    },[])
-
-    const token = localStorage.getItem("token");
-    const [deger, setDeger] = useState([]);
     const [open, setOpen] = React.useState(true);
+    const [product, setProduct] = React.useState({ success: false, data: [] });
+
+    useEffect(() => {
+
+        api("GET", "localhost", "7098", "products", "getbyid", props.productid, null).then((data) => {
+            if (data.status == 401) {
+                setProduct({ success: false, data: [] })
+            }
+            else {
+                setProduct({ success: true, data: data })
+            }
+
+        });
+
+    }, [props.productid])
+
+
     const handleClose = () => {
         setOpen(false);
     };
     const Update = () => {
-
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
+
+        var product_brand = document.getElementById("product_brand").value;
+        var product_model = document.getElementById("product_model").value;
+        var product_description = document.getElementById("product_description").value;
+        var product_color = document.getElementById("product_color").value;
         var product = {
-            "id": String(id),
+            "id": String(props.productid),
             "name": String(product_name),
             "stock": Number(product_stock),
-            "price": Number(product_price)
-
+            "price": Number(product_price),
+            "brand": String(product_brand),
+            "model": String(product_model),
+            "description": String(product_description),
+            "color": String(product_color)
         }
-        api("PUT", "localhost", "7098", "products", "update", null, product).then(res => notify(res.message))
+        props.setUpdateproduct(product);
         setOpen(false);
     };
 
@@ -103,15 +116,34 @@ export default function ProductUpdate(props) {
                     <Typography gutterBottom>
 
                         <form onSubmit={Update}>
+
                             <label>
-                                NewName:<input id='product_name' defaultValue={deger.name} type="text" />
+                                İsim:<input id='product_name' defaultValue={product.data.productId} type="text" />
                             </label>
                             <label>
-                                NewStock:<input id='product_stock' defaultValue={deger.stock} type="number" />
+                                Stok:<input id='product_stock' defaultValue={product.data.productStock} type="text" />
                             </label>
                             <label>
-                                NewPrice:<input id='product_price' defaultValue={deger.price} type="number" />
+                                Fiyat:<input id='product_price' defaultValue={product.data.productPrice} type="text" />
                             </label>
+
+                            <label>
+                                Marka:<input id='product_brand' defaultValue={product.data.productBrand} type="text" />
+                            </label>
+
+                            <label>
+                                Model:<input id='product_model' defaultValue={product.data.productModel} type="text" />
+                            </label>
+                            <label>
+                                Açıklama:<input id='product_description' defaultValue={product.data.productDescription} type="text" />
+                            </label>
+                            <label>
+                                Renk:<input id='product_color' defaultValue={product.data.productColor} type="text" />
+                            </label>
+
+
+
+
                         </form>
 
 

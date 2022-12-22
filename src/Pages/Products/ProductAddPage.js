@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { useEffect } from 'react';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -53,12 +54,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductAdd(props) {
-    //-----------------------------
-  
 
-    //-----------------------------
-
-    let token = localStorage.getItem("token");
     const [open, setOpen] = React.useState(true);
     const handleClose = () => {
         setOpen(false);
@@ -67,14 +63,21 @@ export default function ProductAdd(props) {
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
+
+        var product_brand = document.getElementById("product_brand").value;
+        var product_model = document.getElementById("product_model").value;
+        var product_description = document.getElementById("product_description").value;
+        var product_color = document.getElementById("product_color").value;
         var product = {
             "name": String(product_name),
             "stock": Number(product_stock),
-            "price": Number(product_price)
-
+            "price": Number(product_price),
+            "brand": String(product_brand),
+            "model": String(product_model),
+            "description": String(product_description),
+            "color": String(product_color)
         }
-        api("POST", "localhost", "7098", "products", "add", null, product, token).then(res => notify(res.message))
-        
+        props.setAddproduct(product);
         setOpen(false);
     };
 
@@ -97,13 +100,27 @@ export default function ProductAdd(props) {
 
                         <form onSubmit={Add}>
                             <label>
-                                Name:<input id='product_name' type="text" />
+                                İsim:<input id='product_name' type="text" />
                             </label>
                             <label>
-                                Stock:<input id='product_stock' type="number" />
+                                Stok:<input id='product_stock'type="text" />
                             </label>
                             <label>
-                                Price:<input id='product_price' type="number" />
+                                Fiyat:<input id='product_price' type="text" />
+                            </label>
+
+                            <label>
+                                Marka:<input id='product_brand' type="text" />
+                            </label>
+
+                            <label>
+                                Model:<input id='product_model'type="text" />
+                            </label>
+                            <label>
+                                Açıklama:<input id='product_description' type="text" />
+                            </label>
+                            <label>
+                                Renk:<input id='product_color'type="text" />
                             </label>
                         </form>
 
@@ -113,7 +130,6 @@ export default function ProductAdd(props) {
                 <DialogActions>
                     <Button onClick={() => {
                         Add()
-
                     }}>
                         Add
                     </Button>

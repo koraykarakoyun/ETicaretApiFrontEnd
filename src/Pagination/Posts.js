@@ -12,6 +12,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import { Link } from 'react-router-dom';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -30,27 +31,31 @@ const Posts = ({ posts }) => {
 
         {
           posts.map((post, index) => (
+
             <Grid item xs={2} sm={4} md={4} key={index}>
 
               <Card>
-              <CardMedia
-                  component="img"
-                  src={
-                    `http://127.0.0.1:8887/${post.path}`
-                  }
-                  style={{ height: "15rem", width: "100%", objectFit: "fill" }}
-                />
-                <CardContent style={{ padding: "1rem" }}>
-                  <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto", marginBottom: "1rem", fontSize: "1rem", textOverflow: "ellipsis", maxHeight: "1.2rem" }}>
-                    Name:{post.productName}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Stock:{post.productStock}
-                  </Typography>
-                  <Typography variant="body2" style={{ marginTop: "2%", fontSize: "1rem" }}>
-                    <strong>Fiyat:{post.productPrice} TL</strong>
-                  </Typography>
-                </CardContent>
+                <Link style={{textDecoration:"none",color:"black"}} to={"/product/"+post.productId}>
+                  <CardMedia
+                    component="img"
+                    src={
+                      `http://127.0.0.1:8887/${post.productPath}`
+                    }
+                    style={{ height: "15rem", width: "100%", objectFit: "fill" }}
+                  />
+                  <CardContent style={{ padding: "1rem" }}>
+                    <Typography gutterBottom variant="h5" component="div" style={{ margin: "auto", marginBottom: "1rem", fontSize: "1rem", textOverflow: "ellipsis", maxHeight: "1.2rem" }}>
+                      Name:{post.productName}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Stock:{post.productStock}
+                    </Typography>
+                    <Typography variant="body2" style={{ marginTop: "2%", fontSize: "1rem" }}>
+                      <strong>Fiyat:{post.productPrice} TL</strong>
+                    </Typography>
+                  </CardContent>
+                </Link>
+
                 <CardActions>
 
 
@@ -71,10 +76,11 @@ const Posts = ({ posts }) => {
               </Card>
 
             </Grid >
+
           ))
         }
       </Grid>
-    </Box>
+    </Box >
   );
 };
 

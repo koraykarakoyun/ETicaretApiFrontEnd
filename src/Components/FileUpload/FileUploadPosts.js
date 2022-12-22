@@ -44,7 +44,7 @@ const FileUploadPosts = (props) => {
                     <input type="radio" value={post.productId} name='img' onClick={handleChange}></input>
                     <CardMedia
                         component="img"
-                        src={"http://127.0.0.1:8887/" + post.path}
+                        src={"http://127.0.0.1:8887/" + post.productPath}
                         style={{ height: "100%", width: "100%", margin: "auto" }}
                     />
 

@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProductsPage from './Pages/Products/ProductsPage';
 import ProductAdd from './Pages/Products/ProductAddPage';
 import ProductUpdate from './Pages/Products/ProductUpdatePage';
-import ProductDelete from './Pages/Products/ProductDeletePage';
 import RegistrationForm from './Pages/Register/RegisterForm';
 import LoginForm from './Pages/LogIn/LoginForm';
 import NotFound from './Pages/NotFound/NotFound';
@@ -18,6 +17,7 @@ import Navbar2 from './Components/Navbar/Navbar2';
 import { useEffect } from 'react';
 import { api } from './Utilities/Api';
 import CategoriesNavbar from './Components/CategoriesNavbar/CategoriesNavbar';
+import ProductDetail from './Pages/ProductDetail/ProductDetail';
 
 
 const Main_Routers = (props) => {
@@ -32,9 +32,11 @@ const Main_Routers = (props) => {
             <Routes>
                 <Route path="*" element={<NotFound />} />
                 <Route path="/" element={<MainPage></MainPage>} />
+                <Route path="/:category" element={<MainPage></MainPage>} />
                 <Route path="/register" element={<RegistrationForm ></RegistrationForm>} />
                 <Route path="/login" element={<LoginForm></LoginForm>} />
-                <Route path="/:category" element={<MainPage></MainPage>} />
+                <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
+
             </Routes>
         )
     }
@@ -51,16 +53,11 @@ const Main_Routers = (props) => {
                 <Route path="/adminpanel/auth" element={<AdminPanel type="auth"></AdminPanel>} />
                 <Route path="/adminpanel/slider" element={<AdminPanel type="slider"></AdminPanel>} />
                 {/* Admin Panel */}
-                <Route path="/addproduct" element={<ProductAdd ></ProductAdd>} />
-                <Route path="/updateproduct" element={<ProductUpdate ></ProductUpdate>} />
-                <Route path="/updateproduct/:id" element={<ProductUpdate ></ProductUpdate>} />
-                <Route path="/deleteproduct" element={<ProductDelete ></ProductDelete>} />
-                <Route path="/deleteproduct/:id" element={<ProductDelete></ProductDelete>} />
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
                 <Route path="/mybasket" element={<MyBasket></MyBasket>} />
                 {/* Admin Panel */}
                 <Route path="/:category" element={<MainPage></MainPage>} />
-
+                <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
 
             </Routes>
         )

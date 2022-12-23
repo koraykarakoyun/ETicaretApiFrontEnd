@@ -14,8 +14,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
-
-
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import CategorySelecter from '../../Components/CategorySelecter/CategorySelecter';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -56,9 +56,9 @@ BootstrapDialogTitle.propTypes = {
 export default function ProductUpdate(props) {
 
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const [product, setProduct] = React.useState({ success: false, data: [] });
-
+    const [categoryid, setCategoryId] = React.useState(product.data.categoryId);
     useEffect(() => {
 
         api("GET", "localhost", "7098", "products", "getbyid", props.productid, null).then((data) => {
@@ -71,9 +71,12 @@ export default function ProductUpdate(props) {
 
         });
 
+
     }, [props.productid])
 
-
+    const handleOpen = () => {
+        setOpen(true);
+    };
     const handleClose = () => {
         setOpen(false);
     };
@@ -94,9 +97,11 @@ export default function ProductUpdate(props) {
             "brand": String(product_brand),
             "model": String(product_model),
             "description": String(product_description),
-            "color": String(product_color)
+            "color": String(product_color),
+            "categoryid": categoryid
+
         }
-        props.setUpdateproduct(product);
+        api("PUT", "localhost", "7098", "products", "update", null, product).then(res => notify(res.message))
         setOpen(false);
     };
 
@@ -105,6 +110,9 @@ export default function ProductUpdate(props) {
     return (
         <div>
             <ToastContainer />
+            <IconButton aria-label="delete" onClick={handleOpen}>
+                <AutorenewIcon></AutorenewIcon>
+            </IconButton>
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
@@ -118,7 +126,7 @@ export default function ProductUpdate(props) {
                         <form onSubmit={Update}>
 
                             <label>
-                                İsim:<input id='product_name' defaultValue={product.data.productId} type="text" />
+                                İsim:<input id='product_name' defaultValue={product.data.productName} type="text" />
                             </label>
                             <label>
                                 Stok:<input id='product_stock' defaultValue={product.data.productStock} type="text" />
@@ -140,10 +148,7 @@ export default function ProductUpdate(props) {
                             <label>
                                 Renk:<input id='product_color' defaultValue={product.data.productColor} type="text" />
                             </label>
-
-
-
-
+                            <CategorySelecter categoryId={product.data.categoryId} setCategoryId={setCategoryId} ></CategorySelecter>
                         </form>
 
 

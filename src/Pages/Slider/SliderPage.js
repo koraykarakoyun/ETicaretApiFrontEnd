@@ -107,10 +107,12 @@ export default function SliderPage(props) {
                         ) : null}
                         <div>
                           <ConfirmDialog buttonName="Kaydet" DialogTitle="Vitrine Resim Ekleme" DialogContent={"Vitrine Resim Ekleme İşlemi"} apifunction={() => {
-
+                            console.log(selectedFile)
                             const formData = new FormData();
                             formData.append('file', selectedFile);
+                            console.log(formData)
                             api("POST", "localhost", "7098", "sliders", "addslidephoto", null, formData).then(res => console.log(res));
+
                           }} Button1="Onayla" Button2="Kapat" ></ConfirmDialog>
                         </div>
                       </div>

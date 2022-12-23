@@ -15,7 +15,8 @@ import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from 'react';
-
+import CategorySelecter from '../../Components/CategorySelecter/CategorySelecter';
+import AddIcon from '@mui/icons-material/Add';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -55,7 +56,13 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ProductAdd(props) {
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
+    const [categoryid, setCategoryId] = React.useState("");
+
+    
+    const handleOpen = () => {
+        setOpen(true);
+    };
     const handleClose = () => {
         setOpen(false);
     };
@@ -63,37 +70,39 @@ export default function ProductAdd(props) {
         var product_name = document.getElementById("product_name").value;
         var product_stock = document.getElementById("product_stock").value;
         var product_price = document.getElementById("product_price").value;
-
         var product_brand = document.getElementById("product_brand").value;
         var product_model = document.getElementById("product_model").value;
         var product_description = document.getElementById("product_description").value;
         var product_color = document.getElementById("product_color").value;
-        var product = {
+        const product = {
             "name": String(product_name),
             "stock": Number(product_stock),
             "price": Number(product_price),
             "brand": String(product_brand),
             "model": String(product_model),
             "description": String(product_description),
-            "color": String(product_color)
+            "color": String(product_color),
+            "categoryid": categoryid
         }
-        props.setAddproduct(product);
+        console.log(product)
+        api("POST", "localhost", "7098", "products", "add", null, product).then(res => notify(res.message))
         setOpen(false);
     };
-
-
 
 
 
     return (
         <div>
             <ToastContainer />
+            <IconButton aria-label="delete" onClick={handleOpen}>
+               <AddIcon></AddIcon>
+            </IconButton>
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={open}>
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Product Add
+                    Urun Ekleme
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
@@ -103,10 +112,10 @@ export default function ProductAdd(props) {
                                 İsim:<input id='product_name' type="text" />
                             </label>
                             <label>
-                                Stok:<input id='product_stock'type="text" />
+                                Stok:<input id='product_stock' type="number" />
                             </label>
                             <label>
-                                Fiyat:<input id='product_price' type="text" />
+                                Fiyat:<input id='product_price' type="number" />
                             </label>
 
                             <label>
@@ -114,14 +123,15 @@ export default function ProductAdd(props) {
                             </label>
 
                             <label>
-                                Model:<input id='product_model'type="text" />
+                                Model:<input id='product_model' type="text" />
                             </label>
                             <label>
                                 Açıklama:<input id='product_description' type="text" />
                             </label>
                             <label>
-                                Renk:<input id='product_color'type="text" />
+                                Renk:<input id='product_color' type="text" />
                             </label>
+                            <CategorySelecter categoryid={categoryid} setCategoryId={setCategoryId}></CategorySelecter>
                         </form>
 
 
@@ -131,10 +141,10 @@ export default function ProductAdd(props) {
                     <Button onClick={() => {
                         Add()
                     }}>
-                        Add
+                        Seçimi Onayla
                     </Button>
                     <Button autoFocus onClick={handleClose}>
-                        Close
+                        Kapat
                     </Button>
                 </DialogActions>
             </BootstrapDialog>

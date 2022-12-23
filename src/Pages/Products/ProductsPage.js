@@ -67,30 +67,10 @@ export default function ProductsPage(props) {
                 <TableCell align="center">{row.productStock}</TableCell>
                 <TableCell align="center">{row.productPrice}</TableCell>
                 <TableCell align="center">
-                  <ConfirmDialog icon={<AddIcon></AddIcon>} DialogTitle="Urun Ekle" DialogContent={<ProductAdd productid={row.productId} setAddproduct={setAddproduct}></ProductAdd>}
-                    Button1=
-                    {
-                      <ConfirmDialog DialogTitle="Dikkat" DialogContent="Urunu Eklemek İstediğinize Eminmisinz" Button1="Evet" Button2="Hayır" apifunction={() => {
-
-                        api("POST", "localhost", "7098", "products", "add", null, addproduct).then(res => notify(res.message))
-                      }}>
-                      </ConfirmDialog>
-                    }
-                    Button2="Kapat"
-                  ></ConfirmDialog>
+                  <ProductAdd productid={row.productId}></ProductAdd>
                 </TableCell>
                 <TableCell align="center">
-                  <ConfirmDialog icon={<AutorenewIcon></AutorenewIcon>} DialogTitle="Urunu Guncelle" DialogContent={<ProductUpdate productid={row.productId} setUpdateproduct={setUpdateproduct}></ProductUpdate>}
-                    Button1=
-                    {
-                      <ConfirmDialog DialogTitle="Dikkat" DialogContent="Urunu Guncellemek İstediğinize Eminmisinz" Button1="Evet" Button2="Hayır" apifunction={() => {
-
-                        api("PUT", "localhost", "7098", "products", "update", null, updateproduct).then(res => notify(res.message))
-                      }}>
-                      </ConfirmDialog>
-                    }
-                    Button2="Kapat"
-                  ></ConfirmDialog>
+                  <ProductUpdate productid={row.productId}></ProductUpdate>
                 </TableCell>
                 <TableCell align="center">
                   <IconButton aria-label="delete">
@@ -99,7 +79,6 @@ export default function ProductsPage(props) {
                         notify(response.message);
                       })
                     }} ></ConfirmDialog>
-
                   </IconButton>
                 </TableCell>
                 <TableCell align="center">

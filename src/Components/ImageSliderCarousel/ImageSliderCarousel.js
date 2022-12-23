@@ -23,7 +23,7 @@ const ImageSliderCarousel = () => {
                 {
                     image.map(element => (
                         <Carousel.Item>
-                            <img style={{ width: "100%", maxHeight: "40rem" }} src={`http://127.0.0.1:8887/${element.filePath}`} />
+                            <img style={{ width: "100%", maxHeight: "35rem" }} src={`http://127.0.0.1:8887/${element.filePath}`} />
                         </Carousel.Item>
                     ))
                 }

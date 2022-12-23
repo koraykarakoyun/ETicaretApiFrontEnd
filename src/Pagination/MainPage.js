@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import Posts from "./Posts"
 import Pagination from "./Pagination"
 import { api } from '../Utilities/Api';
@@ -10,8 +11,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const divMargin = {
-    marginLeft: "5%",
-    marginRight: "5%"
+    marginLeft: "20%",
+    marginRight: "20%",
+    marginTop:"1%"
 }
 
 const MainPage = (props) => {

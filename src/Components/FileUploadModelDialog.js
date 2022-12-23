@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import ImageIcon from '@mui/icons-material/Image';
 import FileUpload from './FileUpload/FileUpload';
 import { api } from '../Utilities/Api';
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),

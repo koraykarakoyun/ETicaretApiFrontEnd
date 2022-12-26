@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { api } from './Utilities/Api';
 import CategoriesNavbar from './Components/CategoriesNavbar/CategoriesNavbar';
 import ProductDetail from './Pages/ProductDetail/ProductDetail';
+import MyBasket2 from './Pages/MyBasket/MyBasket2';
 
 
 const Main_Routers = (props) => {

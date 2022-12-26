@@ -243,7 +243,6 @@ export const api = (method_type = null, origin = "localhost", port = "7098", con
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,
-
                 }),
                 method: method_type,
                 body: JSON.stringify(formData)

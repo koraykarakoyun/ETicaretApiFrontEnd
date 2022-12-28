@@ -135,6 +135,8 @@ function Navbar2(props) {
                     <>
                         <MenuItem onClick={handleMenuClose} style={linkstyle} >Profilim</MenuItem>
                         <MenuItem onClick={handleMenuClose} style={linkstyle} >Hesabım</MenuItem>
+                        <MenuItem onClick={handleMenuClose} style={linkstyle} >
+                            <Link to="/myorders">Siparişlerim</Link></MenuItem>
                         <MenuItem onClick={logout} style={linkstyle} >Çıkış Yap</MenuItem>
 
                     </>
@@ -258,13 +260,13 @@ function Navbar2(props) {
 const mapStateToProps = (state) => {
     return {
         authstate: state.auth,
-        searchstate:state.search
+        searchstate: state.search
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
 
-    return bindActionCreators({search,authanticated, notauthanticated}, dispatch)
+    return bindActionCreators({ search, authanticated, notauthanticated }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar2)

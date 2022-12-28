@@ -18,8 +18,8 @@ import { useEffect } from 'react';
 import { api } from './Utilities/Api';
 import CategoriesNavbar from './Components/CategoriesNavbar/CategoriesNavbar';
 import ProductDetail from './Pages/ProductDetail/ProductDetail';
-import MyBasket2 from './Pages/MyBasket/MyBasket2';
-
+import MyOrders from './Pages/MyOrders/MyOrders';
+import MyOrderDetail from './Pages/MyOrders/MyOrderDetail';
 
 const Main_Routers = (props) => {
 
@@ -60,6 +60,8 @@ const Main_Routers = (props) => {
                 <Route path="/:category" element={<MainPage></MainPage>} />
                 <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
 
+                <Route path="/myorders" element={<MyOrders></MyOrders>} />
+                <Route path="/myorders/:ordercode" element={<MyOrderDetail></MyOrderDetail>} />
             </Routes>
         )
     }

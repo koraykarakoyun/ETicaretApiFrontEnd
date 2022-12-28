@@ -19,9 +19,11 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import CardMedia from '@mui/material/CardMedia';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
-
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
+import { Link } from 'react-router-dom';
+import MainPage from '../../Pagination/MainPage';
 export default function MyBasket() {
     const [datas, setDatas] = useState({ success: false, data: [] });
     const [IsConfirm, setIsConfirm] = useState(false);
@@ -51,9 +53,27 @@ export default function MyBasket() {
     return (
         datas.success ? (
 
-            datas.data[0].count == 0 ? (<div>
-               Boş Sepet
-            </div>
+            datas.data[0].count == 0 ? (
+                <>
+
+                    <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center", fontSize: "1.8rem" }}>
+                        Sepetiniz boş!
+                    </div>
+
+                    <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >
+                        <ShoppingBagIcon style={{ fontSize: "10rem" }}></ShoppingBagIcon>
+                    </div>
+
+                    <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >
+                        <Link style={{textDecoration:"none"}} to="/">
+                        <Button style={{backgroundColor:"#193441",borderRadius:"0",fontSize: "1.2rem" }} variant="contained"> Alışverişe Başlayın!</Button>
+                        </Link>
+                        
+
+
+                    </div>
+
+                </>
             ) : (<>
                 <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.8rem" }}>
                     Sepetim

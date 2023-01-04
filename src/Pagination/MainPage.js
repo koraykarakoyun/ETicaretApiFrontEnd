@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 const divMargin = {
     marginLeft: "20%",
     marginRight: "20%",
-    marginTop:"1%"
+    marginTop: "1%"
 }
 
 const MainPage = (props) => {
@@ -21,24 +21,69 @@ const MainPage = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(20);
     let { category } = useParams();
+    let { type } = useParams();
+    let { parameter } = useParams();
+
 
 
 
     useEffect(() => {
         if (category != undefined) {
-            api("GET", "localhost", "7098", "categories", "getbynamecategoryinproducts", category, null).then((data) => {
+
+
+            if (type != undefined && parameter != undefined) {
+
+                let data = {
+                    "category": category,
+                    "type": type,
+                    "parameter": parameter
+                }
                 console.log(data);
-                setPosts(data);
-            });
+                api("POST", "localhost", "7098", "categories", "SortCategoryInProducts", null, data).then((data) => {
+                    console.log(data);
+                    setPosts(data);
+                });
+
+
+            }
+
+            else {
+                
+                let data = {
+                    "category": category,
+                    "type": type,
+                    "parameter": parameter
+                }
+                console.log(data);
+                api("GET", "localhost", "7098", "categories", "getbynamecategoryinproducts", category, null).then((data) => {
+                    console.log(data);
+                    setPosts(data);
+                });
+            }
+
         }
         else {
-            api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
-                setPosts(data);
-                console.log(data);
-            });
+            let data = {
+                "type": type,
+                "parameter": parameter
+            }
+            console.log(data);
+            if (type != undefined && parameter != undefined) {
+                api("POST", "localhost", "7098", "products", "SortAllProducts", null, data).then((data) => {
+                    setPosts(data);
+                });
+            }
+
+            else {
+                api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
+                    console.log(data)
+                    setPosts(data);
+                });
+            }
+
         }
 
-    }, [category])
+    }, [category, type, parameter])
 
     useEffect(() => {
         if (props.searchstate.productName != null && props.searchstate.productName != undefined && props.searchstate.productName != "") {
@@ -66,7 +111,7 @@ const MainPage = (props) => {
         <>
             <ImageCarousel></ImageCarousel>
             <div style={divMargin}>
-                <Posts posts={currentPosts} />
+                <Posts posts={currentPosts} category={category} />
                 <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={posts.length}

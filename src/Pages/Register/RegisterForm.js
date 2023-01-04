@@ -8,7 +8,7 @@ import { Button } from '@mui/material';
 import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
 import { useEffect } from 'react';
 import registerloginimage from "../../Image/register-login.jpg"
-
+import { useNavigate } from "react-router-dom";
 
 export const infoverification = (firstname, lastname, email, username, password, confirmpassword) => {
     if (firstname !== null && firstname !== ""
@@ -30,7 +30,7 @@ export const infoverification = (firstname, lastname, email, username, password,
 function RegistrationForm() {
 
 
-
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [email, setEmail] = useState(null);
@@ -76,7 +76,12 @@ function RegistrationForm() {
                 "PasswordConfirm": confirmPassword
             }
 
-            api("POST", "localhost", "7098", "users", "createuser", null, user_data).then(response => notify(response.message));
+            api("POST", "localhost", "7098", "users", "createuser", null, user_data).then((res) => {
+                if(res.isSuccess){
+                navigate("/login");
+                }
+                
+            });
 
         }
         else {
@@ -87,7 +92,7 @@ function RegistrationForm() {
     }
 
     return (
-        <div className='backgroundImageDiv' style={{ backgroundImage: `url(${registerloginimage})`}}>
+        <div className='backgroundImageDiv' style={{ backgroundImage: `url(${registerloginimage})` }}>
 
             <div className="form" style={{ border: "1px solid black" }}>
                 <div className="form-body">

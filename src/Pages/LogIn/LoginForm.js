@@ -12,20 +12,16 @@ import { useEffect } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { gapi } from 'gapi-script';
 import { authanticated, notauthanticated } from '../../Redux/Action/AuthAction';
-import { Navigate } from 'react-router';
 import { Button } from '@mui/material';
 import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
 import registerloginimage from "../../Image/register-login.jpg"
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function LoginForm(props) {
 
-
-
-
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
-
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { id, value } = e.target;
@@ -56,8 +52,7 @@ function LoginForm(props) {
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
                 notify(res.message)
-
-
+                navigate("/");
             }
             else {
                 props.notauthanticated();

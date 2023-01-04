@@ -29,12 +29,25 @@ export default function MyOrderDetail(props) {
     const [datas, setDatas] = useState({ success: false, data: [] });
     const [IsConfirm, setIsConfirm] = useState(false);
 
+    const Item = styled(Paper)(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }));
     let { ordercode } = useParams();
     useEffect(() => {
 
         api("GET", "localhost", "7098", "orders", "GetByIdUserOrderDetail", ordercode, null).then((data) => {
-            console.log(data);
+            console.log(data.data);
 
+            if (data.status == 401) {
+                setDatas({ success: false, data: [] })
+            }
+            else {
+                setDatas({ success: true, data: data.data })
+            }
 
         });
 
@@ -43,93 +56,145 @@ export default function MyOrderDetail(props) {
     }, [ordercode])
 
     return (
-        null
-        // datas.success ? (
 
-        //     <>
-        //         <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.8rem" }}>
-        //             Siparişlerim
-        //         </div>
+        datas.success ? (
 
-        //         <Box style={{ marginLeft: "15%", marginTop: "2%", marginRight: "15%" }} sx={{ flexGrow: 1 }}>
+            <>
+                <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.8rem" }}>
+                    Sipariş Detayı
+                </div>
 
-        //             <TableContainer component={Paper}>
+                <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.2rem" }}>
+                    Sipariş No: {datas.data.orderCode}
+                </div>
 
-        //                 <Table  >
-        //                     <TableHead>
-        //                         <TableRow>
+                <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.2rem" }}>
+                    Sipariş Tarihi: {datas.data.orderCreatedDate}
+                </div>
+                <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.2rem" }}>
+                    Sipariş Toplamı: {datas.data.totalPrice} TL
+                </div>
+
+                <Box style={{ marginLeft: "15%", marginTop: "2%", marginRight: "15%" }} sx={{ flexGrow: 1 }}>
+                    <TableContainer component={Paper}>
+                        <Table  >
+                            <TableHead>
+                                <TableRow>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                    <TableCell style={{ borderTop: "1px solid grey" }}>
+                                        <span style={{ fontWeight: "bold" }}>&nbsp;</span> Toplam Ürün Sayısı: {datas.data.totalProductCount} Adet
+                                    </TableCell>
+                                </TableRow>
+                                {
+                                    datas.data.productInfo.map(element => (
+                                        <>
+
+                                            <TableRow
+                                                key={element.orderCode}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+
+                                                <TableCell>
+
+                                                    <Box sx={{ flexGrow: 1 }}>
+                                                        <Grid container spacing={2}>
+
+                                                            <Grid item xs={2}>
+
+                                                                <CardMedia
+                                                                    component="img"
+                                                                    src={
+                                                                        `http://127.0.0.1:8887/${element.paths}`
+                                                                    }
+                                                                    style={{ height: "100%", objectFit: "fill", display: "inline" }}
+                                                                />
+
+                                                            </Grid>
+                                                            <Grid item xs={8}>
+
+                                                                <div style={{ marginBottom: "1.5rem" }}>
+                                                                    {element.productName}
+                                                                </div>
+                                                                <div style={{ marginBottom: "4rem" }}>
+                                                                    Model:{element.productBrand} / {element.productModel}
+                                                                </div>
+                                                                <div>
+                                                                    Renk: {element.productColor}
+                                                                </div>
+
+                                                            </Grid>
+                                                            <Grid item style={{ display: "flex", alignItems: "center" }} xs={2}>
+                                                                <div>
+                                                                    {element.productPrice} TL
+                                                                </div>
+
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Box>
 
 
 
-        //                         </TableRow>
-        //                     </TableHead>
-        //                     <TableBody>
 
-        //                         {
-        //                             datas.data.map(element => (
-        //                                 <>
-        //                                     <TableRow
-        //                                         key={element.orderCode}
-        //                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                </TableCell>
 
-        //                                     >
-        //                                         <TableCell style={{ borderTop: "1px solid grey", display: "flex", justifyContent: "space-around" }}>
-        //                                             <div>
-        //                                                 <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-        //                                                     <span style={{ fontWeight: "normal" }}>SİPARİŞ NO:</span>{element.orderCode}
-        //                                                 </div>
-        //                                                 <br></br>
-        //                                                 <div>
-        //                                                     <span style={{ fontWeight: "bold" }}>Sipariş Tarihi:&nbsp;</span> {element.createdDate}
-        //                                                     &nbsp;
-        //                                                     &nbsp;
-        //                                                     &nbsp;
-        //                                                     &nbsp;
-        //                                                     <span style={{ fontWeight: "bold" }}>Toplam Fiyat:&nbsp;</span>{element.totalPrice+" TL"}
-        //                                                     &nbsp;
-        //                                                     &nbsp;
-        //                                                     &nbsp;
-        //                                                     &nbsp;
-        //                                                     <span style={{ fontWeight: "bold" }}>Ürün Adedi:</span>&nbsp;{element.productQuantity+""}
-        //                                                 </div>
+                                            </TableRow>
 
-        //                                             </div>
-        //                                             <button>
-        //                                                 Sipariş Detayı
-        //                                             </button>
-        //                                         </TableCell>
-        //                                     </TableRow>
-        //                                     <TableRow
-        //                                         key={element.orderCode}
-        //                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-        //                                     >
-        //                                         <TableCell style={{ display: "flex", width: "50%", borderBottom: "0", marginBottom: "10px" }}>
-        //                                             {
-        //                                                 element.paths.map((element) => (
-        //                                                     <CardMedia
-        //                                                         component="img"
-        //                                                         src={
-        //                                                             `http://127.0.0.1:8887/${element}`
-        //                                                         }
-        //                                                         style={{ margin: "1rem", height: "5rem", objectFit: "fill", justifyContent: "center", alignItems: "center" }}
-        //                                                     />
-        //                                                 ))
-        //                                             }
-        //                                         </TableCell>
-        //                                     </TableRow>
+                                        </>
 
-        //                                 </>
+                                    ))
+                                }
 
-        //                             ))
-        //                         }
+                                <TableRow
 
-        //                     </TableBody>
-        //                 </Table>
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
 
-        //             </TableContainer >
 
-        //         </Box>
-        //     </>
-        // ) : (null)
+
+                                    <TableCell>
+
+
+                                        <div style={{ marginBottom: "1rem" }}>
+                                            Sipariş Detayı:
+                                        </div>
+
+                                        <Box sx={{ flexGrow: 1 }}>
+                                            <Grid container spacing={2}>
+
+                                                <Grid item xs={9}>
+                                                    <div style={{ marginBottom: "1rem" }}>
+                                                        Teslimat Adresi:
+                                                    </div>
+                                                    {
+                                                        datas.data.orderAddress
+                                                    }
+                                                </Grid>
+                                                <Grid item xs={3}>
+                                                    <div style={{ marginBottom: "1rem" }}>
+                                                        Toplam Fiyat:
+                                                    </div>
+                                                    {datas.data.totalPrice} TL
+
+                                                </Grid>
+
+                                            </Grid>
+                                        </Box>
+                                    </TableCell>
+
+
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+
+                    </TableContainer >
+
+                </Box>
+            </>
+        ) : (null)
     );
 }

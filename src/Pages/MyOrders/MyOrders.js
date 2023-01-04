@@ -44,7 +44,7 @@ export default function MyOrders() {
 
 
 
-    }, MyOrders)
+    }, [])
 
     return (
         datas.success ? (

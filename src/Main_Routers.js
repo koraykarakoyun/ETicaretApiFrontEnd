@@ -33,20 +33,24 @@ const Main_Routers = (props) => {
             <Routes>
                 <Route path="*" element={<NotFound />} />
                 <Route path="/" element={<MainPage></MainPage>} />
+                <Route path="/:type&:parameter" element={<MainPage></MainPage>} />
                 <Route path="/:category" element={<MainPage></MainPage>} />
+                <Route path="/:category/:type&:parameter" element={<MainPage></MainPage>} />
                 <Route path="/register" element={<RegistrationForm ></RegistrationForm>} />
                 <Route path="/login" element={<LoginForm></LoginForm>} />
                 <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
-
             </Routes>
         )
     }
     if (props.authstate.isAuth) {
         routes = (
             <Routes>
-                <Route path="*" element={<MainPage></MainPage>} />
+                <Route path="*" element={<NotFound />} />
+                <Route path="/" element={<MainPage></MainPage>} />
+                <Route path="/:type&:parameter" element={<MainPage></MainPage>} />
+                <Route path="/:category" element={<MainPage></MainPage>} />
+                <Route path="/:category/:type&:parameter" element={<MainPage></MainPage>} />
                 <Route path="/adminpanel" element={<AdminPanel type="products"></AdminPanel>} />
-
                 <Route path="/adminpanel/products" element={<AdminPanel type="products"></AdminPanel>} />
                 <Route path="/adminpanel/orders" element={<AdminPanel type="orders"></AdminPanel>} />
                 <Route path="/adminpanel/users" element={<AdminPanel type="users"></AdminPanel>} />
@@ -57,7 +61,7 @@ const Main_Routers = (props) => {
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
                 <Route path="/mybasket" element={<MyBasket></MyBasket>} />
                 {/* Admin Panel */}
-                <Route path="/:category" element={<MainPage></MainPage>} />
+                
                 <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
 
                 <Route path="/myorders" element={<MyOrders></MyOrders>} />

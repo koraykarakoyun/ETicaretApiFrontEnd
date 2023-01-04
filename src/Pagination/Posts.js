@@ -13,6 +13,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
+import SortingSelectBox from '../Components/SortingSelectBox/SortingSelectBox';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -23,14 +25,17 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const Posts = ({ posts }) => {
+const Posts = (props) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <div style={{width:"20%",float:'right'}}>
+      <SortingSelectBox category={props.category}></SortingSelectBox>
+      </div>
+      
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 16 }}>
-
         {
-          posts.map((post, index) => (
+          props.posts.map((post, index) => (
 
             <Grid item xs={2} sm={4} md={4} key={index}>
 

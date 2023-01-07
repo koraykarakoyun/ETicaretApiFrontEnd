@@ -24,16 +24,17 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import MainPage from '../../Pagination/MainPage';
-export default function MyBasket() {
+import { bindActionCreators } from 'redux';
+import { activatedbasket, deactivatedbasket } from '../../Redux/Action/ActiveBasket';
+import { connect } from 'react-redux';
+import OrderDetail from '../../Components/OrderDetail/OrderDetail';
+function MyBasket(props) {
     const [datas, setDatas] = useState({ success: false, data: [] });
-    const [IsConfirm, setIsConfirm] = useState(false);
-
-
-
-
+    const hrStyle = {
+        margin: "2%",
+        padding: 0
+    }
     useEffect(() => {
-
-
         api("GET", "localhost", "7098", "baskets", "getbasketitem", null, null).then((data) => {
 
             console.log(data);
@@ -65,10 +66,10 @@ export default function MyBasket() {
                     </div>
 
                     <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >
-                        <Link style={{textDecoration:"none"}} to="/">
-                        <Button style={{backgroundColor:"#193441",borderRadius:"0",fontSize: "1.2rem" }} variant="contained"> Alışverişe Başlayın!</Button>
+                        <Link style={{ textDecoration: "none" }} to="/">
+                            <Button style={{ backgroundColor: "#193441", borderRadius: "0", fontSize: "1.2rem" }} variant="contained"> Alışverişe Başlayın!</Button>
                         </Link>
-                        
+
 
 
                     </div>
@@ -94,7 +95,8 @@ export default function MyBasket() {
                                     </TableHead>
                                     <TableBody>
                                         {datas.data.map((data) => (
-                                            <TableRow
+
+                                            < TableRow
                                                 key={data.basketItemId}
                                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
@@ -107,6 +109,8 @@ export default function MyBasket() {
                                                         style={{ height: "7rem", objectFit: "fill", }}
                                                     />
                                                 </TableCell>
+
+
 
                                                 <TableCell >
                                                     {data.productName}
@@ -179,21 +183,18 @@ export default function MyBasket() {
                         </Grid>
 
                         <Grid item xs={3}>
-                            <div>
-                                <TextField multiline={true} rows={5} style={{ width: "100%" }} id="address" label="Adres" variant="outlined" />
-                                <br></br><br></br>
-                                <TextField multiline={true} rows={5} style={{ width: "100%" }} id="description" label="Açıklama" variant="outlined" />
-                                <br></br><br></br>
-                                <ConfirmDialog buttonName={"Sepeti Tamamla"} Button1="Onayla" Button2="İptal Et" DialogTitle="Dikkat" DialogContent="Sepetinizi onaylamak istiyormusunuz" apifunction={() => {
-                                    let formdata = {
-                                        "address": document.getElementById("address").value,
-                                        "description": document.getElementById("description").value
-                                    }
+                            <OrderDetail></OrderDetail>
 
-                                    api("POST", "localhost", "7098", "orders", "createorder", null, formdata).then(res => console.log(res));
-                                }}></ConfirmDialog>
+                            <hr style={hrStyle}></hr>
+                            
+                            <Link to="/orders/checkout">
+                                <Button onClick={() => {
+                                    props.activatedbasket();
+                                }} variant="contained" style={{ width: "100%" }}>
+                                    Ödeme Sayfasına Devam Et
+                                </Button>
+                            </Link>
 
-                            </div>
                         </Grid>
 
                     </Grid>
@@ -205,3 +206,17 @@ export default function MyBasket() {
         ) : (null)
     );
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        activebasketState: state.activeBasket,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+
+    return bindActionCreators({ activatedbasket, deactivatedbasket }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyBasket)

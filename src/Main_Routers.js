@@ -20,6 +20,7 @@ import CategoriesNavbar from './Components/CategoriesNavbar/CategoriesNavbar';
 import ProductDetail from './Pages/ProductDetail/ProductDetail';
 import MyOrders from './Pages/MyOrders/MyOrders';
 import MyOrderDetail from './Pages/MyOrders/MyOrderDetail';
+import OrdersCheckout from './Pages/OrdersCheckout/OrdersCheckout';
 
 const Main_Routers = (props) => {
 
@@ -60,10 +61,11 @@ const Main_Routers = (props) => {
                 {/* Admin Panel */}
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
                 <Route path="/mybasket" element={<MyBasket></MyBasket>} />
+                {
+                    props.activebasketstate.activeBasket?(<Route path="/orders/checkout" element={<OrdersCheckout></OrdersCheckout>}/>):(null)
+                }
                 {/* Admin Panel */}
-                
                 <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
-
                 <Route path="/myorders" element={<MyOrders></MyOrders>} />
                 <Route path="/myorders/:ordercode" element={<MyOrderDetail></MyOrderDetail>} />
             </Routes>
@@ -88,7 +90,8 @@ const Main_Routers = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        authstate: state.auth
+        authstate: state.auth,
+        activebasketstate: state.activeBasket
     }
 }
 

@@ -41,7 +41,7 @@ export default function ConfirmDialog(props) {
                         {props.icon}
                     </IconButton>
                 ) : (
-                    <Button variant="outlined" onClick={handleClickOpen}>
+                    <Button variant="contained" onClick={handleClickOpen}>
                         {props.buttonName}
                     </Button>
                 )

@@ -114,7 +114,7 @@ export default function MyOrderDetail(props) {
                                                                 />
 
                                                             </Grid>
-                                                            <Grid item xs={8}>
+                                                            <Grid item xs={6}>
 
                                                                 <div style={{ marginBottom: "1.5rem" }}>
                                                                     {element.productName}
@@ -127,10 +127,23 @@ export default function MyOrderDetail(props) {
                                                                 </div>
 
                                                             </Grid>
-                                                            <Grid item style={{ display: "flex", alignItems: "center" }} xs={2}>
-                                                                <div>
-                                                                    {element.productPrice} TL
-                                                                </div>
+
+                                                            <Grid item style={{ display: "flex", alignItems: "center" }} xs={4}>
+                                                                <Grid container spacing={1}>
+
+                                                                    <Grid item xs={4}>
+
+                                                                        {element.productQuantity} Adet
+                                                                    </Grid>
+                                                                    <Grid item xs={8}>
+
+                                                                        Birim Fiyat: {element.productPrice} TL
+                                                                    </Grid>
+
+
+                                                                </Grid>
+
+
 
 
                                                             </Grid>
@@ -166,7 +179,7 @@ export default function MyOrderDetail(props) {
                                         <Box sx={{ flexGrow: 1 }}>
                                             <Grid container spacing={2}>
 
-                                                <Grid item xs={9}>
+                                                <Grid item xs={4}>
                                                     <div style={{ marginBottom: "1rem" }}>
                                                         Teslimat Adresi:
                                                     </div>
@@ -174,6 +187,15 @@ export default function MyOrderDetail(props) {
                                                         datas.data.orderAddress
                                                     }
                                                 </Grid>
+                                                <Grid item xs={5}>
+                                                    <div style={{ marginBottom: "1rem" }}>
+                                                        Sipariş Açıklaması:
+                                                    </div>
+                                                    {
+                                                        datas.data.orderDescription
+                                                    }
+                                                </Grid>
+
                                                 <Grid item xs={3}>
                                                     <div style={{ marginBottom: "1rem" }}>
                                                         Toplam Fiyat:

@@ -10,11 +10,12 @@ import { useEffect } from 'react';
 import registerloginimage from "../../Image/register-login.jpg"
 import { useNavigate } from "react-router-dom";
 
-export const infoverification = (firstname, lastname, email, username, password, confirmpassword) => {
+export const infoverification = (firstname, lastname, email, username,phoneNumber, password, confirmpassword) => {
     if (firstname !== null && firstname !== ""
         && lastname !== null && lastname !== ""
         && email !== null && email !== ""
         && username !== null && username !== ""
+        && phoneNumber !== null && phoneNumber !== ""
         && password !== null && password !== ""
         && confirmpassword !== null && confirmpassword !== "") {
         if (password === confirmpassword) {
@@ -35,9 +36,10 @@ function RegistrationForm() {
     const [lastName, setLastName] = useState(null);
     const [email, setEmail] = useState(null);
     const [username, setUsername] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(null);
     const [password, setPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
-
+    
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
@@ -58,13 +60,29 @@ function RegistrationForm() {
         if (id === "confirmPassword") {
             setConfirmPassword(value);
         }
+        if (id === "phonenumber") {
+            setPhoneNumber(value);
+        }
 
     }
 
 
 
     const handleSubmit = () => {
-        if (infoverification(firstName, lastName, email, username, password, confirmPassword)) {
+
+        var user_data =
+        {
+            "Name": firstName,
+            "Surname": lastName,
+            "Email": email,
+            "Username": username,
+            "PhoneNumber":phoneNumber,
+            "Password": password,
+            "PasswordConfirm": confirmPassword
+        }
+        console.log(user_data)
+
+        if (infoverification(firstName, lastName, email, username,phoneNumber, password, confirmPassword)) {
 
             var user_data =
             {
@@ -72,6 +90,7 @@ function RegistrationForm() {
                 "Surname": lastName,
                 "Email": email,
                 "Username": username,
+                "PhoneNumber":phoneNumber,
                 "Password": password,
                 "PasswordConfirm": confirmPassword
             }
@@ -111,6 +130,10 @@ function RegistrationForm() {
                     <div className="username">
                         <label className="form__label" htmlfor='username'>Kullanıcı Adı</label>
                         <input type="text" id="username" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} />
+                    </div>
+                    <div className="phonenumber">
+                        <label className="form__label" htmlfor='phonenumber'>Telefon Numarası</label>
+                        <input type="text" id="phonenumber" className="form__input" defaultValue={null} onChange={(e) => handleInputChange(e)} />
                     </div>
                     <div className="password">
                         <label className="form__label" htmlfor='password'>Şifre</label>

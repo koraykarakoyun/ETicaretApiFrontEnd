@@ -8,13 +8,15 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 import Authreducer from './Redux/Reducer/AuthReducer';
 import SearchReducer from "./Redux/Reducer/SearchReducer"
+import ActiveBasketReducer from './Redux/Reducer/ActiveBasketReducer';
 
 export const store = createStore(
     combineReducers(
         {
             search:SearchReducer,
             login: Loginreducer,
-            auth: Authreducer
+            auth: Authreducer,
+            activeBasket:ActiveBasketReducer
         }
     ));
 

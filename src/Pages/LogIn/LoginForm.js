@@ -51,7 +51,6 @@ function LoginForm(props) {
                 props.authanticated("internal", res.userAuthRoleName);
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
-                notify(res.message)
                 navigate("/");
             }
             else {

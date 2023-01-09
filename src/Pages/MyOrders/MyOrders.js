@@ -24,6 +24,7 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import MainPage from '../../Pagination/MainPage';
+import no_order from "../../Image/no-order.png"
 export default function MyOrders() {
     const [datas, setDatas] = useState({ success: false, data: [] });
     const [IsConfirm, setIsConfirm] = useState(false);
@@ -48,92 +49,115 @@ export default function MyOrders() {
 
     return (
         datas.success ? (
-
             <>
-                <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.8rem" }}>
-                    Siparişlerim
-                </div>
 
-                <Box style={{ marginLeft: "15%", marginTop: "2%", marginRight: "15%" }} sx={{ flexGrow: 1 }}>
+                {
+                    datas.data.length != 0 ? (
+                        <>
+                            <div style={{ margin: "auto", marginLeft: "15%", marginTop: "2%", marginBottom: "0", fontSize: "1.8rem" }}>
+                                Siparişlerim
+                            </div>
+                            <Box style={{ marginLeft: "15%", marginTop: "2%", marginRight: "15%" }} sx={{ flexGrow: 1 }}>
 
-                    <TableContainer component={Paper}>
+                                <TableContainer component={Paper}>
 
-                        <Table  >
-                            <TableHead>
-                                <TableRow>
+                                    <Table  >
+                                        <TableHead>
+                                            <TableRow>
 
 
 
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-
-                                {
-                                    datas.data.map(element => (
-                                        <>
-                                            <TableRow
-                                                key={element.orderCode}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-
-                                            >
-                                                <TableCell style={{ borderTop: "1px solid grey", display: "flex", justifyContent: "space-around" }}>
-                                                    <div>
-                                                        <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                                                            <span style={{ fontWeight: "normal" }}>SİPARİŞ NO:</span>{element.orderCode}
-                                                        </div>
-                                                        <br></br>
-                                                        <div>
-                                                            <span style={{ fontWeight: "bold" }}>Sipariş Tarihi:&nbsp;</span> {element.createdDate}
-                                                            &nbsp;
-                                                            &nbsp;
-                                                            &nbsp;
-                                                            &nbsp;
-                                                            <span style={{ fontWeight: "bold" }}>Toplam Fiyat:&nbsp;</span>{element.totalPrice + " TL"}
-                                                            &nbsp;
-                                                            &nbsp;
-                                                            &nbsp;
-                                                            &nbsp;
-                                                            <span style={{ fontWeight: "bold" }}>Ürün Adedi:</span>&nbsp;{element.productQuantity + ""}
-                                                        </div>
-
-                                                    </div>
-                                                    <Link to={"/myorders/"+element.orderCode}>
-                                                        <Button>
-                                                            Sipariş Detayı
-                                                        </Button>
-                                                    </Link>
-                                                </TableCell>
                                             </TableRow>
-                                            <TableRow
-                                                key={element.orderCode}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell style={{ display: "flex", width: "50%", borderBottom: "0", marginBottom: "10px" }}>
-                                                    {
-                                                        element.paths.map((element) => (
-                                                            <CardMedia
-                                                                component="img"
-                                                                src={
-                                                                    `http://127.0.0.1:8887/${element}`
+                                        </TableHead>
+                                        <TableBody>
+
+                                            {
+                                                datas.data.map(element => (
+                                                    <>
+                                                        <TableRow
+                                                            key={element.orderCode}
+                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+
+                                                        >
+                                                            <TableCell style={{ borderTop: "1px solid grey", display: "flex", justifyContent: "space-around" }}>
+                                                                <div>
+                                                                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                                                                        <span style={{ fontWeight: "normal" }}>SİPARİŞ NO:</span>{element.orderCode}
+                                                                    </div>
+                                                                    <br></br>
+                                                                    <div>
+                                                                        <span style={{ fontWeight: "bold" }}>Sipariş Tarihi:&nbsp;</span> {element.createdDate}
+                                                                        &nbsp;
+                                                                        &nbsp;
+                                                                        &nbsp;
+                                                                        &nbsp;
+                                                                        <span style={{ fontWeight: "bold" }}>Toplam Fiyat:&nbsp;</span>{element.totalPrice + " TL"}
+                                                                        &nbsp;
+                                                                        &nbsp;
+                                                                        &nbsp;
+                                                                        &nbsp;
+                                                                        <span style={{ fontWeight: "bold" }}>Ürün Adedi:</span>&nbsp;{element.productQuantity + ""}
+                                                                    </div>
+
+                                                                </div>
+                                                                <Link to={"/myorders/" + element.orderCode}>
+                                                                    <Button>
+                                                                        Sipariş Detayı
+                                                                    </Button>
+                                                                </Link>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                        <TableRow
+                                                            key={element.orderCode}
+                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                        >
+                                                            <TableCell style={{ display: "flex", width: "50%", borderBottom: "0", marginBottom: "10px" }}>
+                                                                {
+                                                                    element.paths.map((element) => (
+                                                                        <CardMedia
+                                                                            component="img"
+                                                                            src={
+                                                                                `http://127.0.0.1:8887/${element}`
+                                                                            }
+                                                                            style={{ margin: "1rem", height: "5rem", objectFit: "fill", justifyContent: "center", alignItems: "center" }}
+                                                                        />
+                                                                    ))
                                                                 }
-                                                                style={{ margin: "1rem", height: "5rem", objectFit: "fill", justifyContent: "center", alignItems: "center" }}
-                                                            />
-                                                        ))
-                                                    }
-                                                </TableCell>
-                                            </TableRow>
+                                                            </TableCell>
+                                                        </TableRow>
 
-                                        </>
+                                                    </>
 
-                                    ))
-                                }
+                                                ))
+                                            }
 
-                            </TableBody>
-                        </Table>
+                                        </TableBody>
+                                    </Table>
 
-                    </TableContainer >
+                                </TableContainer >
 
-                </Box>
+                            </Box></>) : (
+                        <>
+                            <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center", fontSize: "1.8rem" }}>
+                                Henüz Siparişiniz Yok!
+                            </div>
+                            <div style={{ marginLeft: "auto", marginRight: "auto", width: "50%", textAlign: "center" }}>
+                                <img style={{ height: "30rem" }} src={no_order}></img>
+                            </div>
+                            <div style={{ marginLeft: "auto", marginRight: "auto", width: "50%", textAlign: "center" }}>
+                                <Link style={{ textDecoration: "none" }} to="/">
+                                    <Button style={{ backgroundColor: "#193441", borderRadius: "0", fontSize: "1.2rem" }} variant="contained"> Alışverişe Başlayın!</Button>
+                                </Link>
+                            </div>
+
+
+                        </>
+                    )
+                }
+
+
+
+
             </>
         ) : (null)
     );

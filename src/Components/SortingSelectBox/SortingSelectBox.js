@@ -8,7 +8,10 @@ import { Link } from 'react-router-dom';
 
 export default function SortingSelectBox(props) {
     const [data, setData] = React.useState();
-
+    const menuitemStyle = {
+        color: "black",
+        textDecoration: "none"
+    }
     const handleChange = (event) => {
         setData(event.target.value);
     };
@@ -25,11 +28,11 @@ export default function SortingSelectBox(props) {
                         label="Sıralama"
                         onChange={handleChange}
                     >
-                        <MenuItem value={1}><Link to={"/"+ props.category}>Varsayılan</Link></MenuItem>
-                        <MenuItem value={2}><Link to={"/" + props.category + "/name&asc"}>Urun Adi---A'dan Z'ye</Link></MenuItem>
-                        <MenuItem value={3}><Link to={"/" + props.category + "/name&desc"}>Urun Adi---Z'den A'ya</Link></MenuItem>
-                        <MenuItem value={4}><Link to={"/" + props.category + "/price&asc"}>Artan Fiyat</Link></MenuItem>
-                        <MenuItem value={5}><Link to={"/" + props.category + "/price&desc"}>Azalan Fiyat</Link></MenuItem>
+                        <MenuItem value={1}><Link style={menuitemStyle} to={"/" + props.category}>Varsayılan</Link></MenuItem>
+                        <MenuItem value={2}><Link style={menuitemStyle} to={"/" + props.category + "/name&asc"}>Urun Adi---A'dan Z'ye</Link></MenuItem>
+                        <MenuItem value={3}><Link style={menuitemStyle} to={"/" + props.category + "/name&desc"}>Urun Adi---Z'den A'ya</Link></MenuItem>
+                        <MenuItem value={4}><Link style={menuitemStyle} to={"/" + props.category + "/price&asc"}>Artan Fiyat</Link></MenuItem>
+                        <MenuItem value={5}><Link style={menuitemStyle} to={"/" + props.category + "/price&desc"}>Azalan Fiyat</Link></MenuItem>
 
                     </Select>
                 </FormControl>
@@ -49,11 +52,11 @@ export default function SortingSelectBox(props) {
                         label="Sıralama"
                         onChange={handleChange}
                     >
-                        <MenuItem value={1}><Link to={"/"}>Varsayılan</Link></MenuItem>
-                        <MenuItem value={2}><Link to={"/name&asc"}>Urun Adi---A'dan Z'ye</Link></MenuItem>
-                        <MenuItem value={3}><Link to={"/name&desc"}>Urun Adi---Z'den A'ya</Link></MenuItem>
-                        <MenuItem value={4}><Link to={"/price&asc"}>Artan Fiyat </Link></MenuItem>
-                        <MenuItem value={5}><Link to={"/price&desc"}>Azalan Fiyat</Link></MenuItem>
+                        <MenuItem value={1}><Link style={menuitemStyle} to={"/"}>Varsayılan</Link></MenuItem>
+                        <MenuItem value={2}><Link style={menuitemStyle} to={"/name&asc"}>Urun Adi---A'dan Z'ye</Link></MenuItem>
+                        <MenuItem value={3}><Link style={menuitemStyle} to={"/name&desc"}>Urun Adi---Z'den A'ya</Link></MenuItem>
+                        <MenuItem value={4}><Link style={menuitemStyle} to={"/price&asc"}>Artan Fiyat </Link></MenuItem>
+                        <MenuItem value={5}><Link style={menuitemStyle} to={"/price&desc"}>Azalan Fiyat</Link></MenuItem>
 
                     </Select>
                 </FormControl>

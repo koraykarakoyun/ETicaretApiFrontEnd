@@ -62,7 +62,7 @@ function MyBasket(props) {
                     </div>
 
                     <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >
-                        <ShoppingBagIcon style={{ fontSize: "10rem" }}></ShoppingBagIcon>
+                        <ShoppingBagIcon style={{ fontSize: "10rem" ,color:"#193441" }} ></ShoppingBagIcon>
                     </div>
 
                     <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >

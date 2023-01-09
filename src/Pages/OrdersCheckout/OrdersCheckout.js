@@ -16,6 +16,7 @@ import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 
 const OrdersCheckout = (props) => {
     const [datas, setDatas] = useState({ success: false, data: [] });
+    const [userInfo, setUserInfo] = useState({name:"",surname:"",phoneNumber:""});
     const [verifycode, setVerifyCode] = useState("");
     const hrStyle = {
         margin: "2%",
@@ -33,6 +34,14 @@ const OrdersCheckout = (props) => {
             }
 
         });
+
+        api("GET", "localhost", "7098", "users", "getuserinfo", null, null).then((data) => {
+           
+            setUserInfo(data);
+            console.log(userInfo)
+        });
+
+
     }, [])
 
 
@@ -63,16 +72,16 @@ const OrdersCheckout = (props) => {
                         <ConfirmDialog buttonName="Siparişi Tamamla" DialogTitle="Ödeme Sayfası"
                             DialogContent={
                                 <>
-                                    <div>xxx Telefonuna Mesaj Göndeilmiştir.Lütfen Gelen Kodu Giriniz.</div>
-                                    <TextField style={{ width: "100%" }} id="verifycode" label="Code" variant="outlined" onChange={() => { setVerifyCode(document.getElementById("verifycode").value) }} />
+                                    <div>{userInfo.phoneNumber} Telefonuna Güvenlik Kodu Gönderilmiştir.Lütfen 6 Haneli Kodu Giriniz.</div>
+                                    <TextField style={{ width: "100%",marginTop:"2%" }} inputProps={{ maxLength: 6 }} id="verifycode" label="Doğrulama Kodu" variant="outlined" onChange={() => { setVerifyCode(document.getElementById("verifycode").value) }} />
                                 </>
                             }
                             apifunction={() => {
                                 if (verifycode == "123456") {
-                                    
-                                    let data={
-                                        "Description":document.getElementById("description").value,
-                                        "Address":document.getElementById("address").value
+
+                                    let data = {
+                                        "Description": document.getElementById("description").value,
+                                        "Address": document.getElementById("address").value
                                     }
 
                                     api("POST", "localhost", "7098", "orders", "CreateOrder", null, data).then((data) => {

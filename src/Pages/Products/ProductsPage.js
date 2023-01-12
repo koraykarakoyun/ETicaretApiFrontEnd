@@ -46,18 +46,17 @@ export default function ProductsPage(props) {
   return (
 
     deger.success ? (<div style={divMargin}>
-      <ToastContainer />
-      <TableContainer component={Paper}>
+      <TableContainer  component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead >
             <TableRow>
-              <TableCell align="center">ProductName</TableCell>
-              <TableCell align="center">ProductStock</TableCell>
-              <TableCell align="center">ProductPrice</TableCell>
-              <TableCell align="center">Add</TableCell>
-              <TableCell align="center">Update</TableCell>
-              <TableCell align="center">Delete</TableCell>
-              <TableCell align="center">Image</TableCell>
+              <TableCell align="center">Ürün İsmi</TableCell>
+              <TableCell align="center">Ürün Stoğu</TableCell>
+              <TableCell align="center">Ürün Fiyatı</TableCell>
+              <TableCell align="center">Ekle</TableCell>
+              <TableCell align="center">Güncelle</TableCell>
+              <TableCell align="center">Sil</TableCell>
+              <TableCell align="center">Resim</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

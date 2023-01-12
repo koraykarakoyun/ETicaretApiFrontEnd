@@ -14,6 +14,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import SortingSelectBox from '../Components/SortingSelectBox/SortingSelectBox';
+import FilterBox from '../Components/FilterBox/FilterBox';
 
 
 
@@ -25,22 +26,26 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+
 const Posts = (props) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <div style={{width:"20%",float:'right'}}>
-      <SortingSelectBox category={props.category}></SortingSelectBox>
+      <div style={{ width: "20%", float: 'right' }}>
+        <SortingSelectBox category={props.category}></SortingSelectBox>
       </div>
-      
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 16 }}>
+
+
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ md: 16 }}>
+
+
         {
           props.posts.map((post, index) => (
 
             <Grid item xs={2} sm={4} md={4} key={index}>
 
               <Card>
-                <Link style={{textDecoration:"none",color:"black"}} to={"/product/"+post.productId}>
+                <Link style={{ textDecoration: "none", color: "black" }} to={"/product/" + post.productId}>
                   <CardMedia
                     component="img"
                     src={
@@ -85,6 +90,13 @@ const Posts = (props) => {
           ))
         }
       </Grid>
+
+
+
+
+
+
+
     </Box >
   );
 };

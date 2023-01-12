@@ -32,7 +32,7 @@ const Main_Routers = (props) => {
     if (!props.authstate.isAuth) {
         routes = (
             <Routes>
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound/>} />
                 <Route path="/" element={<MainPage></MainPage>} />
                 <Route path="/:type&:parameter" element={<MainPage></MainPage>} />
                 <Route path="/:category" element={<MainPage></MainPage>} />
@@ -46,7 +46,7 @@ const Main_Routers = (props) => {
     if (props.authstate.isAuth) {
         routes = (
             <Routes>
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFound/>}/>
                 <Route path="/" element={<MainPage></MainPage>} />
                 <Route path="/:type&:parameter" element={<MainPage></MainPage>} />
                 <Route path="/:category" element={<MainPage></MainPage>} />
@@ -58,13 +58,11 @@ const Main_Routers = (props) => {
                 <Route path="/adminpanel/roles" element={<AdminPanel type="roles"></AdminPanel>} />
                 <Route path="/adminpanel/auth" element={<AdminPanel type="auth"></AdminPanel>} />
                 <Route path="/adminpanel/slider" element={<AdminPanel type="slider"></AdminPanel>} />
-                {/* Admin Panel */}
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
                 <Route path="/mybasket" element={<MyBasket></MyBasket>} />
                 {
                     props.activebasketstate.activeBasket?(<Route path="/orders/checkout" element={<OrdersCheckout></OrdersCheckout>}/>):(null)
                 }
-                {/* Admin Panel */}
                 <Route path="/product/:id" element={<ProductDetail></ProductDetail>} />
                 <Route path="/myorders" element={<MyOrders></MyOrders>} />
                 <Route path="/myorders/:ordercode" element={<MyOrderDetail></MyOrderDetail>} />

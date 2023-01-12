@@ -55,7 +55,13 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ProductUpdate(props) {
 
+    const divMargin = {
+        marginBottom: "4%"
+    }
 
+    const floatRight={
+        float: "right"
+    }
     const [open, setOpen] = React.useState(false);
     const [product, setProduct] = React.useState({ success: false, data: [] });
     const [categoryid, setCategoryId] = React.useState(product.data.categoryId);
@@ -118,48 +124,48 @@ export default function ProductUpdate(props) {
                 aria-labelledby="customized-dialog-title"
                 open={open}>
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Product Update
+                    Ürün Güncelleme
                 </BootstrapDialogTitle>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
+                <DialogContent style={{ width: "100%" }} dividers>
+               
 
-                        <form onSubmit={Update}>
+                        <form  style={{ width: "100%" }} onSubmit={Update}>
 
-                            <label>
-                                İsim:<input id='product_name' defaultValue={product.data.productName} type="text" />
-                            </label>
-                            <label>
-                                Stok:<input id='product_stock' defaultValue={product.data.productStock} type="text" />
-                            </label>
-                            <label>
-                                Fiyat:<input id='product_price' defaultValue={product.data.productPrice} type="text" />
-                            </label>
+                            <div style={divMargin} >
+                                İsim:<input style={floatRight}  id='product_name' defaultValue={product.data.productName} type="text" />
+                            </div>
+                            <div style={divMargin}>
+                                Stok:<input style={floatRight}  id='product_stock' defaultValue={product.data.productStock} type="text" />
+                            </div>
+                            <div style={divMargin}>
+                                Fiyat:<input style={floatRight}  id='product_price' defaultValue={product.data.productPrice} type="text" />
+                            </div>
 
-                            <label>
-                                Marka:<input id='product_brand' defaultValue={product.data.productBrand} type="text" />
-                            </label>
+                            <div style={divMargin}>
+                                Marka:<input style={floatRight}  id='product_brand' defaultValue={product.data.productBrand} type="text" />
+                            </div>
 
-                            <label>
-                                Model:<input id='product_model' defaultValue={product.data.productModel} type="text" />
-                            </label>
-                            <label>
-                                Açıklama:<input id='product_description' defaultValue={product.data.productDescription} type="text" />
-                            </label>
-                            <label>
-                                Renk:<input id='product_color' defaultValue={product.data.productColor} type="text" />
-                            </label>
+                            <div style={divMargin}>
+                                Model:<input style={floatRight}  id='product_model' defaultValue={product.data.productModel} type="text" />
+                            </div>
+                            <div style={divMargin}>
+                                Açıklama:<input style={floatRight}  id='product_description' defaultValue={product.data.productDescription} type="text" />
+                            </div>
+                            <div style={divMargin}>
+                                Renk:<input style={floatRight}  id='product_color' defaultValue={product.data.productColor} type="text" />
+                            </div>
                             <CategorySelecter categoryId={product.data.categoryId} setCategoryId={setCategoryId} ></CategorySelecter>
                         </form>
 
 
-                    </Typography>
+               
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={Update}>
-                        Update
+                        Seçimi Onayla
                     </Button>
                     <Button autoFocus onClick={handleClose}>
-                        Close
+                        Kapat
                     </Button>
                 </DialogActions>
             </BootstrapDialog>

@@ -71,14 +71,14 @@ export default function FileUploadModelDialog(props) {
         aria-labelledby="customized-dialog-title"
         open={open}>
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Image Upload
+          Resim Yükleme
         </BootstrapDialogTitle>
         <DialogContent>
           <FileUpload productId={props.productId}></FileUpload>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>
-            Close
+            Kapat
           </Button>
         </DialogActions>
       </BootstrapDialog>

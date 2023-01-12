@@ -38,7 +38,7 @@ export default function FileUpload(props) {
                 </div>
             ) : null}
             <div>
-                <ConfirmDialog buttonName="Resmi Kaydet" apifunction={() => {
+                <ConfirmDialog DialogTitle="Dikkat" DialogContent=" Seçilen Resmi Yüklemek Istiyormusunuz?" Button1="Seçimi Onayla" Button2="İptal"  buttonName="Resmi Kaydet" apifunction={() => {
 
                     const formData = new FormData();
                     formData.append('file', selectedFile);
@@ -49,7 +49,7 @@ export default function FileUpload(props) {
             </div>
 
 
-            <div style={{ width: "100%", border: "1px solid black", marginTop: "2%" }}>
+            <div style={{ width: "100%", marginTop: "2%" }}>
                 <FileUploadPosts productId={props.productId}></FileUploadPosts>
             </div>
         </div>

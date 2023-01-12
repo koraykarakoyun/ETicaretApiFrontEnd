@@ -35,7 +35,7 @@ export default function SliderPage(props) {
 
   };
   useEffect(() => {
-    api("GET", "localhost", "7098", "Sliders", "getallslidephoto", null, null).then((data) => {
+    api("GET", "localhost", "7098", "Sliders", "getallslidephoto", false, null).then((data) => {
       console.log(data);
       if (data.status == 401) {
         setDeger({ success: false, data: [] })
@@ -58,12 +58,14 @@ export default function SliderPage(props) {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">Image</TableCell>
-              <TableCell align="center">FileName</TableCell>
-              <TableCell align="center">FilePath</TableCell>
-              <TableCell align="center">ShowCase</TableCell>
-              <TableCell align="center">Add</TableCell>
-              <TableCell align="center">Delete</TableCell>
+              <TableCell align="center">Resim</TableCell>
+              <TableCell align="center">Dosya Adı</TableCell>
+              <TableCell align="center">Dosya Yolu</TableCell>
+              <TableCell align="center">Durum</TableCell>
+              <TableCell align="center">Resim Ekle</TableCell>
+              <TableCell align="center">Resim Sil</TableCell>
+              <TableCell align="center">Vitrin</TableCell>
+          
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,33 +124,60 @@ export default function SliderPage(props) {
                   </IconButton>
                 </TableCell>
 
+
                 <TableCell align="center">
                   <IconButton aria-label="delete">
 
-                    <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
+                    <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Resmi Silmek Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
                       api("DELETE", "localhost", "7098", "sliders", "deletebyidslidephoto", row.fileId, null).then(res => console.log(res));
                     }} ></ConfirmDialog>
 
                   </IconButton>
                 </TableCell>
 
-
                 <TableCell align="center">
-                  <IconButton aria-label="delete">
 
-                    <ConfirmDialog icon={<VisibilityOffIcon></VisibilityOffIcon>} DialogTitle="Dikkat" DialogContent="Urunu Vitrinden Çıkarmak Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
-                      api("DELETE", "localhost", "7098", "sliders", "deletebyidshowcase", row.fileId, null).then(res => console.log(res));
-                    }} ></ConfirmDialog>
 
-                  </IconButton>
+                  {
+                    row.showCase ? (
+                      <IconButton aria-label="delete">
+
+                        <ConfirmDialog icon={<VisibilityOffIcon></VisibilityOffIcon>} DialogTitle="Dikkat" DialogContent="Resmi Vitrinden Çıkarmak Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
+                          api("DELETE", "localhost", "7098", "sliders", "deletebyidshowcase", row.fileId, null).then(res => console.log(res));
+                        }} ></ConfirmDialog>
+
+                      </IconButton>
+                    ) : (
+                      <IconButton aria-label="add">
+
+                        <ConfirmDialog icon={<VisibilityIcon></VisibilityIcon>} DialogTitle="Dikkat" DialogContent="Resmi Vitrine Eklemek Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
+                          api("POST", "localhost", "7098", "sliders", "ActivateByIdShowCase", row.fileId, null).then(res => console.log(res));
+                        }} ></ConfirmDialog>
+
+                      </IconButton>
+                    )
+                  }
+
                 </TableCell>
+
+
+
+
+
+
+
+
+
+
+
+
 
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>) : (null)
+    </div >) : (null)
 
 
   );

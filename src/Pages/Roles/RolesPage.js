@@ -45,11 +45,11 @@ export default function RolesPage(props) {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Role Name</TableCell>
+                            <TableCell align="center">Rol Adı</TableCell>
 
-                            <TableCell align="right">Add</TableCell>
-                            <TableCell align="right">Update</TableCell>
-                            <TableCell align="right">Delete</TableCell>
+                            <TableCell align="center">Ekle</TableCell>
+                            <TableCell align="center">Güncelle</TableCell>
+                            <TableCell align="center">Sil</TableCell>
 
                         </TableRow>
                     </TableHead>
@@ -59,12 +59,12 @@ export default function RolesPage(props) {
                             <TableRow key={row.id}>
                                 <TableCell align="center">{row.name}</TableCell>
 
-                                <TableCell align="right">
+                                <TableCell align="center">
 
-                                    <ConfirmDialog icon={<AddIcon></AddIcon>} DialogTitle="Dikkat" DialogContent={<>
+                                    <ConfirmDialog icon={<AddIcon></AddIcon>} DialogTitle="Rol Ekleme" DialogContent={<>
                                         <form>
                                             <label>
-                                                Name:<input id='role_name' type="text" />
+                                                Rol Adı:<input id='role_name' type="text" />
                                             </label>
                                         </form>
                                     </>}
@@ -82,12 +82,12 @@ export default function RolesPage(props) {
                                 </TableCell>
 
 
-                                <TableCell align="right">
+                                <TableCell align="center">
 
-                                    <ConfirmDialog icon={<AutorenewIcon></AutorenewIcon>} DialogTitle="Dikkat" DialogContent={<>
+                                    <ConfirmDialog icon={<AutorenewIcon></AutorenewIcon>} DialogTitle="Rol Güncelleme" DialogContent={<>
                                         <form>
                                             <label>
-                                                Yeni Isim:<input id='role_name' type="text" />
+                                                Rolün Yeni Adı:<input id='role_name' type="text" />
                                             </label>
                                         </form>
                                     </>} Button1="Evet" Button2="Hayır" apifunction={() => {
@@ -102,9 +102,9 @@ export default function RolesPage(props) {
 
                                 </TableCell>
 
-                                <TableCell align="right">
+                                <TableCell align="center">
 
-                                    <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır" apifunction={
+                                    <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Rolü Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır" apifunction={
                                         () => {
 
                                             console.log(row.id)

@@ -41,7 +41,7 @@ export default function OrdersPage(props) {
             }
             else {
                 setDeger({ success: true, data: data })
-            }  
+            }
         });
     }, OrdersPage)
 
@@ -56,8 +56,8 @@ export default function OrdersPage(props) {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">Sipariş Kod</TableCell>
-                            <TableCell align="center">Kullanıcı</TableCell>
+                            <TableCell align="center">Sipariş Kodu</TableCell>
+                            <TableCell align="center">Kullanıcı Adı</TableCell>
                             <TableCell align="center">Sipariş Tarihi</TableCell>
                             <TableCell align="center">Sipariş Durumu</TableCell>
                             <TableCell align="center">Sipariş Detayı</TableCell>
@@ -92,7 +92,15 @@ export default function OrdersPage(props) {
 
                                     <TableCell align="center">
                                         <IconButton aria-label="delete">
-                                            <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır"></ConfirmDialog>
+                                            <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Siparişi Silmek İstiyormusunuz?" Button1="Evet" Button2="Hayır"
+
+                                                apifunction={() => {
+
+                                                    api("DELETE", "localhost", "7098", "orders", "DeleteOrderByOrderCode", row.orderCode,null).then(response => {
+                                                        console.log(response);
+                                                    })
+                                                }}
+                                            ></ConfirmDialog>
                                         </IconButton>
                                     </TableCell>
                                 </TableRow>

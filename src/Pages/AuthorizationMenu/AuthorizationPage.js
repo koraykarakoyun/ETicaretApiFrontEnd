@@ -54,7 +54,7 @@ export default function AuthPage(props) {
                 defaultExpandIcon={<ChevronRightIcon />}
             >
                 {deger.data.map((data) => (
-                    <TreeItem nodeId={data.name} label={data.name}>
+                    <TreeItem style={{color:"white"}} nodeId={data.name} label={data.name}>
                         {
                             data.action.map(action => {
 
@@ -75,7 +75,7 @@ export default function AuthPage(props) {
                                             }
                                         });
                                     }} DialogTitle={action.definiton + " Endpoint'ine Rol Atama"}
-                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rol Ata2" Button2="İptal Et"
+                                        DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Seçimi Onayla" Button2="İptal Et"
                                         apifunction={() => {
                                             let formdata = {
                                                 "menu": String(data.name),

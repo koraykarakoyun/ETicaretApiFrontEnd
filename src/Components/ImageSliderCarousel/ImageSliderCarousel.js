@@ -11,7 +11,7 @@ const ImageSliderCarousel = () => {
 
     useEffect(() => {
 
-        api("GET", "localhost", "7098", "sliders", "getallslidephoto", null, null).then((res) => {
+        api("GET", "localhost", "7098", "sliders", "getallslidephoto", true, null).then((res) => {
             console.log(res);
             setImage(res)
         }

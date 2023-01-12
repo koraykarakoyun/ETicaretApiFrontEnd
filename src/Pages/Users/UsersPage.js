@@ -78,10 +78,10 @@ export default function UsersPage(props) {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="center">NameSurname</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">UserName</TableCell>
-                            <TableCell align="center">Two Factory</TableCell>
+                            <TableCell align="center">Ad Soyad</TableCell>
+                            <TableCell align="center">E-Posta</TableCell>
+                            <TableCell align="center">Kullanıcı Adı</TableCell>
+                            <TableCell align="center">İki Faktörlü Doğrulama</TableCell>
                             <TableCell align="center">Rol Ata</TableCell>
                             <TableCell align="center">Yetki Ata</TableCell>
 
@@ -112,7 +112,7 @@ export default function UsersPage(props) {
                                             }
                                         });
                                     }}
-                                        DialogTitle=" Endpoint'ine Rol Atama"
+                                        DialogTitle=" Kullanıcıya Rol Atama"
                                         DialogContent={<RolesList rolesList={rolesList} rolesToEndpoint={rolesToEndpoint} setSelectedRoles={setSelectedRoles}></RolesList>} Button1="Rolu Onayla" Button2="İptal Et"
                                         apifunction={() => {
                                             let userData = {

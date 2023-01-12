@@ -56,10 +56,17 @@ BootstrapDialogTitle.propTypes = {
 
 export default function ProductAdd(props) {
 
+    const divMargin = {
+        marginBottom: "4%"
+    }
+
+    const floatRight={
+        float: "right"
+    }
     const [open, setOpen] = React.useState(false);
     const [categoryid, setCategoryId] = React.useState("");
 
-    
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -92,50 +99,50 @@ export default function ProductAdd(props) {
 
 
     return (
-        <div>
-            <ToastContainer />
+        <div >
             <IconButton aria-label="delete" onClick={handleOpen}>
-               <AddIcon></AddIcon>
+                <AddIcon></AddIcon>
             </IconButton>
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
-                open={open}>
+                open={open}
+            >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    Urun Ekleme
+                   Ürün Ekleme
                 </BootstrapDialogTitle>
-                <DialogContent dividers>
-                    <Typography gutterBottom>
-
-                        <form onSubmit={Add}>
-                            <label>
-                                İsim:<input id='product_name' type="text" />
-                            </label>
-                            <label>
-                                Stok:<input id='product_stock' type="number" />
-                            </label>
-                            <label>
-                                Fiyat:<input id='product_price' type="number" />
-                            </label>
-
-                            <label>
-                                Marka:<input id='product_brand' type="text" />
-                            </label>
-
-                            <label>
-                                Model:<input id='product_model' type="text" />
-                            </label>
-                            <label>
-                                Açıklama:<input id='product_description' type="text" />
-                            </label>
-                            <label>
-                                Renk:<input id='product_color' type="text" />
-                            </label>
-                            <CategorySelecter categoryid={categoryid} setCategoryId={setCategoryId}></CategorySelecter>
-                        </form>
+                <DialogContent style={{ width: "100%" }} dividers>
 
 
-                    </Typography>
+                    <form style={{ height: "100%" }} onSubmit={Add}>
+                        <div style={divMargin}>
+                            İsim:<input style={floatRight} id='product_name' type="text" />
+                        </div>
+                        <div style={divMargin}>
+                            Stok:<input style={floatRight} id='product_stock' type="number" />
+                        </div>
+                        <div style={divMargin}>
+                            Fiyat:<input style={floatRight}id='product_price' type="number" />
+                        </div >
+
+                        <div style={divMargin}>
+                            Marka:<input style={floatRight} id='product_brand' type="text" />
+                        </div>
+
+                        <div style={divMargin}>
+                            Model:<input style={floatRight} id='product_model' type="text" />
+                        </div>
+                        <div style={divMargin}>
+                            Açıklama:<input style={floatRight} id='product_description' type="text" />
+                        </div>
+                        <div style={divMargin}>
+                            Renk:<input style={floatRight} id='product_color' type="text" />
+                        </div>
+                        <CategorySelecter categoryid={categoryid} setCategoryId={setCategoryId}></CategorySelecter>
+                    </form>
+
+
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => {

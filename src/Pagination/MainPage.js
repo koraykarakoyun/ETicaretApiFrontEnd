@@ -23,7 +23,10 @@ const MainPage = (props) => {
     let { category } = useParams();
     let { type } = useParams();
     let { parameter } = useParams();
-
+    let { filter1} = useParams();
+    let { filter2} = useParams();
+    let { filter3} = useParams();
+    let { filter4} = useParams();
 
 
 
@@ -103,6 +106,9 @@ const MainPage = (props) => {
         }
     }, [props.searchstate])
 
+    
+ 
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
@@ -111,7 +117,7 @@ const MainPage = (props) => {
         <>
             <ImageCarousel></ImageCarousel>
             <div style={divMargin}>
-                <Posts posts={currentPosts} category={category} />
+                <Posts posts={currentPosts} setPosts={setPosts} category={category} />
                 <Pagination
                     postsPerPage={postsPerPage}
                     totalPosts={posts.length}

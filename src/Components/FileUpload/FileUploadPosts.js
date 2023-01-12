@@ -39,27 +39,29 @@ const FileUploadPosts = (props) => {
         <>
             {posts.map(post => (
 
-                <Card sx={{ maxWidth: "23%", display: "inline-block", marginTop: "1.2%", marginLeft: "1.4%" }}>
 
+
+                <Card style={{ height: "10rem", width: "10rem", display: "inline-block",marginLeft:"auto",marginRight:"auto" }}>
                     <input type="radio" value={post.productId} name='img' onClick={handleChange}></input>
                     <CardMedia
                         component="img"
                         src={"http://127.0.0.1:8887/" + post.productPath}
-                        style={{ height: "100%", width: "100%", margin: "auto" }}
+                        style={{ height: "100%", width: "100%", margin: "auto" ,backgroundPosition:"center"}}
                     />
-
                 </Card>
+
+
             ))}
 
             <div>
-                <ConfirmDialog buttonName="Vitrini Onayla" apifunction={() => {
+                <ConfirmDialog DialogTitle="Dikkat" DialogContent="Seçilen Resmi Vitrine Koymak İstiyor Musunuz?" Button1="Seçimi Onayla" Button2="İptal" Dia buttonName="Vitrini Onayla" apifunction={() => {
                     var data = {
                         "ProductId": String(productid),
                         "ImageId": String(imageid)
                     }
-             
+
                     api("PUT", "localhost", "7098", "products", "vitrin", null, data).then((res) => {
-                      
+
 
                     });
                 }}></ConfirmDialog>

@@ -23,9 +23,11 @@ import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import RolesList from '../../Components/RolesList/RolesList';
 import UserAuth from './UserAuth';
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 
 export default function UsersPage(props) {
+    const alert = useAlert()
     const [deger, setDeger] = useState({ success: false, data: [] });
     const [endpoint, setEndpoint] = useState([]);
     const [rolesList, setRolesList] = useState();
@@ -39,7 +41,7 @@ export default function UsersPage(props) {
         api("GET", "localhost", "7098", "Users", "Getallusers", null, null).then((data) => {
             console.log(data);
             if (data.status == 401) {
-              
+
                 setDeger({ success: false, data: [] })
             }
             else {
@@ -97,7 +99,7 @@ export default function UsersPage(props) {
                                 <TableCell align="center">{row.email}</TableCell>
                                 <TableCell align="center">{row.userName}</TableCell>
                                 <TableCell align="center">{
-                                row.twoFactoryEnable?(<CheckCircleIcon></CheckCircleIcon>):(<RemoveCircleIcon></RemoveCircleIcon>)
+                                    row.twoFactoryEnable ? (<CheckCircleIcon></CheckCircleIcon>) : (<RemoveCircleIcon></RemoveCircleIcon>)
                                 }</TableCell>
                                 <TableCell align="center">
                                     <ConfirmDialog buttonName="Rol Ata" handleclickfunction={() => {
@@ -121,7 +123,15 @@ export default function UsersPage(props) {
                                                     return element.name;
                                                 })
                                             }
-                                            api("POST", "localhost", "7098", "Users", "AssignUserRoles", null, userData);
+                                            api("POST", "localhost", "7098", "Users", "AssignUserRoles", null, userData).then(response => {
+                                                if (response.isSuccess) {
+                                                    alert.show(response.message, { type: types.SUCCESS })
+                                                }
+                                                else {
+                                                    alert.show(response.message, { type: types.ERROR })
+                                                }
+
+                                            });
                                         }}
                                     ></ConfirmDialog>
                                 </TableCell>
@@ -133,9 +143,7 @@ export default function UsersPage(props) {
 
                                     <ConfirmDialog buttonName="Yetki Ata" handleclickfunction={() => {
                                         api("PUT", "localhost", "7098", "UserAuthRoles", "GetByIdUserAuthRole", row.id, null).then((data) => {
-
                                             setDefaultUserAuthRoles(data.roleId)
-
                                         });
                                     }}
 
@@ -149,7 +157,15 @@ export default function UsersPage(props) {
                                                 "userid": row.id,
                                                 "roleid": selectedUserAuthRoles
                                             }
-                                            api("PUT", "localhost", "7098", "UserAuthRoles", "SetUserAuthRole", null, userData);
+                                            api("PUT", "localhost", "7098", "UserAuthRoles", "SetUserAuthRole", null, userData).then(response => {
+                                                if (response.isSuccess) {
+                                                    alert.show(response.message, { type: types.SUCCESS })
+                                                }
+                                                else {
+                                                    alert.show(response.message, { type: types.ERROR })
+                                                }
+
+                                            });
 
                                         }}
 

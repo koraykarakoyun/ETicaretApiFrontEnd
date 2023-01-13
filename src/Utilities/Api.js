@@ -101,30 +101,27 @@ const refreshTokenApi = (method_type = null, origin = "localhost", port = "7098"
 
 
 export const api = (method_type = null, origin = "localhost", port = "7098", controller, action, id = null, formData = null) => {
-
     let token = "";
 
     if (store.getState().auth.isAuth) {
-
         if (store.getState().auth.activeAccount == "internal") {
             token = localStorage.getItem("token");
-
         }
 
-        else if (store.getState().auth.activeAccount == "google") {
+        if (store.getState().auth.activeAccount == "google") {
+            console.log(store.getState().auth);
             token = localStorage.getItem("googletoken");
-
         }
-        else if (store.getState().auth.activeAccount == "facebook") {
+        if (store.getState().auth.activeAccount == "facebook") {
             token = localStorage.getItem("facebooktoken");
-
         }
     }
 
 
+
     if (method_type == "GET") {
         if (id == null) {
-            return  fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
+            return fetch(`https://${origin}:${port}/api/${controller}/${action}`, {
                 headers: new Headers({
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + token,

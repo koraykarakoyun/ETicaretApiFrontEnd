@@ -17,16 +17,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import AddIcon from '@mui/icons-material/Add';
-
 import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import ProductAdd from './ProductAddPage';
 import ProductUpdate from './ProductUpdatePage';
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 const divMargin = {
   marginLeft: "5%",
   marginRight: "5%"
 }
 export default function ProductsPage(props) {
+  const alert = useAlert()
   const [deger, setDeger] = useState({ success: false, data: [] });
   const [addproduct, setAddproduct] = useState({});
   const [updateproduct, setUpdateproduct] = useState({});
@@ -46,7 +48,7 @@ export default function ProductsPage(props) {
   return (
 
     deger.success ? (<div style={divMargin}>
-      <TableContainer  component={Paper}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead >
             <TableRow>
@@ -75,7 +77,12 @@ export default function ProductsPage(props) {
                   <IconButton aria-label="delete">
                     <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Urunu Silmek Istiyormusunuz?" Button1="Evet" Button2="Hayır" apifunction={() => {
                       api("DELETE", "localhost", "7098", "products", "deletebyid", row.productId, null).then(response => {
-                        notify(response.message);
+                        if (response.isSuccess) {
+                          alert.show(response.message, { type: types.SUCCESS })
+                        }
+                        else{
+                          alert.show(response.message, { type: types.ERROR })
+                        }
                       })
                     }} ></ConfirmDialog>
                   </IconButton>

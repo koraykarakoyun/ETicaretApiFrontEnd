@@ -28,7 +28,11 @@ import { bindActionCreators } from 'redux';
 import { activatedbasket, deactivatedbasket } from '../../Redux/Action/ActiveBasket';
 import { connect } from 'react-redux';
 import OrderDetail from '../../Components/OrderDetail/OrderDetail';
+import { BadgeCount } from '../../Redux/Action/BadgeAction';
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 function MyBasket(props) {
+    const alert = useAlert()
     const [datas, setDatas] = useState({ success: false, data: [] });
     const hrStyle = {
         margin: "2%",
@@ -37,9 +41,11 @@ function MyBasket(props) {
     useEffect(() => {
         api("GET", "localhost", "7098", "baskets", "getbasketitem", null, null).then((data) => {
 
-            console.log(data);
+            props.BadgeCount(data[0].count);
+
             if (data.status == 401) {
                 setDatas({ success: false, data: [] })
+
             }
             else {
                 setDatas({ success: true, data: data, })
@@ -62,7 +68,7 @@ function MyBasket(props) {
                     </div>
 
                     <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >
-                        <ShoppingBagIcon style={{ fontSize: "10rem" ,color:"#193441" }} ></ShoppingBagIcon>
+                        <ShoppingBagIcon style={{ fontSize: "10rem", color: "#193441" }} ></ShoppingBagIcon>
                     </div>
 
                     <div style={{ marginLeft: "auto", marginRight: "auto", marginTop: "4%", width: "50%", textAlign: "center" }} >
@@ -137,7 +143,14 @@ function MyBasket(props) {
                                                                 quantity: Number(input_deger)
                                                             }
 
-                                                            api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(res => console.log(res));
+                                                            api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(res => {
+                                                                if (res.isSuccess) {
+                                                                    alert.show(res.message, { type: types.SUCCESS })
+                                                                }
+                                                                else {
+                                                                    alert.show(res.message, { type: types.SUCCESS })
+                                                                }
+                                                            });
 
                                                         }
 
@@ -145,7 +158,15 @@ function MyBasket(props) {
                                                             var data = {
                                                                 basketItemId: event.target.id,
                                                             }
-                                                            api("DELETE", "localhost", "7098", "baskets", "deletebasketitem", null, data).then(res => console.log(res));
+                                                            api("DELETE", "localhost", "7098", "baskets", "deletebasketitem", null, data).then(res => {
+                                                                if (res.isSuccess) {
+                                                                    alert.show(res.message, { type: types.SUCCESS })
+                                                                }
+                                                                else {
+                                                                    alert.show(res.message, { type: types.SUCCESS })
+                                                                }
+                                                            }
+                                                            );
                                                         }
 
 
@@ -166,7 +187,17 @@ function MyBasket(props) {
                                                             quantity: Number(input_deger)
                                                         }
 
-                                                        api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(res => console.log(res));
+                                                        api("PUT", "localhost", "7098", "baskets", "updatebasketitem", null, data).then(
+                                                            res => {
+                                                                if (res.isSuccess) {
+                                                                    alert.show(res.message, { type: types.SUCCESS })
+                                                                }
+                                                                else {
+                                                                    alert.show(res.message, { type: types.SUCCESS })
+                                                                }
+                                                            }
+
+                                                        );
 
                                                     }}>
                                                         +
@@ -186,7 +217,7 @@ function MyBasket(props) {
                             <OrderDetail></OrderDetail>
 
                             <hr style={hrStyle}></hr>
-                            
+
                             <Link to="/orders/checkout">
                                 <Button onClick={() => {
                                     props.activatedbasket();
@@ -216,7 +247,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 
-    return bindActionCreators({ activatedbasket, deactivatedbasket }, dispatch)
+    return bindActionCreators({ activatedbasket, deactivatedbasket, BadgeCount }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyBasket)

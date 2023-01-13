@@ -23,7 +23,6 @@ import MyOrderDetail from './Pages/MyOrders/MyOrderDetail';
 import OrdersCheckout from './Pages/OrdersCheckout/OrdersCheckout';
 
 const Main_Routers = (props) => {
-
     let routes = (
         <>
 
@@ -51,6 +50,7 @@ const Main_Routers = (props) => {
                 <Route path="/:type&:parameter" element={<MainPage></MainPage>} />
                 <Route path="/:category" element={<MainPage></MainPage>} />
                 <Route path="/:category/:type&:parameter" element={<MainPage></MainPage>} />
+
                 <Route path="/adminpanel" element={<AdminPanel type="products"></AdminPanel>} />
                 <Route path="/adminpanel/products" element={<AdminPanel type="products"></AdminPanel>} />
                 <Route path="/adminpanel/orders" element={<AdminPanel type="orders"></AdminPanel>} />
@@ -58,6 +58,7 @@ const Main_Routers = (props) => {
                 <Route path="/adminpanel/roles" element={<AdminPanel type="roles"></AdminPanel>} />
                 <Route path="/adminpanel/auth" element={<AdminPanel type="auth"></AdminPanel>} />
                 <Route path="/adminpanel/slider" element={<AdminPanel type="slider"></AdminPanel>} />
+                
                 <Route path="/fileupload/:id" element={<FileUploadModelDialog></FileUploadModelDialog>} />
                 <Route path="/mybasket" element={<MyBasket></MyBasket>} />
                 {

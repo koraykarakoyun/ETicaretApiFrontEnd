@@ -26,10 +26,12 @@ import { useNavigate } from "react-router";
 import ProductAdd from '../Products/ProductAddPage';
 import ProductsPage from '../Products/ProductsPage';
 import UnpublishedIcon from '@mui/icons-material/Unpublished';
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 
 export default function OrdersPage(props) {
     const [deger, setDeger] = useState({ success: false, data: [] });
+    const alert = useAlert()
     const navigate = useNavigate();
     useEffect(() => {
 
@@ -80,7 +82,14 @@ export default function OrdersPage(props) {
                                                 row.orderCompleted ? null : (
                                                     <ConfirmDialog DialogTitle="Sipariş Detayı" DialogContent="Siparişi Tamamlamak istiyormusunuz" Button1="Evet" Button2="Hayır" apifunction={() => {
                                                         console.log(row.orderBasketId)
-                                                        api("POST", "localhost", "7098", "orders", "CompleteOrder", row.orderBasketId, null).then(res => console.log(res));
+                                                        api("POST", "localhost", "7098", "orders", "CompleteOrder", row.orderBasketId, null).then(response => {
+                                                            if (response.isSuccess) {
+                                                                alert.show(response.message, { type: types.SUCCESS })
+                                                            }
+                                                            else {
+                                                                alert.show(response.message, { type: types.ERROR })
+                                                            }
+                                                        });
                                                     }}>
 
                                                     </ConfirmDialog>
@@ -96,8 +105,13 @@ export default function OrdersPage(props) {
 
                                                 apifunction={() => {
 
-                                                    api("DELETE", "localhost", "7098", "orders", "DeleteOrderByOrderCode", row.orderCode,null).then(response => {
-                                                        console.log(response);
+                                                    api("DELETE", "localhost", "7098", "orders", "DeleteOrderByOrderCode", row.orderCode, null).then(response => {
+                                                        if (response.isSuccess) {
+                                                            alert.show(response.message, { type: types.SUCCESS })
+                                                        }
+                                                        else {
+                                                            alert.show(response.message, { type: types.ERROR })
+                                                        }
                                                     })
                                                 }}
                                             ></ConfirmDialog>

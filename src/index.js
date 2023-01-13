@@ -9,14 +9,30 @@ import { createStore } from 'redux'
 import Authreducer from './Redux/Reducer/AuthReducer';
 import SearchReducer from "./Redux/Reducer/SearchReducer"
 import ActiveBasketReducer from './Redux/Reducer/ActiveBasketReducer';
+import BadgeReducer from './Redux/Reducer/BadgeReducer';
+import { transitions, positions,types, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
+import { style } from '@mui/system';
+
+const options = {
+    position: positions.TOP_RIGHT,
+    timeout: 5000,
+    offset: '10px',
+    type: types.SUCCESS,
+    transition: transitions.SCALE,
+    containerStyle:{
+        fontSize:"0.8rem",
+    }
+}
 
 export const store = createStore(
     combineReducers(
         {
-            search:SearchReducer,
+            search: SearchReducer,
             login: Loginreducer,
             auth: Authreducer,
-            activeBasket:ActiveBasketReducer
+            activeBasket: ActiveBasketReducer,
+            badge: BadgeReducer
         }
     ));
 
@@ -25,7 +41,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>
         <Provider store={store}>
-            <Main_Routers></Main_Routers>
+            <AlertProvider template={AlertTemplate} {...options}>
+                <Main_Routers></Main_Routers>
+            </AlertProvider>
         </Provider>
     </>
 );

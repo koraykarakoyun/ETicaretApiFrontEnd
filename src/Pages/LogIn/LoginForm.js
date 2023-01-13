@@ -16,9 +16,10 @@ import { Button } from '@mui/material';
 import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
 import registerloginimage from "../../Image/register-login.jpg"
 import { useNavigate } from "react-router-dom";
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 function LoginForm(props) {
-
+    const alert = useAlert()
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const navigate = useNavigate();
@@ -48,12 +49,14 @@ function LoginForm(props) {
         api("POST", "localhost", "7098", "auth", "login", null, user_data).then(res => {
 
             if (res.isSuccess == true) {
+                alert.show(res.message, { type: types.SUCCESS })
                 props.authanticated("internal", res.userAuthRoleName);
                 localStorage.setItem("token", res.token.accessToken)
                 localStorage.setItem("refreshtoken", res.token.refreshToken)
                 navigate("/");
             }
             else {
+                alert.show(res.message, { type: types.ERROR })
                 props.notauthanticated();
             }
 

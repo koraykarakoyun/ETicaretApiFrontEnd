@@ -9,9 +9,10 @@ import { api } from '../../Utilities/Api';
 import Radio from '@mui/material/Radio';
 import { LegendToggle } from '@mui/icons-material';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 const FileUploadPosts = (props) => {
-
+    const alert = useAlert()
     const [posts, setPosts] = useState([]);
     const [productid, setproductid] = useState();
     const [imageid, setimageid] = useState();
@@ -62,6 +63,12 @@ const FileUploadPosts = (props) => {
 
                     api("PUT", "localhost", "7098", "products", "vitrin", null, data).then((res) => {
 
+                         if (res.isSuccess) {
+                            alert.show(res.message, { type: types.SUCCESS })
+                        }
+                        else {
+                            alert.show(res.message, { type: types.SUCCESS })
+                        }
 
                     });
                 }}></ConfirmDialog>

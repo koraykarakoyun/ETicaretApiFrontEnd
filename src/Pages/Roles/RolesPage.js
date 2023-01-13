@@ -17,12 +17,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import AddIcon from '@mui/icons-material/Add';
-
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 import FileUploadModelDialog from '../../Components/FileUploadModelDialog';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 
 export default function RolesPage(props) {
+    const alert = useAlert()
     const [deger, setDeger] = useState({ success: false, data: [] });
     useEffect(() => {
         api("GET", "localhost", "7098", "Roles", "getallroles", null, null).then((data) => {
@@ -36,8 +37,6 @@ export default function RolesPage(props) {
 
         });
     }, [])
-
-
     return (
         deger.success ? (<div style={{ marginLeft: "64px" }}>
             <ToastContainer />
@@ -75,7 +74,14 @@ export default function RolesPage(props) {
                                             var role = {
                                                 "Name": String(role_name)
                                             }
-                                            api("POST", "localhost", "7098", "roles", "CreateRole", null, role).then(res => notify(res.message))
+                                            api("POST", "localhost", "7098", "roles", "CreateRole", null, role).then(response => {
+                                                if (response.isSuccess) {
+                                                    alert.show(response.message, { type: types.SUCCESS })
+                                                }
+                                                else {
+                                                    alert.show(response.message, { type: types.ERROR })
+                                                }
+                                            })
                                         }}
                                     ></ConfirmDialog>
 
@@ -97,7 +103,14 @@ export default function RolesPage(props) {
                                             "Id": String(row.id),
                                             "Name": String(role_name)
                                         }
-                                        api("PUT", "localhost", "7098", "roles", "updaterole", null, role).then(res => notify(res.message))
+                                        api("PUT", "localhost", "7098", "roles", "updaterole", null, role).then(response => {
+                                            if (response.isSuccess) {
+                                                alert.show(response.message, { type: types.SUCCESS })
+                                            }
+                                            else {
+                                                alert.show(response.message, { type: types.ERROR })
+                                            }
+                                        })
                                     }}></ConfirmDialog>
 
                                 </TableCell>
@@ -109,7 +122,14 @@ export default function RolesPage(props) {
 
                                             console.log(row.id)
 
-                                            api("DELETE", "localhost", "7098", "roles", "DeleteRole", row.id, null).then(res => notify(res.message))
+                                            api("DELETE", "localhost", "7098", "roles", "DeleteRole", row.id, null).then(response => {
+                                                if (response.isSuccess) {
+                                                    alert.show(response.message, { type: types.SUCCESS })
+                                                }
+                                                else {
+                                                    alert.show(response.message, { type: types.ERROR })
+                                                }
+                                            })
                                         }
                                     }></ConfirmDialog>
 

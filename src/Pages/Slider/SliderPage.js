@@ -24,8 +24,11 @@ import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import CardMedia from '@mui/material/CardMedia';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 
 export default function SliderPage(props) {
+  const alert = useAlert()
   const [deger, setDeger] = useState({ success: false, data: [] });
   const [selectedFile, setSelectedFile] = useState();
   const [IsSelected, setIsSelected] = useState(false);
@@ -65,7 +68,7 @@ export default function SliderPage(props) {
               <TableCell align="center">Resim Ekle</TableCell>
               <TableCell align="center">Resim Sil</TableCell>
               <TableCell align="center">Vitrin</TableCell>
-          
+
             </TableRow>
           </TableHead>
           <TableBody>
@@ -113,7 +116,14 @@ export default function SliderPage(props) {
                             const formData = new FormData();
                             formData.append('file', selectedFile);
                             console.log(formData)
-                            api("POST", "localhost", "7098", "sliders", "addslidephoto", null, formData).then(res => console.log(res));
+                            api("POST", "localhost", "7098", "sliders", "addslidephoto", null, formData).then(response => {
+                              if (response.isSuccess) {
+                                alert.show(response.message, { type: types.SUCCESS })
+                              }
+                              else {
+                                alert.show(response.message, { type: types.ERROR })
+                              }
+                            });
 
                           }} Button1="Onayla" Button2="Kapat" ></ConfirmDialog>
                         </div>
@@ -129,7 +139,14 @@ export default function SliderPage(props) {
                   <IconButton aria-label="delete">
 
                     <ConfirmDialog icon={<DeleteIcon></DeleteIcon>} DialogTitle="Dikkat" DialogContent="Resmi Silmek Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
-                      api("DELETE", "localhost", "7098", "sliders", "deletebyidslidephoto", row.fileId, null).then(res => console.log(res));
+                      api("DELETE", "localhost", "7098", "sliders", "deletebyidslidephoto", row.fileId, null).then(response => {
+                        if (response.isSuccess) {
+                          alert.show(response.message, { type: types.SUCCESS })
+                        }
+                        else {
+                          alert.show(response.message, { type: types.ERROR })
+                        }
+                      });
                     }} ></ConfirmDialog>
 
                   </IconButton>
@@ -143,7 +160,14 @@ export default function SliderPage(props) {
                       <IconButton aria-label="delete">
 
                         <ConfirmDialog icon={<VisibilityOffIcon></VisibilityOffIcon>} DialogTitle="Dikkat" DialogContent="Resmi Vitrinden Çıkarmak Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
-                          api("DELETE", "localhost", "7098", "sliders", "deletebyidshowcase", row.fileId, null).then(res => console.log(res));
+                          api("DELETE", "localhost", "7098", "sliders", "deletebyidshowcase", row.fileId, null).then(response => {
+                            if (response.isSuccess) {
+                              alert.show(response.message, { type: types.SUCCESS })
+                            }
+                            else {
+                              alert.show(response.message, { type: types.ERROR })
+                            }
+                          });
                         }} ></ConfirmDialog>
 
                       </IconButton>
@@ -151,7 +175,14 @@ export default function SliderPage(props) {
                       <IconButton aria-label="add">
 
                         <ConfirmDialog icon={<VisibilityIcon></VisibilityIcon>} DialogTitle="Dikkat" DialogContent="Resmi Vitrine Eklemek Istiyormusunuz?" Button1="Onayla" Button2="Kapat" apifunction={() => {
-                          api("POST", "localhost", "7098", "sliders", "ActivateByIdShowCase", row.fileId, null).then(res => console.log(res));
+                          api("POST", "localhost", "7098", "sliders", "ActivateByIdShowCase", row.fileId, null).then(response => {
+                            if (response.isSuccess) {
+                              alert.show(response.message, { type: types.SUCCESS })
+                            }
+                            else {
+                              alert.show(response.message, { type: types.ERROR })
+                            }
+                          });
                         }} ></ConfirmDialog>
 
                       </IconButton>

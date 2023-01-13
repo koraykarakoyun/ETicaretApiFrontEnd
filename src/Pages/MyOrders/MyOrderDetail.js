@@ -40,8 +40,7 @@ export default function MyOrderDetail(props) {
     useEffect(() => {
 
         api("GET", "localhost", "7098", "orders", "GetByIdUserOrderDetail", ordercode, null).then((data) => {
-            console.log(data.data);
-
+    
             if (data.status == 401) {
                 setDatas({ success: false, data: [] })
             }

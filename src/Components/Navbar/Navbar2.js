@@ -29,8 +29,20 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import home from "../../Image/home.png"
 import AdminDrawer from '../AdminDrawer/AdminDrawer';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useEffect } from 'react';
+import { api } from '../../Utilities/Api';
+import { useState } from 'react';
+import { BadgeCount } from '../../Redux/Action/BadgeAction';
 
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+    },
+}));
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -82,6 +94,17 @@ const linkstyle = {
 
 
 function Navbar2(props) {
+
+    useEffect(() => {
+
+        api("GET", "localhost", "7098", "baskets", "getbasketitem", null, null).then((data) => {
+            props.BadgeCount(String(data[0].count));
+
+        });
+    },[])
+
+
+
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -200,9 +223,16 @@ function Navbar2(props) {
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                                 {
                                     props.authstate.isAuth ? (
-                                        <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/mybasket"><ShoppingBasketIcon style={{ paddingRight: "5%" }}></ShoppingBasketIcon>Sepetim</Link>
+                                        <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/mybasket">
+                                            <StyledBadge style={{ marginRight: "1rem" }} badgeContent={props.badgestate.count} color="secondary">
+                                                <ShoppingCartIcon />
+                                            </StyledBadge>
+                                            Sepetim</Link>
                                     ) : (
-                                        <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/login"><ShoppingBasketIcon style={{ paddingRight: "5%" }}></ShoppingBasketIcon>Sepetim</Link>
+                                        <Link style={{ color: 'white', fontSize: "0.9rem", textDecoration: "none" }} to="/login">
+                                            <StyledBadge color="secondary">
+                                                <ShoppingCartIcon />
+                                            </StyledBadge>Sepetim</Link>
                                     )
                                 }
 
@@ -260,13 +290,14 @@ function Navbar2(props) {
 const mapStateToProps = (state) => {
     return {
         authstate: state.auth,
-        searchstate: state.search
+        searchstate: state.search,
+        badgestate: state.badge
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
 
-    return bindActionCreators({ search, authanticated, notauthanticated }, dispatch)
+    return bindActionCreators({ search, authanticated, notauthanticated,BadgeCount }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar2)

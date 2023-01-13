@@ -4,12 +4,29 @@ import 'react-credit-cards/es/styles-compiled.css';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
-const CreditCard = () => {
+import { useEffect } from 'react';
+const CreditCard = (props) => {
 
   const [cvc, setCvc] = useState("");
   const [expiry, setExpiry] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const cardInfoVerify = (name, number, cvc, expiry) => {
+    if (name !== null && name !== "" && name !== undefined
+      && number !== null && number !== "" && number !== undefined && number.length === 16
+      && cvc !== null && cvc !== "" && cvc !== undefined&& cvc.length === 3
+      && expiry !== null && expiry !== "" && expiry !== undefined&& expiry.length === 4 ) {
+      props.setCardinfos(true);
+    }
+    else {
+      props.setCardinfos(false);
+    }
+  }
+  useEffect(() => {
+    cardInfoVerify(name, number, cvc, expiry);
+  })
+
+
 
   const dates = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   const years = [

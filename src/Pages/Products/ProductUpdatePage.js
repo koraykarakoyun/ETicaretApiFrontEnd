@@ -16,6 +16,9 @@ import { api } from '../../Utilities/Api';
 import { notify } from '../../Utilities/Notify';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import CategorySelecter from '../../Components/CategorySelecter/CategorySelecter';
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -54,7 +57,7 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductUpdate(props) {
-
+    const alert = useAlert()
     const divMargin = {
         marginBottom: "4%"
     }
@@ -107,7 +110,14 @@ export default function ProductUpdate(props) {
             "categoryid": categoryid
 
         }
-        api("PUT", "localhost", "7098", "products", "update", null, product).then(res => notify(res.message))
+        api("PUT", "localhost", "7098", "products", "update", null, product).then(res => {
+            if (res.isSuccess) {
+                alert.show(res.message, { type: types.SUCCESS })
+            }
+            else {
+                alert.show(res.message, { type: types.ERROR })
+            }
+        })
         setOpen(false);
     };
 

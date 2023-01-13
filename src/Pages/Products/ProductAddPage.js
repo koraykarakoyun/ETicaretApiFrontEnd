@@ -17,6 +17,9 @@ import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useEffect } from 'react';
 import CategorySelecter from '../../Components/CategorySelecter/CategorySelecter';
 import AddIcon from '@mui/icons-material/Add';
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -55,12 +58,12 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ProductAdd(props) {
-
+    const alert = useAlert()
     const divMargin = {
         marginBottom: "4%"
     }
 
-    const floatRight={
+    const floatRight = {
         float: "right"
     }
     const [open, setOpen] = React.useState(false);
@@ -92,7 +95,14 @@ export default function ProductAdd(props) {
             "categoryid": categoryid
         }
         console.log(product)
-        api("POST", "localhost", "7098", "products", "add", null, product).then(res => notify(res.message))
+        api("POST", "localhost", "7098", "products", "add", null, product).then(res => {
+            if (res.isSuccess) {
+                alert.show(res.message, { type: types.SUCCESS })
+            }
+            else {
+                alert.show(res.message, { type: types.ERROR })
+            }
+        })
         setOpen(false);
     };
 
@@ -109,7 +119,7 @@ export default function ProductAdd(props) {
                 open={open}
             >
                 <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                   Ürün Ekleme
+                    Ürün Ekleme
                 </BootstrapDialogTitle>
                 <DialogContent style={{ width: "100%" }} dividers>
 
@@ -122,7 +132,7 @@ export default function ProductAdd(props) {
                             Stok:<input style={floatRight} id='product_stock' type="number" />
                         </div>
                         <div style={divMargin}>
-                            Fiyat:<input style={floatRight}id='product_price' type="number" />
+                            Fiyat:<input style={floatRight} id='product_price' type="number" />
                         </div >
 
                         <div style={divMargin}>

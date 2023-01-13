@@ -15,8 +15,8 @@ import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import SortingSelectBox from '../Components/SortingSelectBox/SortingSelectBox';
 import FilterBox from '../Components/FilterBox/FilterBox';
-
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -26,10 +26,10 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-
 const Posts = (props) => {
-
+  const alert = useAlert()
   return (
+
     <Box sx={{ flexGrow: 1 }}>
       <div style={{ width: "20%", float: 'right' }}>
         <SortingSelectBox category={props.category}></SortingSelectBox>
@@ -79,7 +79,12 @@ const Posts = (props) => {
                       quantity: "1"
                     }
 
-                    api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data).then(res => console.log(res));
+                    api("POST", "localhost", "7098", "baskets", "addbasketitem", null, data).then(res => {
+                      if (res.isSuccess) {
+                        alert.show('Sepete Eklendi', { type: types.SUCCESS })
+                      }
+                    }
+                    );
 
                   }} variant="contained" style={{ width: "100%" }}>Sepete ekle</Button>
                 </CardActions>

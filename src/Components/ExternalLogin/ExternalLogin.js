@@ -9,9 +9,10 @@ import { authanticated, notauthanticated } from '../../Redux/Action/AuthAction';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addLoginInfo, removeLogınInfo } from '../../Redux/Action/LoginAction';
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 const ExternalLogin = (props) => {
-
+    const alert = useAlert()
     const clientId = "858096983515-prmmpeohub6v3u5smr2cc02o6u4mkn2v.apps.googleusercontent.com";
     const FacebookAppId = "630541088591232";
 
@@ -39,12 +40,12 @@ const ExternalLogin = (props) => {
         api("POST", "localhost", "7098", "auth", "google", null, data)
             .then(res => {
                 if (res.isSuccess) {
-
-                    notify("Google Girisi Yapildi")
+                    alert.show(res.message, { type: types.SUCCESS })
                     localStorage.setItem("googletoken", res.token.accessToken)
                     props.authanticated("google", res.userAuthRoleName);
                 }
                 else{
+                    alert.show(res.message, { type: types.INFO })
                     props.notauthanticated();
                 }
             }
@@ -52,7 +53,8 @@ const ExternalLogin = (props) => {
     };
 
     const onFailure = (err) => {
-        console.log('failed:', err);
+        alert.show(err.error, { type: types.INFO })
+      
     };
 
     const responseFacebook = (response) => {
@@ -62,11 +64,12 @@ const ExternalLogin = (props) => {
         api("POST", "localhost", "7098", "auth", "facebook", null, data).then(res => {
             if (res.isSuccess) {
 
-                notify("Facebook Girisi Yapildi")
+                alert.show(res.message, { type: types.SUCCESS })
                 localStorage.setItem("facebooktoken", res.token.accessToken)
                 props.authanticated("facebook", res.userAuthRoleName);
             }
             else{
+                alert.show(res.message, { type: types.INFO })
                 props.notauthanticated();
             }
 

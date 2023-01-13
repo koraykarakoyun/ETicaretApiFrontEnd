@@ -23,11 +23,11 @@ const ProductDetail = (props) => {
 
         api("GET", "localhost", "7098", "products", "getbyid", id, null).then((data) => {
             setPosts({ success: true, data: data });
-            console.log(data);
+
         });
         api("GET", "localhost", "7098", "products", "getbyidproductallimages", id, null).then((data) => {
             setImages(data);
-            console.log(data);
+
         });
 
 
@@ -177,12 +177,12 @@ const ProductDetail = (props) => {
 
 
                 <div style={{ width: "50%", minHeight: "10rem", display: "inline-block" }}>
-                    <div style={{ display: "flex" ,justifyContent:"center"}}>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
                         {
 
                             images.map(element => (
                                 <Carousel.Item>
-                                    <img style={{ width: "20%", height: "5rem" ,margin:"3%"}} src={`http://127.0.0.1:8887/${element.filePath}`} />
+                                    <img style={{ width: "20%", height: "5rem", margin: "3%" }} src={`http://127.0.0.1:8887/${element.filePath}`} />
                                 </Carousel.Item>
                             ))
 

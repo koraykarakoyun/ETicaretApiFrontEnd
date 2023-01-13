@@ -19,32 +19,27 @@ import TreeItem from '@mui/lab/TreeItem';
 import ConfirmDialog from '../../Components/ConfirmDialog/ConfirmDialog';
 import RolesList from '../../Components/RolesList/RolesList';
 import { act } from 'react-dom/test-utils';
-
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
 export default function AuthPage(props) {
+    const alert = useAlert()
     const [deger, setDeger] = useState({ success: false, data: [] });
     const [rolesList, setRolesList] = useState();
     const [selectedRoles, setSelectedRoles] = useState([]);
     const [rolesToEndpoint, setRolesToEndpoint] = useState([]);
     useEffect(() => {
         api("GET", "localhost", "7098", "ApplicationServices", "GetAuthorizeDefinitonEndpoints", null, null).then((data) => {
-
-            console.log(data);
             if (data.status == 401) {
                 setDeger({ success: false, data: [] })
             }
             else {
                 setDeger({ success: true, data: data })
             }
-
-
         });
-
         api("GET", "localhost", "7098", "Roles", "getallroles", null, null).then((data) => {
             console.log(data);
             setRolesList(data.result);
         });
-
-
     }, [])
     return (
         deger.success ? (<div style={{ marginLeft: "0.1%" }}>
@@ -54,7 +49,7 @@ export default function AuthPage(props) {
                 defaultExpandIcon={<ChevronRightIcon />}
             >
                 {deger.data.map((data) => (
-                    <TreeItem style={{color:"white"}} nodeId={data.name} label={data.name}>
+                    <TreeItem style={{ color: "white" }} nodeId={data.name} label={data.name}>
                         {
                             data.action.map(action => {
 
@@ -66,7 +61,7 @@ export default function AuthPage(props) {
                                         }
                                         console.log("formdata: " + data.name + " " + action.code)
                                         api("POST", "localhost", "7098", "AuthorizationEndpoints", "GetRolesToEndpoint", null, formdata).then((data) => {
-                                            console.log(data.datas);
+
                                             if (data.datas != null) {
                                                 setRolesToEndpoint(data.datas)
                                             }
@@ -85,7 +80,16 @@ export default function AuthPage(props) {
                                                 })
                                             }
 
-                                            api("POST", "localhost", "7098", "AuthorizationEndpoints", "AssingRoleEndpoint", null, formdata);
+                                            api("POST", "localhost", "7098", "AuthorizationEndpoints", "AssingRoleEndpoint", null, formdata).then(response => {
+                                                if (response.isSuccess) {
+                                                    alert.show(response.message, { type: types.SUCCESS })
+                                                }
+                                                else {
+                                                    alert.show(response.message, { type: types.ERROR })
+                                                }
+                                            })
+
+
                                         }}></ConfirmDialog>
 
                                     <TreeItem style={{ display: "inline-block" }} nodeId={action.code} label={action.definiton} />

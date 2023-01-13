@@ -9,8 +9,9 @@ import ExternalLogin from '../../Components/ExternalLogin/ExternalLogin';
 import { useEffect } from 'react';
 import registerloginimage from "../../Image/register-login.jpg"
 import { useNavigate } from "react-router-dom";
-
-export const infoverification = (firstname, lastname, email, username,phoneNumber, password, confirmpassword) => {
+import { useAlert } from 'react-alert'
+import { types } from 'react-alert'
+export const infoverification = (firstname, lastname, email, username, phoneNumber, password, confirmpassword) => {
     if (firstname !== null && firstname !== ""
         && lastname !== null && lastname !== ""
         && email !== null && email !== ""
@@ -30,7 +31,7 @@ export const infoverification = (firstname, lastname, email, username,phoneNumbe
 
 function RegistrationForm() {
 
-
+    const alert = useAlert()
     const navigate = useNavigate();
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
@@ -39,7 +40,7 @@ function RegistrationForm() {
     const [phoneNumber, setPhoneNumber] = useState(null);
     const [password, setPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
-    
+
     const handleInputChange = (e) => {
         const { id, value } = e.target;
         if (id === "firstName") {
@@ -76,13 +77,13 @@ function RegistrationForm() {
             "Surname": lastName,
             "Email": email,
             "Username": username,
-            "PhoneNumber":phoneNumber,
+            "PhoneNumber": phoneNumber,
             "Password": password,
             "PasswordConfirm": confirmPassword
         }
-        console.log(user_data)
 
-        if (infoverification(firstName, lastName, email, username,phoneNumber, password, confirmPassword)) {
+
+        if (infoverification(firstName, lastName, email, username, phoneNumber, password, confirmPassword)) {
 
             var user_data =
             {
@@ -90,21 +91,25 @@ function RegistrationForm() {
                 "Surname": lastName,
                 "Email": email,
                 "Username": username,
-                "PhoneNumber":phoneNumber,
+                "PhoneNumber": phoneNumber,
                 "Password": password,
                 "PasswordConfirm": confirmPassword
             }
 
             api("POST", "localhost", "7098", "users", "createuser", null, user_data).then((res) => {
-                if(res.isSuccess){
-                navigate("/login");
-                }
                 
+                if (res.isSuccess) {
+                    navigate("/login");
+                    alert.show(res.message, { type: types.SUCCESS })
+                }
+                else{
+                    alert.show(res.message, { type: types.ERROR })
+                }
             });
 
         }
         else {
-            notify("bilgilerinizi kontrol ediniz");
+            alert.show("Lütfen Bilgilerinizi Kontrol Ediniz", { type: types.INFO })
         }
 
 

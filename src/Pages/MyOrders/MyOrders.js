@@ -100,8 +100,8 @@ export default function MyOrders() {
                                                                     </div>
 
                                                                 </div>
-                                                                <Link to={"/myorders/" + element.orderCode}>
-                                                                    <Button>
+                                                                <Link style={{textDecoration:"none"}} to={"/myorders/" + element.orderCode}>
+                                                                    <Button variant='contained'>
                                                                         Sipariş Detayı
                                                                     </Button>
                                                                 </Link>

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
 import Posts from "./Posts"
 import Pagination from "./Pagination"
 import { api } from '../Utilities/Api';
 import ImageCarousel from '../Components/ImageSliderCarousel/ImageSliderCarousel';
 import { useParams } from "react-router-dom";
 import { search } from '../Redux/Action/SearchAction'
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Footer from '../Components/Footer/Footer';
 
 const divMargin = {
     marginLeft: "20%",
@@ -124,6 +123,7 @@ const MainPage = (props) => {
                     paginate={paginate}
                 />
             </div>
+            <Footer></Footer>
         </>
     );
 };

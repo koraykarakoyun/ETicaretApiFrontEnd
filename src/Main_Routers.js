@@ -82,6 +82,7 @@ const Main_Routers = (props) => {
                 {routes}
 
             </>
+            
         </BrowserRouter >
     )
 }

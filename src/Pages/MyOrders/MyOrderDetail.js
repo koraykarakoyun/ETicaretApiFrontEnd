@@ -84,7 +84,7 @@ export default function MyOrderDetail(props) {
                             <TableBody>
                                 <TableRow
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell style={{ borderTop: "1px solid grey" }}>
+                                    <TableCell >
                                         <span style={{ fontWeight: "bold" }}>&nbsp;</span> Toplam Ürün Sayısı: {datas.data.totalProductCount} Adet
                                     </TableCell>
                                 </TableRow>
@@ -171,8 +171,8 @@ export default function MyOrderDetail(props) {
                                     <TableCell>
 
 
-                                        <div style={{ marginBottom: "1rem" }}>
-                                            Sipariş Detayı:
+                                        <div style={{ marginBottom: "1rem",fontSize:"1.3rem" }}>
+                                            Sipariş Detayı Bilgileri:
                                         </div>
 
                                         <Box sx={{ flexGrow: 1 }}>

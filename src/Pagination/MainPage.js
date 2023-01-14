@@ -22,12 +22,18 @@ const MainPage = (props) => {
     let { category } = useParams();
     let { type } = useParams();
     let { parameter } = useParams();
-    let { filter1} = useParams();
-    let { filter2} = useParams();
-    let { filter3} = useParams();
-    let { filter4} = useParams();
+    let { filter1 } = useParams();
+    let { filter2 } = useParams();
+    let { filter3 } = useParams();
+    let { filter4 } = useParams();
 
 
+    useEffect(() => {
+        api("GET", "localhost", "7098", "products", "getall", null, null).then((data) => {
+            console.log(data)
+            setPosts(data);
+        });
+    }, [])
 
     useEffect(() => {
         if (category != undefined) {
@@ -50,7 +56,7 @@ const MainPage = (props) => {
             }
 
             else {
-                
+
                 let data = {
                     "category": category,
                     "type": type,
@@ -105,8 +111,8 @@ const MainPage = (props) => {
         }
     }, [props.searchstate])
 
-    
- 
+
+
 
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
